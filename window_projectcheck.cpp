@@ -1,11 +1,16 @@
-#include "checkproject_window.h"
+#include "window_projectcheck.h"
 
 int checkPjWindow::num = 0;
 
-checkPjWindow::checkPjWindow(QWidget *parent) : QWidget(parent)
+checkPjWindow::checkPjWindow(QWidget *parent) : QDialog(parent)
 {
 
     checkPjWindow::num += 1;
+    Qt::WindowFlags flags = Qt::Dialog;
+    flags |= Qt::WindowMinMaxButtonsHint;
+    flags |= Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
+
 
     this->setWindowTitle(tr("校核项目"));
     this->resize(1000, 800);

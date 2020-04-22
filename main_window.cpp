@@ -1,130 +1,6 @@
 #include "main_window.h"
 #include "central_widget.h"
 
-setCoalParThread::setCoalParThread(int prid):prid(prid){}
-
-
-
-void setCoalParThread::run()
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
-            "UID=sa;PWD=123456;";
-    db.setDatabaseName(dsn);
-
-    if(!db.open())                                      //打开数据库
-    {
-//        QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));
-    }
-    else
-    {
-        QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-        QString pd = QString::number(this->prid);
-        QString sqlprojects = "SELECT * FROM projects WHERE prid=" + pd;
-        QString sqlPinf = "SELECT * FROM Pinf WHERE prid=" + pd;
-        QString sqlGasResult = "SELECT * FROM GasResult WHERE prid=" + pd;
-        QString sqlGSLResult = "SELECT * FROM GSLResult WHERE prid=" + pd;
-        QString sqlEquip = "SELECT * FROM Equip WHERE prid=" + pd;
-        QString sqlCoal = "SELECT * FROM Coal WHERE prid=" + pd;
-        query.exec(sqlCoal);
-        if (query.next()){
-            qDebug() << "煤气参数 = "<<query.value(0).toString();
-            Coal::setCoalPar(query.value(0).toFloat(), query.value(1).toFloat(),
-                             query.value(2).toFloat(), query.value(3).toFloat(),
-                             query.value(4).toFloat(), query.value(5).toFloat(),
-                             query.value(6).toFloat(), query.value(7).toFloat(),
-                             query.value(8).toFloat());
-            qDebug() << "煤气参数 = "<<Coal::Ap << Coal::S;
-        }
-//        query.exec(sqlEquip);
-//        if (query.next()){
-//            std::cout << query.value(0).toString().toStdString()<< query.value(1).toString().toStdString()<<
-//                        query.value(2).toString().toStdString();
-                    //                               query.value(3).toString().toStdString()
-//            Equip::setEquipPar(query.value(0).toString().toStdString(), query.value(1).toString().toStdString(), query.value(2).toString().toStdString());
-//            Equip::setEquipPar(query.value(0).toString().toStdString(), query.value(1).toString().toStdString(), query.value(2).toString().toStdString(),
-//                               query.value(3).toString().toStdString(), query.value(4).toString().toStdString(),
-//                               query.value(5).toString().toStdString(), query.value(6).toString().toStdString(),
-//                               query.value(7).toString().toStdString(), query.value(8).toString().toStdString(),
-//                               query.value(9).toString().toStdString(), query.value(10).toString().toStdString(),
-//                               query.value(11).toString().toStdString(), query.value(12).toString().toStdString(),
-//                               query.value(13).toString().toStdString(), query.value(14).toString().toStdString(),
-//                               query.value(15).toString().toStdString(), query.value(16).toString().toStdString(),
-//                               query.value(17).toString().toStdString(), query.value(18).toString().toStdString(),
-//                               query.value(19).toString().toStdString(), query.value(20).toString().toStdString(),
-//                               query.value(21).toString().toStdString(), query.value(22).toString().toStdString(),
-//                               query.value(23).toString().toStdString(), query.value(24).toString().toStdString(),
-//                               query.value(25).toString().toStdString(), query.value(26).toString().toStdString(),
-//                               query.value(27).toString().toStdString(), query.value(28).toString().toStdString(),
-//                               query.value(29).toString().toStdString(), query.value(30).toString().toStdString(),
-//                               query.value(31).toString().toStdString());
-//        std::cout << "EQ1 = " << Equip::eq1;
-
-//        }
-
-    }
-    db.close();
-
-}
-
-
-setEquipParThread::setEquipParThread(int prid):prid(prid){}
-setEquipParThread::~setEquipParThread(){}
-
-void setEquipParThread::run()
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
-            "UID=sa;PWD=123456;";
-    db.setDatabaseName(dsn);
-
-    if(!db.open())                                      //打开数据库
-    {
-//        QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));
-    }
-    else
-    {
-        QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-        QString pd = QString::number(this->prid);
-//        QString sqlprojects = "SELECT * FROM projects WHERE prid=" + pd;
-//        QString sqlPinf = "SELECT * FROM Pinf WHERE prid=" + pd;
-//        QString sqlGasResult = "SELECT * FROM GasResult WHERE prid=" + pd;
-//        QString sqlGSLResult = "SELECT * FROM GSLResult WHERE prid=" + pd;
-        QString sqlEquip = "SELECT * FROM Equip WHERE prid=" + pd;
-        query.exec(sqlEquip);
-        if (query.next()){
-//            Equip::setEquipPar(query);
-//            std::cout << "size = " << query.size();
-            qDebug() << query.value(0).toString()<< query.value(1).toString()<<
-                        query.value(2).toString();
-                    //                               query.value(3).toString().toStdString()
-//            Equip::setEquipPar(query.value(0).toString().toStdString(), query.value(1).toString().toStdString(), query.value(2).toString().toStdString());
-//            Equip::setEquipPar(query.value(0).toString().toStdString(), query.value(1).toString().toStdString(), query.value(2).toString().toStdString(),
-//                               query.value(3).toString().toStdString(), query.value(4).toString().toStdString(),
-//                               query.value(5).toString().toStdString(), query.value(6).toString().toStdString(),
-//                               query.value(7).toString().toStdString(), query.value(8).toString().toStdString(),
-//                               query.value(9).toString().toStdString(), query.value(10).toString().toStdString(),
-//                               query.value(11).toString().toStdString(), query.value(12).toString().toStdString(),
-//                               query.value(13).toString().toStdString(), query.value(14).toString().toStdString(),
-//                               query.value(15).toString().toStdString(), query.value(16).toString().toStdString(),
-//                               query.value(17).toString().toStdString(), query.value(18).toString().toStdString(),
-//                               query.value(19).toString().toStdString(), query.value(20).toString().toStdString(),
-//                               query.value(21).toString().toStdString(), query.value(22).toString().toStdString(),
-//                               query.value(23).toString().toStdString(), query.value(24).toString().toStdString(),
-//                               query.value(25).toString().toStdString(), query.value(26).toString().toStdString(),
-//                               query.value(27).toString().toStdString(), query.value(28).toString().toStdString(),
-//                               query.value(29).toString().toStdString(), query.value(30).toString().toStdString(),
-//                               query.value(31).toString().toStdString());
-//        std::cout << "EQ1 = " << Equip::eq1;
-
-        }
-
-    }
-    db.close();
-
-}
-
-
 
 void MainWindow::createAction()
 {
@@ -168,36 +44,71 @@ void MainWindow::createAction()
     this->absorberParAction = new QAction(tr("吸收塔参数"), this);
     this->boosterFanAction = new QAction(tr("增压风机"), this);
     this->heatExchangerAction = new QAction(tr("烟气换热器"), this);
-    //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    connect(heatExchangerAction, SIGNAL(triggered(bool)), this, SLOT(heatExchangeSLOT()));
+     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->oxidationAirBlowerAction = new QAction(tr("氧化风机"), this);
     this->slurryCirculationPumpAction = new QAction(tr("浆液循环泵"), this);
+    connect(slurryCirculationPumpAction, SIGNAL(triggered(bool)), this, SLOT(absorberSryCirPumpSLOT()));
+    
+    
     this->absorberAgitatorAction = new QAction(tr("吸收塔搅拌器"), this);
     this->caso4DischargePumpAction = new QAction(tr("石膏排出泵"), this);
+    connect(caso4DischargePumpAction, SIGNAL(triggered(bool)), this, SLOT(caso4DischargePumpSLOT()));
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->caso4RotationalFlowAction = new QAction(tr("石膏旋流器"), this);
+    connect(caso4RotationalFlowAction, SIGNAL(triggered(bool)), this, SLOT(caso4RotationalFlowSLOT()));
+
     this->vacuumBeltDehydratorAction = new QAction(tr("真空皮带脱水机"), this);
-    this->filterTankAndAgitatorAction = new QAction(tr("滤液箱机搅拌器"), this);
+    connect(vacuumBeltDehydratorAction, SIGNAL(triggered(bool)), this, SLOT(vacuumBeltDeWindowSLOT()));
+    
+    this->filterTankAndAgitatorAction = new QAction(tr("滤液箱及搅拌器"), this);
+    connect(filterTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(filterSryAndAgitatorSLOT()));
     this->filterPumpAction = new QAction(tr("滤液泵"), this);
+    connect(filterPumpAction, SIGNAL(triggered(bool)), this, SLOT(filterPumpSLOT()));
+
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->caco3HouseAction = new QAction(tr("石灰石仓"), this);
+    connect(caco3HouseAction, SIGNAL(triggered(bool)), this, SLOT(caco3HouseSLOT()));
     this->wetBallMillAction = new QAction(tr("湿式球磨机"), this);
+    connect(wetBallMillAction, SIGNAL(triggered(bool)), this, SLOT(wetMillSLOT()));
+
     this->caco3CirculantTankAndAgitatorAction = new QAction(tr("石灰石浆液循环箱及搅拌器"));
-    this->caco3CirculantPumpAction= new QAction(tr("石灰石浆液循环泵"));
+    connect(caco3CirculantTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryCirAndAgitatorSLOT()));
+    this->caco3SlurryCirculantPumpAction= new QAction(tr("石灰石浆液循环泵"));
+    connect(caco3SlurryCirculantPumpAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryPumpCirSLOT()));
+
+
     this->caco3RotationalFlowAction = new QAction(tr("石灰石旋流器"));
+    connect(caco3RotationalFlowAction, SIGNAL(triggered(bool)), this, SLOT(caco3RotationalFlowSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->caco3PowderHouseAction = new QAction(tr("石灰石粉仓"));
     this->caco3SlurryTankAndAgitatorAction = new QAction(tr("石灰石浆液箱及搅拌器"));
+    connect(caco3SlurryTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryAndAgitatorSLOT()));
     this->caco3SlurryPumpAction = new QAction(tr("石灰石浆液泵"));
+    connect(caco3SlurryPumpAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryPumpSLOT()));
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->processWaterTankAction = new QAction(tr("工艺水箱"));
+    connect(processWaterTankAction, SIGNAL(triggered(bool)), this, SLOT(proH2OtankSLOT()));
     this->processWaterPumpAction = new QAction(tr("工艺水泵"));
+    connect(processWaterPumpAction, SIGNAL(triggered(bool)), this, SLOT(proH2OpumpSLOT()));
+
     this->waterPumpAction = new QAction(tr("除雾器冲洗水泵"));
+    connect(waterPumpAction, SIGNAL(triggered(bool)), this, SLOT(waterPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->emergencySlurryTankAndAgitatorAction = new QAction(tr("事故浆液箱及搅拌器"));
+    connect(emergencySlurryTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(emergencySryAndAgitatorSLOT()));
+    
     this->emergencySlurryPumpAction = new QAction(tr("事故浆液箱泵"));
+    connect(emergencySlurryPumpAction, SIGNAL(triggered(bool)), this, SLOT(emergencySryPumpSLOT()));
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->wasteH2OrotationalFlowAction = new QAction(tr("废水旋流器"));
+    connect(wasteH2OrotationalFlowAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2OrotationalFlowSLOT()));
     this->wasteH2OfeedAction = new QAction(tr("废水旋流器给料泵"));
+    connect(wasteH2OfeedAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2oFeedPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->equipmentParSetAction = new QAction(tr("设备参数汇总"));
 
@@ -279,13 +190,15 @@ void MainWindow::createMenus()
     this->wetPulpingSystemmenu->addAction(this->caco3HouseAction);
     this->wetPulpingSystemmenu->addAction(this->wetBallMillAction);
     this->wetPulpingSystemmenu->addAction(this->caco3CirculantTankAndAgitatorAction);
-    this->wetPulpingSystemmenu->addAction(this->caco3CirculantPumpAction);
+    this->wetPulpingSystemmenu->addAction(this->caco3SlurryCirculantPumpAction);
     this->wetPulpingSystemmenu->addAction(this->caco3RotationalFlowAction);
     this->equipmentmenu->addMenu(this->wetPulpingSystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->powderPulpingSystemmenu = new QMenu("粉制浆系统");
     this->powderPulpingSystemmenu ->addAction(this->caco3PowderHouseAction);
     this->powderPulpingSystemmenu ->addAction(this->caco3SlurryTankAndAgitatorAction);
+
+
     this->powderPulpingSystemmenu ->addAction(this->caco3SlurryPumpAction);
     this->equipmentmenu->addMenu(this->powderPulpingSystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -300,10 +213,10 @@ void MainWindow::createMenus()
     this->emergencySlurrySystemmenu->addAction(emergencySlurryPumpAction);
     this->equipmentmenu->addMenu(this->emergencySlurrySystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->wasterH2Osystemmenu = new QMenu(tr("废水处理系统"));
-    this->wasterH2Osystemmenu->addAction(wasteH2OrotationalFlowAction);
-    this->wasterH2Osystemmenu->addAction(wasteH2OfeedAction);
-    this->equipmentmenu->addMenu(this->wasterH2Osystemmenu);
+    this->wasteH2Osystemmenu = new QMenu(tr("废水处理系统"));
+    this->wasteH2Osystemmenu->addAction(wasteH2OrotationalFlowAction);
+    this->wasteH2Osystemmenu->addAction(wasteH2OfeedAction);
+    this->equipmentmenu->addMenu(this->wasteH2Osystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->equipmentmenu->addAction(this->equipmentParSetAction);
 
@@ -347,14 +260,95 @@ void MainWindow::createToolBars()
     this->outputTool->addAction(this->curveAction);
 }
 
+void MainWindow::caco3SryCirAndAgitatorSLOT()
+{
+    if (caco3SryCirTankAndAgitatorWindow::num == 0){
+        this->caco3SryCirTankAgitatorWindow= new caco3SryCirTankAndAgitatorWindow(
+                slurryPreSystem::Qsjx, absorberSystem::FGDnum, slurryPreSystem::Tsjx, slurryPreSystem::Dsjx, slurryPreSystem::Hsjx, slurryPreSystem::HDsjx,  slurryPreSystem::Vjsjx, slurryPreSystem::VTjsjx, slurryPreSystem::Ysjx,
+                slurryPreSystem::Nbsjx, slurryPreSystem::Nfsjx, slurryPreSystem::Nesjx, slurryPreSystem::Nksjx, this);
+    }
+    else{
+        this->caco3SryCirTankAgitatorWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3SryCirTankAgitatorWindow->showNormal();
+    }
+}
+
+void MainWindow::caco3HouseSLOT()
+{
+    if (caco3HouseWindow::num == 0)
+    {
+        this->caco3HosWindow = new caco3HouseWindow(this);
+    }
+    else{
+        this->caco3HosWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3HosWindow->showNormal();
+    }
+}
+
+
+void MainWindow::wetMillSLOT()
+{
+    if (wetBallMillWindow::num == 0)
+    {
+        this->wetMillWindow = new wetBallMillWindow(slurryPreSystem::Qmj, slurryPreSystem::Nfmj, slurryPreSystem::Nemj ,this);
+    }
+    else{
+        this->wetMillWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->wetMillWindow->showNormal();
+    }
+}
+
+
+void MainWindow::filterSryAndAgitatorSLOT()
+{
+    if (filterSryTankAndAgitatorWindow::num == 0)
+    {
+        this->filterSryTankAgitatorWindow = new filterSryTankAndAgitatorWindow(caso4ExtractH2Osystem::Qlx, absorberSystem::FGDnum, caso4ExtractH2Osystem::Tlx, caso4ExtractH2Osystem::Dlx, caso4ExtractH2Osystem::Hlx, caso4ExtractH2Osystem::HDlx, caso4ExtractH2Osystem::Vjlx, caso4ExtractH2Osystem::VTjlx, caso4ExtractH2Osystem::Ylx,
+                caso4ExtractH2Osystem::Nblx, caso4ExtractH2Osystem::Nflx, caso4ExtractH2Osystem::Nelx, caso4ExtractH2Osystem::Nklx, this);
+    }
+    else{
+        this->filterSryTankAgitatorWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->filterSryTankAgitatorWindow->showNormal();
+    }
+}
+
+
+void MainWindow::caco3SryAndAgitatorSLOT()
+{
+    if (caco3SryTankAndAgitatorWindow::num == 0)
+        this->caco3SryTankAgitatorWindow= new caco3SryTankAndAgitatorWindow(
+                slurryPreSystem::Qsj, absorberSystem::FGDnum, slurryPreSystem::Tsj, slurryPreSystem::Dsj, slurryPreSystem::Hsj, slurryPreSystem::HDsj,  slurryPreSystem::Vjsj, slurryPreSystem::VTjsj, slurryPreSystem::Ysj,
+                slurryPreSystem::Nbsj, slurryPreSystem::Nfsj, slurryPreSystem::Nesj, slurryPreSystem::Nksj, this);
+    else{
+        this->caco3SryTankAgitatorWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3SryTankAgitatorWindow->showNormal();
+    }
+
+
+}
+
+
+void MainWindow::emergencySryAndAgitatorSLOT()
+{
+    if (newPjWindow::num == 0)
+        this->emeSryTankAndAgitatorWindow = new emergencySryTankAndAgitatorWindow(
+                emergencySlurrySystem::Dshg, emergencySlurrySystem::Hshg, emergencySlurrySystem::HDshg, emergencySlurrySystem::Vshg, emergencySlurrySystem::VTshg, emergencySlurrySystem::Yshg,
+                emergencySlurrySystem::Nbshg, emergencySlurrySystem::Nfshg, emergencySlurrySystem::Neshg, emergencySlurrySystem::Nkshg, this);
+    else{
+        
+        this->emeSryTankAndAgitatorWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->emeSryTankAndAgitatorWindow->showNormal();
+    }
+}
+
 
 void MainWindow::newSLOT()
 {
     if (newPjWindow::num == 0)
-        this->newWindow = new newPjWindow;
+        this->newWindow = new newPjWindow(this);
     else{
         this->newWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
-        this->newWindow->show();
+        this->newWindow->showNormal();
     }
 }
 
@@ -362,25 +356,222 @@ void MainWindow::openSLOT()
 {
     if (openPjWindow::num == 0)
     {
+        qDebug() << "in openPJwindow::num ============== 0";
         this->openProjectwindow = new openPjWindow;
-        connect(openProjectwindow, SIGNAL(pridSIGNAL(int)), this, SLOT(setParSLOT(int)));
+        connect(openProjectwindow, SIGNAL(threadStart(int)), this, SLOT(setParSLOT(int)));
     }
     else{
         this->openProjectwindow->setWindowFlag(Qt::WindowStaysOnTopHint);
-        this->openProjectwindow->show();
+        this->openProjectwindow->showNormal();
     }
 }
 
 void MainWindow::setParSLOT(int prid)
 {
-    if (dbUtils::ping(Login_window::ip)==0){
-        setEquipThread = new setEquipParThread(prid);
-        setEquipThread->start();
-    }
-    else
-        QMessageBox::information(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
+    setparObj = new setParObject(prid);
+    this->myThread = new QThread();
+    setparObj ->moveToThread(myThread);
+    qDebug()<< "start,thread id = " << QThread::currentThreadId();
+    connect(myThread, SIGNAL(started()), setparObj, SLOT(start()));
+    connect(setparObj, SIGNAL(finishedSIGNAL()), myThread, SLOT(quit()));
+    connect(setparObj, SIGNAL(finishedSIGNAL()), this, SLOT(setTitleSLOT()));
+    connect(myThread, SIGNAL(finished()), myThread, SLOT(deleteLater()));
+    connect(myThread, SIGNAL(finished()), setparObj, SLOT(deleteLater()));
+    myThread->start();
+
 }
 
+void MainWindow::setTitleSLOT()
+{
+    qDebug() << "pp1 = " << QString("%1").arg(pinf::PP1);
+    qDebug() << "pp2 = " << QString("%1").arg(pinf::PP2);
+
+
+    this->setWindowTitle(QString::fromStdString("湿法烟气脱硫系统 - [" + projects::pj_name + "]"));
+}
+
+
+void MainWindow::wasteH2OrotationalFlowSLOT()
+{
+    if (wasteH2OrotationalFlow_window::num == 0)
+        this->wasteH2OroFlowWindow = new wasteH2OrotationalFlow_window(wasteH2OproSystem::Qfx, wasteH2OproSystem::XZfx, this);
+    else{
+        this->wasteH2OroFlowWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->wasteH2OroFlowWindow->showNormal();
+
+    }
+}
+
+void MainWindow::vacuumBeltDeWindowSLOT()
+{
+    if (vacuumBeltDehydratorWindow::num == 0)
+        this->vacuumBeltDeWindow = new vacuumBeltDehydratorWindow(caso4ExtractH2Osystem::Qzhk,  caso4ExtractH2Osystem::Szhk,  caso4ExtractH2Osystem::Nezhk,
+                                                                  caso4ExtractH2Osystem::Qzhb,  caso4ExtractH2Osystem::Nfzhb, caso4ExtractH2Osystem::Nezhb,
+                                                                  caso4ExtractH2Osystem::Dlb,   caso4ExtractH2Osystem::Hlb,   caso4ExtractH2Osystem::Vjlb,
+                                                                  caso4ExtractH2Osystem::Qlbb,  caso4ExtractH2Osystem::Hlbb,  caso4ExtractH2Osystem::Nelbb, this);
+    else{
+        this->vacuumBeltDeWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->vacuumBeltDeWindow->showNormal();
+
+    }
+}
+
+void MainWindow::heatExchangeSLOT()
+{
+    if (heatExchangeWindow::num == 0)
+        this->heatExWindow = new heatExchangeWindow(this);
+    else{
+        this->heatExWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->heatExWindow->showNormal();
+
+    }
+}
+
+
+void MainWindow::caso4RotationalFlowSLOT()
+{
+    if (caso4RotationalFlow_window::num == 0)
+        this->caso4RoFlowWindow = new caso4RotationalFlow_window(caso4ExtractH2Osystem::Qshgx, caso4ExtractH2Osystem::XZshgx, this);
+    else{
+        this->caso4RoFlowWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caso4RoFlowWindow->showNormal();
+    }
+}
+
+void MainWindow::caso4DischargePumpSLOT()
+{
+    if (caso4DischargePumpWindow::num == 0)
+        this->caso4DisPumpWindow = new caso4DischargePumpWindow(so2AbsorbSystem::Yshpb, so2AbsorbSystem::Qshpb, so2AbsorbSystem::Hshpb, so2AbsorbSystem::Nfshpb,
+                                                                so2AbsorbSystem::Neshpb, so2AbsorbSystem::Nkshpb, this);
+    else{
+        this->caso4DisPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caso4DisPumpWindow->showNormal();
+    }
+
+}
+
+
+void MainWindow::proH2OtankSLOT()
+{
+    if (proH2OtankWindow::num == 0)
+    {
+        qDebug() << "in PROH2oSLOT";
+        this->processH2OtankWindow = new proH2OtankWindow(processH2Osystem::Qgy, absorberSystem::FGDnum, processH2Osystem::Tgy, processH2Osystem::Dgy,
+                                                                processH2Osystem::Hgy, processH2Osystem::HDgy,  processH2Osystem::Vjgy, processH2Osystem::VTjgy,  processH2Osystem::Ygy, this);
+    }
+    else{
+        this->processH2OtankWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->processH2OtankWindow->showNormal();
+    }
+}
+
+void MainWindow::proH2OpumpSLOT()
+{
+    if (processH2OpumpWindow::num == 0)
+        this->proH2OpumpWindow= new processH2OpumpWindow(processH2Osystem::Ygyb, processH2Osystem::Qgyb, processH2Osystem::Hgyb, processH2Osystem::Nfgyb,
+                                                                processH2Osystem::Negyb, processH2Osystem::Nkgyb, this);
+    else{
+        this->proH2OpumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->proH2OpumpWindow->showNormal();
+    }
+}
+
+void MainWindow::filterPumpSLOT()
+{
+    if (filterPumpWindow::num == 0)
+        this->filtPumpWindow= new filterPumpWindow(caso4ExtractH2Osystem::Ylyb, caso4ExtractH2Osystem::Qlyb, caso4ExtractH2Osystem::Hlyb, caso4ExtractH2Osystem::Nflyb,
+                                                                caso4ExtractH2Osystem::Nelyb, caso4ExtractH2Osystem::Nklyb, this);
+    else{
+        this->filtPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->filtPumpWindow->showNormal();
+    }
+}
+
+
+void MainWindow::emergencySryPumpSLOT()
+{
+    if (emergencySlurryPumpWindow::num == 0)
+        this->emeSlurryPumpWindow = new emergencySlurryPumpWindow(emergencySlurrySystem::Yshgb,
+                                                             emergencySlurrySystem::Qshgb, emergencySlurrySystem::Hshgb, emergencySlurrySystem::Nfshgb,
+                                                                emergencySlurrySystem::Neshgb, emergencySlurrySystem::Nkshgb, this);
+    else{
+        this->emeSlurryPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->emeSlurryPumpWindow->showNormal();
+    }
+}
+
+void MainWindow::wasteH2oFeedPumpSLOT()
+{
+    if (wasteh2ofeedPumpWindow::num == 0)
+        this->wasteh2oFeedPumpWindow = new wasteh2ofeedPumpWindow(wasteH2OproSystem::Yfshb,
+                                                             wasteH2OproSystem::Qfshb, wasteH2OproSystem::Hfshb, wasteH2OproSystem::Nffshb,
+                                                                wasteH2OproSystem::Nefshb, wasteH2OproSystem::Nkfshb, this);
+    else{
+        this->wasteh2oFeedPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->wasteh2oFeedPumpWindow->showNormal();
+    }
+}
+
+void MainWindow::waterPumpSLOT()
+{
+    if (waterPumpWindow::num == 0)
+        this->wateringPumpWindow = new waterPumpWindow(processH2Osystem::Yccb,
+                                                             processH2Osystem::Qccb, processH2Osystem::Hccb, processH2Osystem::Nfccb,
+                                                                processH2Osystem::Neccb, processH2Osystem::Nkccb, this);
+    else{
+        this->wateringPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->wateringPumpWindow->showNormal();
+    }
+}
+
+void MainWindow::absorberSryCirPumpSLOT()
+{   
+    if (absorberSryCirPumpWindow::num == 0)
+        // 效率:yjxb, 数量:xg, 流量:Qjxb
+        
+        this->absorberSlrCirWindow = new absorberSryCirPumpWindow(so2AbsorbSystem::Yjxb, so2AbsorbSystem::Qjxb, so2AbsorbSystem::Hjxb, so2AbsorbSystem::Nfjxb, so2AbsorbSystem::Nejxb,
+                                                                  so2AbsorbSystem::Nkjxb, so2AbsorbSystem::xg, this);
+    else{
+        this->absorberSlrCirWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->absorberSlrCirWindow->showNormal();
+    }
+    
+}
+
+
+void MainWindow::caco3SryPumpSLOT()
+{
+    if (caco3SlurryPumpWindow::num == 0)
+        this->caco3SryPumpWindow = new caco3SlurryPumpWindow(slurryPreSystem::Yshjb,
+                                                             slurryPreSystem::Qshjb, slurryPreSystem::Hshjb, slurryPreSystem::Nfshjb,
+                                                                slurryPreSystem::Neshjb, slurryPreSystem::Nkshjb, this);
+    else{
+        this->caco3SryPumpWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3SryPumpWindow->showNormal();
+    }
+}
+
+void MainWindow::caco3SryPumpCirSLOT()
+{
+    if (caco3SlurryCurculantPumpWindow::num == 0)
+        this->caco3SryPumpCirWindow = new caco3SlurryCurculantPumpWindow(slurryPreSystem::Yshjxb,
+                                                             slurryPreSystem::Qshjxb, slurryPreSystem::Hshjxb, slurryPreSystem::Nfshjxb,
+                                                                slurryPreSystem::Neshjxb, slurryPreSystem::Nkshjxb, this);
+    else{
+        this->caco3SryPumpCirWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3SryPumpCirWindow->showNormal();
+    }
+}
+
+void MainWindow::caco3RotationalFlowSLOT()
+{
+    if (caco3RotationalFlow_window::num == 0)
+        this->caco3RoFlowWindow = new caco3RotationalFlow_window(slurryPreSystem::Qshhx, slurryPreSystem::XZshhx, this);
+    else{
+        this->caco3RoFlowWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->caco3RoFlowWindow->showNormal();
+    }
+}
 
 
 void MainWindow::saveSLOT()
@@ -403,20 +594,21 @@ void MainWindow::saveSLOT()
 void MainWindow::checkSLOT()
 {
     if (checkPjWindow::num == 0)
-        this->checkOpinionWindow = new checkPjWindow;
+        this->checkOpinionWindow = new checkPjWindow(this);
     else{
         this->checkOpinionWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
-        this->checkOpinionWindow->show();
+        this->checkOpinionWindow->showNormal();
     }
 }
+
 
 void MainWindow::aboutSLOT()
 {
     if (about_window::num == 0)
-        this->aboutWindow = new about_window;
+        this->aboutWindow = new about_window(this);
     else{
         this->aboutWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
-        this->aboutWindow->show();
+        this->aboutWindow->showNormal();
     }
 }
 

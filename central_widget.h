@@ -19,8 +19,6 @@ private:
     QVBoxLayout *vlayout;
     QSplitter *hsplitter;
 
-
-
 signals:
 
 public slots:

@@ -15,7 +15,51 @@
 #include <QSqlTableModel>
 #include <QTableView>
 
-#include "login_window.h"
+#include "window_login.h"
+#include "par_equip.h"
+#include "par_gasresult.h"
+#include "par_gslresult.h"
+#include "par_pinf.h"
+#include "par_projects.h"
+
+class setParObject: public QObject
+{
+    Q_OBJECT
+signals:
+//    void msgboxShowSIGNAL(const int &res);
+    void finishedSIGNAL();
+
+public slots:
+    void start();
+
+public:
+//    explicit setParThread(QObject *parent=0);
+    setParObject(const int &prid);
+
+
+private:
+    int prid;
+    QSqlDatabase db;
+    QSqlQuery * query;
+
+    absorberSystem * absorberPtr;
+    Equip * equipPtr;
+    Coal * coalPtr;
+    gasResultPar * gasResultPtr;
+    gslResultPar * gslResultPtr;
+//    pinfPar * pinfPtr;
+
+    QString sqlPinf;
+    QString sqlGasResult;
+    QString sqlGSLResult;
+    QString sqlEquip;
+    QString sqlCoal;
+
+};
+
+
+
+
 
 class openPjWindow : public QWidget
 {
@@ -27,7 +71,7 @@ public:
 
 
 signals:
-    void pridSIGNAL(int);
+    void threadStart(int p);
     
 
 public slots:
@@ -47,6 +91,8 @@ private:
     QSqlDatabase db;
     QSqlQueryModel * pjModel;
     void setPjModel();
+    setParObject * setparTHREAD;
+    QThread * myThread;
 };
 
 

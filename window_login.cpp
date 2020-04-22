@@ -1,11 +1,11 @@
-#include "login_window.h"
+#include "window_login.h"
 
 loginThread::loginThread(QString nm, QString pw, QString ip):
     name(nm), password(pw), ip(ip){}
 
 void loginThread::run()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");   //数据库驱动类型为SQL Server
+    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
     QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
             "UID=sa;PWD=123456;";
     db.setDatabaseName(dsn);
@@ -21,7 +21,7 @@ void loginThread::run()
 
         query.exec(sqlVerify);
         if (query.next()){
-            QString ipv4 = dbUtils::getIPV4address();
+            QString ipv4 = utils::getIPV4address();
             QDateTime curDateTime = QDateTime::currentDateTime();
             QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
             QString sqlMax = "SELECT MAX(recid) FROM records";
@@ -88,7 +88,7 @@ void Login_window::verifySLOT()
 //    给静态全局变量赋值
     Login_window::setGloabalvar(this);
 
-    if (dbUtils::ping(Login_window::ip)==0)
+    if (utils::ping(Login_window::ip)==0)
     {
         this->thread = new
                 loginThread(Login_window::name, Login_window::password, Login_window::ip);
@@ -103,7 +103,7 @@ void Login_window::verifySLOT()
 void Login_window::testNetSLOT()
 {
     QString ip = this->ipLineedit->text();
-    int exitCode = dbUtils::ping(ip);
+    int exitCode = utils::ping(ip);
     if(!exitCode)                                      //打开数据库
         QMessageBox::information(this, tr("测试结果"), tr("网络测试成功"));
     else

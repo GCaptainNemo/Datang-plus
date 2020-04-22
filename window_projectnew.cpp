@@ -1,10 +1,15 @@
-#include "newproject_window.h"
+#include "window_projectnew.h"
 #include <iostream>
 
 int newPjWindow::num = 0;
 
 newPjWindow::newPjWindow(QWidget *parent) : QDialog(parent)
 {
+    Qt::WindowFlags flags=Qt::Dialog;
+    flags |=Qt::WindowMinimizeButtonHint;
+    flags |=Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
+
     newPjWindow::num += 1;
     this->nameLabel = new QLabel(tr("项目名称"));
     this->nameLineedit = new QLineEdit;

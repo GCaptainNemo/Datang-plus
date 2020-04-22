@@ -15,56 +15,40 @@
 #include <iostream>
 #include <exception>
 
-#include "login_window.h"
-#include "newproject_window.h"
-#include "openproject_window.h"
-#include "checkproject_window.h"
-#include "about_window.h"
-#include "db_utils.h"
-#include "global_par.h"
+#include "window_login.h"
+#include "window_projectnew.h"
+#include "window_projectopen.h"
+#include "window_projectcheck.h"
+#include "window_about.h"
+#include "utils.h"
+#include "par_equip.h"
+#include "par_projects.h"
 
 
+#include "window_rotationalflowwasteh2o_base.h"
+#include "window_rotationalflowcaso4.h"
+#include "window_rotationalflowcaco3.h"
+#include "window_pumpcaso4discharge_base.h"
+#include "window_pumpcaco3slurry.h"
+#include "window_pumpfilter.h"
+#include "window_pumpcaco3slurrycurculant.h"
+#include "window_pumpemergencyslurry.h"
+#include "window_pumpwasteh2ofeed.h"
+#include "window_pumpproccessh2o.h"
+#include "window_pumpwaterwindow.h"
+#include "window_pumpabsorberslurrycirculant.h"
 
-class setCoalParThread: public QThread
-{
-    Q_OBJECT
-signals:
-    void msgboxShowSIGNAL(const int &res);
+#include "window_vacuumbeltdehydrator.h"
 
-public:
-    setCoalParThread(int prid);
+#include "window_srytank_agitatoremergency_base.h"
+#include "window_srytank_agitatorcaco3_base.h"
+#include "window_srycirtank_agitatorcaco3.h"
+#include "window_srytank_agitatorfilter.h"
 
-protected:
-    void run();
-
-
-private:
-    int prid;
-
-};
-
-class setEquipParThread: public QThread
-{
-    Q_OBJECT
-signals:
-    void msgboxShowSIGNAL(const int &res);
-
-public:
-    setEquipParThread(int prid);
-    ~setEquipParThread();
-
-protected:
-    void run();
-
-
-private:
-    int prid;
-};
-
-
-
-
-
+#include "window_tankproh2o.h"
+#include "window_wetballmill.h"
+#include "window_heatexchange.h"
+#include "window_housecaco3.h"
 
 class MainWindow : public QMainWindow
 {
@@ -77,27 +61,77 @@ public:
     void createMenus();
     void createToolBars();
 
+
+signals:
+    void setParThreadStart();
+
+
 private slots:
     void newSLOT();
     void openSLOT();
     void saveSLOT();
     void checkSLOT();
     void aboutSLOT();
+    void wasteH2OrotationalFlowSLOT();
+    void caso4RotationalFlowSLOT();
+    void caco3RotationalFlowSLOT();
+    void wasteH2oFeedPumpSLOT();
 
-    void setParSLOT(int);
+    void setParSLOT(int prid);
+    void caso4DischargePumpSLOT();
+    void filterPumpSLOT();
+    void caco3SryPumpSLOT();
+    void waterPumpSLOT();
+    void caco3SryPumpCirSLOT();
+    void emergencySryPumpSLOT();
+    void proH2OpumpSLOT();
+    void absorberSryCirPumpSLOT();
+    void setTitleSLOT();
+    void vacuumBeltDeWindowSLOT();
+    void emergencySryAndAgitatorSLOT();
+    void caco3SryAndAgitatorSLOT();
+    void caco3SryCirAndAgitatorSLOT();
+    void filterSryAndAgitatorSLOT();
+    void proH2OtankSLOT();
+    void wetMillSLOT();
+    void heatExchangeSLOT();
+    void caco3HouseSLOT();
+
 
 private:
+    setParObject * setparObj;
+    QThread * myThread;
+
 
     QSqlDatabase db;
 //    QSqlQuery query;
-    setCoalParThread * setparThread;
-    setEquipParThread * setEquipThread;
 
-    Login_window * loginWindow = nullptr;
-    newPjWindow * newWindow = nullptr;
-    openPjWindow * openProjectwindow = nullptr;
-    checkPjWindow * checkOpinionWindow = nullptr;
-    about_window * aboutWindow = nullptr;
+    Login_window * loginWindow;
+    newPjWindow * newWindow;
+    openPjWindow * openProjectwindow;
+    checkPjWindow * checkOpinionWindow ;
+    about_window * aboutWindow ;
+    wasteH2OrotationalFlow_window * wasteH2OroFlowWindow ;
+    caso4RotationalFlow_window * caso4RoFlowWindow;
+    caco3RotationalFlow_window * caco3RoFlowWindow;
+    caso4DischargePumpWindow * caso4DisPumpWindow;
+    caco3SlurryPumpWindow * caco3SryPumpWindow;
+    caco3SlurryCurculantPumpWindow * caco3SryPumpCirWindow;
+    filterPumpWindow * filtPumpWindow;
+    emergencySlurryPumpWindow * emeSlurryPumpWindow;
+    wasteh2ofeedPumpWindow * wasteh2oFeedPumpWindow;
+    processH2OpumpWindow * proH2OpumpWindow;
+    waterPumpWindow * wateringPumpWindow;
+    absorberSryCirPumpWindow * absorberSlrCirWindow;
+    vacuumBeltDehydratorWindow * vacuumBeltDeWindow;
+    emergencySryTankAndAgitatorWindow * emeSryTankAndAgitatorWindow;
+    caco3SryTankAndAgitatorWindow * caco3SryTankAgitatorWindow;
+    caco3SryCirTankAndAgitatorWindow * caco3SryCirTankAgitatorWindow;
+    filterSryTankAndAgitatorWindow * filterSryTankAgitatorWindow;
+    proH2OtankWindow * processH2OtankWindow;
+    wetBallMillWindow * wetMillWindow;
+    heatExchangeWindow * heatExWindow;
+    caco3HouseWindow * caco3HosWindow;
 
     //    工具栏
 
@@ -156,7 +190,7 @@ private:
     QAction * caco3HouseAction;
     QAction * wetBallMillAction;
     QAction * caco3CirculantTankAndAgitatorAction;
-    QAction * caco3CirculantPumpAction;
+    QAction * caco3SlurryCirculantPumpAction;
     QAction * caco3RotationalFlowAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QMenu * powderPulpingSystemmenu;
@@ -173,7 +207,7 @@ private:
     QAction * emergencySlurryTankAndAgitatorAction;
     QAction * emergencySlurryPumpAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    QMenu * wasterH2Osystemmenu;
+    QMenu * wasteH2Osystemmenu;
     QAction * wasteH2OrotationalFlowAction;
     QAction * wasteH2OfeedAction;\
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

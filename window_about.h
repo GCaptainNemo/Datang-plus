@@ -5,14 +5,14 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QDialog>
-#include "login_window.h"
+#include "window_login.h"
 
 class about_window : public QDialog
 {
     Q_OBJECT
 public:
     static int num;
-    about_window();
+    about_window(QWidget * parent = nullptr);
     ~about_window();
 
 

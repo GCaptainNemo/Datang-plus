@@ -9,8 +9,9 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <iostream>
+#include <QDialog>
 
-class checkPjWindow : public QWidget
+class checkPjWindow : public QDialog
 {
     Q_OBJECT
 public:

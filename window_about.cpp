@@ -1,9 +1,14 @@
-#include "about_window.h"
+#include "window_about.h"
 
 int about_window::num = 0;
 
-about_window::about_window()
+about_window::about_window(QWidget * parent):QDialog(parent)
 {
+    Qt::WindowFlags flags=Qt::Dialog;
+    flags |=Qt::WindowMinimizeButtonHint;
+    flags |=Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
+
     about_window::num += 1;
     this->softwareLabel = new QLabel("烟气脱硫物料平衡计算软件");
     this->versionLabel = new QLabel("版本号");

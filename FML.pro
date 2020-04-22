@@ -28,26 +28,74 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    newproject_window.cpp \
-    openproject_window.cpp \
-    checkproject_window.cpp \
-    login_window.cpp \
     central_widget.cpp \
-    db_utils.cpp \
-    about_window.cpp \
-    global_par.cpp \
-    main_window.cpp
+    main_window.cpp \
+    utils.cpp \
+    par_pinf.cpp \
+    par_gasresult.cpp \
+    par_equip.cpp \
+    par_gslresult.cpp \
+    window_about.cpp \
+    window_login.cpp \
+    par_projects.cpp \
+    window_projectnew.cpp \
+    window_projectopen.cpp \
+    window_projectcheck.cpp \
+    window_pumpcaco3slurry.cpp \
+    window_pumpcaso4discharge_base.cpp \
+    window_pumpfilter.cpp \
+    window_rotationalflowwasteh2o_base.cpp \
+    window_pumpcaco3slurrycurculant.cpp \
+    window_pumpemergencyslurry.cpp \
+    window_pumpwasteh2ofeed.cpp \
+    window_pumpproccessh2o.cpp \
+    window_pumpwaterwindow.cpp \
+    window_pumpabsorberslurrycirculant.cpp \
+    window_vacuumbeltdehydrator.cpp \
+    window_srycirtank_agitator_caco3.cpp \
+    window_srytank_agitatorfilter.cpp \
+    window_srytank_agitatoremergency_base.cpp \
+    window_tankproh2o.cpp \
+    window_srytank_agitatorcaco3_base.cpp \
+    window_wetballmill.cpp \
+    window_heatexchange.cpp \
+    window_housecaco3.cpp
 
 HEADERS += \
-    login_window.h \
-    newproject_window.h \
-    checkproject_window.h \
     central_widget.h \
-    db_utils.h \
-    about_window.h \
-    openproject_window.h \
-    global_par.h \
-    main_window.h
+    main_window.h \
+    utils.h \
+    par_equip.h \
+    par_gasresult.h \
+    par_gslresult.h \
+    par_pinf.h \
+    window_login.h \
+    window_about.h \
+    par_projects.h \
+    window_projectnew.h \
+    window_projectopen.h \
+    window_projectcheck.h \
+    window_pumpcaso4discharge_base.h \
+    window_pumpcaco3slurry.h \
+    window_pumpfilter.h \
+    window_rotationalflowwasteh2o_base.h \
+    window_rotationalflowcaco3.h \
+    window_rotationalflowcaso4.h \
+    window_pumpcaco3slurrycurculant.h \
+    window_pumpemergencyslurry.h \
+    window_pumpwasteh2ofeed.h \
+    window_pumpproccessh2o.h \
+    window_pumpwaterwindow.h \
+    window_pumpabsorberslurrycirculant.h \
+    window_vacuumbeltdehydrator.h \
+    window_srytank_agitatorfilter.h \
+    window_srytank_agitatoremergency_base.h \
+    window_srycirtank_agitatorcaco3.h \
+    window_srytank_agitatorcaco3_base.h \
+    window_tankproh2o.h \
+    window_wetballmill.h \
+    window_heatexchange.h \
+    window_housecaco3.h
 
 DISTFILES += \
     icon/new.ico \
