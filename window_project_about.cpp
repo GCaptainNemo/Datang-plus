@@ -1,4 +1,4 @@
-#include "window_about.h"
+#include "window_project_about.h"
 
 int about_window::num = 0;
 

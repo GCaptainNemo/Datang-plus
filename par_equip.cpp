@@ -41,6 +41,10 @@ Equip::Equip(QSqlQuery * query):
     absorberSystem * sys0 = new absorberSystem(this->eq1);
     qDebug() << "successful sys0";
     delete sys0;
+    flueGasSystem * sys1 = new flueGasSystem(this->eq2, this->eq3);
+    qDebug() << "successful sys1";
+    delete sys1;
+
     so2AbsorbSystem * sys2 = new so2AbsorbSystem(this->eq4, this->eq5, this->eq6, this->eq7);
     qDebug() << "successful sys2";
     delete sys2;
@@ -69,6 +73,7 @@ Equip::Equip(QSqlQuery * query):
 }
 
 
+// 系统0 - 1 吸收塔系统
 
 
 
@@ -86,6 +91,14 @@ double absorberSystem::k = 0; //除雾器距顶部烟气出口
 double absorberSystem::hx = 0; //烟道宽度 %
 int absorberSystem::NUMjb = 0; //个数
 double absorberSystem::V = 0 ; //浆池容量
+
+float absorberSystem::B = 0; //氧化空气管距正常液面高度差
+float absorberSystem::Bb = 0; //计算最小氧化高度
+int absorberSystem::Bx = 0; //氧化风布置方式  喷枪式
+int absorberSystem::wx = 0; //外形
+double absorberSystem::vin1 = 0; //入口烟气流速 选择
+
+
 
 absorberSystem::absorberSystem(const std::string &s){
     qDebug() << "in absorber succ";
@@ -113,6 +126,47 @@ absorberSystem::absorberSystem(const std::string &s){
 
 }
 
+// 系统1 - 2 增压风机
+
+
+float flueGasSystem::Yfan = 0; //效率
+float flueGasSystem::Qfan = 0; //BMCR流量
+float flueGasSystem::Qfand = 0; //TB流量
+float flueGasSystem::Pfan = 0; //BMCR压升
+float flueGasSystem::Pfand = 0; //TB压升
+float flueGasSystem::Nffan = 0; //BMCR轴功率
+float flueGasSystem::Ndfan = 0; //TB轴功率
+float flueGasSystem::Nefan = 0; //电机功率
+float flueGasSystem::Nkfan = 0 ; //电机功率靠档
+float flueGasSystem::Pfans = 0; //设计BMCR压升
+
+
+// 系统1 - 3 换热器
+//
+
+flueGasSystem::flueGasSystem(const std::string &s2, const std::string &s3)
+{
+    std::vector<std::string> res = utils::Split(s2, "[*]");
+
+    // 系统1 - 2 增压风机
+
+    flueGasSystem::Yfan= std::atof(res[0].c_str());
+    flueGasSystem::Qfan= std::atof(res[1].c_str());
+    flueGasSystem::Qfand = std::atof(res[2].c_str());
+    flueGasSystem::Pfan = std::atof(res[3].c_str());
+    flueGasSystem::Pfand = std::atof(res[4].c_str());
+    flueGasSystem::Nffan = std::atof(res[5].c_str());
+    flueGasSystem::Ndfan = std::atof(res[6].c_str());
+    flueGasSystem::Nefan = std::atof(res[7].c_str());
+    flueGasSystem::Nkfan = std::atof(res[8].c_str());
+
+    // 系统1 - 3 换热器
+    res = utils::Split(s3, "[*]");
+    gasResultPar::Gas[0][1][22] = std::atof(res[0].c_str());
+    gasResultPar::Gas[0][4][22] = std::atof(res[1].c_str());
+    gasResultPar::Gas[0][1][4] = std::atof(res[2].c_str());
+
+}
 
 
 
@@ -121,7 +175,8 @@ absorberSystem::absorberSystem(const std::string &s){
 
 
 
-// 系统2 - 氧化风机
+
+// 系统2 - 4 氧化风机
 
 
 float so2AbsorbSystem::Yyang = 0; //效率
@@ -134,7 +189,7 @@ float so2AbsorbSystem::Nkyang = 0; //电机功率靠档
 
 
 
-// 系统2 - 浆液循环泵
+// 系统2 - 5浆液循环泵
 
 float so2AbsorbSystem::Yjxb =0; //效率
 float so2AbsorbSystem::Qjxb = 0; //流量
@@ -144,7 +199,7 @@ float so2AbsorbSystem::Nfjxb[6] = {0, 0, 0, 0, 0, 0}; //轴功率
 float so2AbsorbSystem::Nejxb[6] = {0, 0, 0, 0, 0, 0}; //电机功率
 float so2AbsorbSystem::Nkjxb[6] = {0, 0, 0, 0, 0, 0}; //电机功率靠档
 
-// 系统2 - 吸收塔搅拌器
+// 系统2 - 6吸收塔搅拌器
 
 float so2AbsorbSystem::Nbxsh = 0;
 float so2AbsorbSystem::Nfxsh = 0;
@@ -152,7 +207,7 @@ float so2AbsorbSystem::Nexsh = 0;
 float so2AbsorbSystem::Nkxsh = 0;
 
 
-// 系统2 - 石膏排除泵
+// 系统2 - 7石膏排除泵
 
 float so2AbsorbSystem::Yshpb = 0; //效率
 float so2AbsorbSystem::Qshpb = 0; //流量
@@ -165,7 +220,7 @@ float so2AbsorbSystem::Nkshpb = 0; //电机功率靠档
 so2AbsorbSystem::so2AbsorbSystem(std::string &s4, std::string &s5, std::string &s6, std::string &s7)
 {
 
-    //    氧化风机
+    // 系统2 - 4 氧化风机
 
     std::vector<std::string> res = utils::Split(s4, "[*]");
     so2AbsorbSystem::Yyang= std::atof(res[0].c_str());
@@ -392,7 +447,6 @@ float slurryPreSystem::H2shc = 0; //追段高度
 float slurryPreSystem::VTjshc = 0; //计算总容积
 float slurryPreSystem::Vjshc = 0; //计算有效容积
 float slurryPreSystem::Yshc = 0; //有效 总容积
-int slurryPreSystem::shihui = 0;
 
 //    系统4 - 17 磨机
 

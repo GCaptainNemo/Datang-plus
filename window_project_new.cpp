@@ -1,4 +1,4 @@
-#include "window_projectnew.h"
+#include "window_project_new.h"
 #include <iostream>
 
 int newPjWindow::num = 0;

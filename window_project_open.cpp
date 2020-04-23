@@ -1,4 +1,4 @@
-#include "window_projectopen.h"
+#include "window_project_open.h"
 
 
 
@@ -9,6 +9,7 @@ setParObject::setParObject(const int &prid):prid(prid){
     sqlGSLResult = "SELECT * FROM GSLResult WHERE prid=" + pd;
     sqlEquip = "SELECT * FROM Equip WHERE prid=" + pd;
     sqlCoal = "SELECT * FROM Coal WHERE prid=" + pd;
+    sqlExp = "SELECT * FROM Experience  WHERE Eid=" +pd;
 }
 
 void setParObject::start()
@@ -52,6 +53,7 @@ void setParObject::start()
         else
             qDebug() << "error";
 
+
         qDebug() << "sqlGasResult = " << sqlGasResult;
         this->query->exec(sqlGasResult);
         if (query->next()){
@@ -70,9 +72,14 @@ void setParObject::start()
         this->query->exec(sqlPinf);
         if(query->next()){
             pinf::pinfPar(query);
-            qDebug() << "end load in data";
         }
 
+        this->query->exec(sqlExp);
+        if(query->next()){
+            experiencePar *exParPtr = new experiencePar(query);
+            delete exParPtr;
+            qDebug() << "end load in data";
+        }
 
     }
     delete query;
@@ -160,12 +167,13 @@ openPjWindow::~openPjWindow(){
 
 
 
-openPjWindow::openPjWindow(QWidget *parent) : QWidget(parent)
+openPjWindow::openPjWindow(QWidget *parent) : QDialog(parent)
 {
     Qt::WindowFlags flags=Qt::Dialog;
-    flags |=Qt::WindowMinimizeButtonHint;
+    flags |=Qt::WindowMinMaxButtonsHint;
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
+
 
     openPjWindow::num += 1;
     qDebug() << "openPjWindow::num =  " <<openPjWindow::num ;
@@ -192,6 +200,6 @@ openPjWindow::openPjWindow(QWidget *parent) : QWidget(parent)
     connect(tableView, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setLineeditTextSLOT(const QModelIndex &)));
 
     this->setAttribute(Qt::WA_DeleteOnClose);
-    this->show();
+    this->showMaximized();
 
 }

@@ -21,9 +21,15 @@ float pinf::PP12  = 0; //烟囱阻力
 float pinf::PP13  = 0; //局部总阻力
 std::string pinf::ss = ""; //系统配置（七个数）
 int pinf::Expid  = 0; //设备ID
-int pinf::bz1 = 0;
-int pinf::bz2 = 0;
 
+int pinf::huanre = 0; //换热
+int pinf::feishui = 0; //废水
+int pinf::zhengong = 0; //真空皮带脱水机
+int pinf::shihui = 0; //石灰
+int pinf::shuibeng = 0; //水泵
+int pinf::gongyi = 0; //工艺水制浆
+int pinf::tianjia = 0 ; //添加废水制浆
+int pinf::zengya = 0; //增压
 
 
 
@@ -34,9 +40,19 @@ void pinf::pinfPar(QSqlQuery * query)
     pinf::ss = query->value(2).toString().toStdString();   // pequip
     pinf::Expid = query->value(3).toString().toInt();      // eid
 
+    pinf::huanre = pinf::ss[0] == '1'? 1 : 0; //换热
+    pinf::feishui = pinf::ss[1] == '1'? 1 : 0; //废水
+    pinf::zhengong = pinf::ss[2] == '1'? 1 : 0; //真空皮带脱水机
+    pinf::shihui = pinf::ss[3] == '1'? 1 : 0; //石灰
+    pinf::shuibeng = pinf::ss[4] == '1'? 1 : 0; //水泵
+    pinf::gongyi = pinf::ss[5] == '1'? 1 : 0; //工艺水制浆
+    pinf::tianjia = pinf::ss[6] == '1'? 1 : 0; //添加废水制浆
+    pinf::zengya = 1; //增压
+    qDebug() << "ss = " << QString::fromStdString(ss);
+
     std::vector<std::string> pinput_res = utils::Split(pinput, "[*]");
-    pinf::bz1 = atoi(pinput_res[0].c_str());
-    pinf::bz2 = atoi(pinput_res[1].c_str());
+    inputParameterWindow::bz1 = atoi(pinput_res[0].c_str());
+    inputParameterWindow::bz2 = atoi(pinput_res[1].c_str());
 //    std::atof(res[0].c_str());
 
     pinf::VCaCO3 = atof(pinput_res[25].c_str());
@@ -66,5 +82,7 @@ void pinf::pinfPar(QSqlQuery * query)
     pinf::PP11 = atof(pinput_res[45].c_str());
     pinf::PP12 = atof(pinput_res[46].c_str());
     pinf::PP13 = atof(pinput_res[47].c_str());
+
+
 }
 

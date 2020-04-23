@@ -7,15 +7,15 @@ void MainWindow::createAction()
 
     //    file menu
 
-    this->newAction = new QAction(QIcon("/icon/new.ico"), tr("新建项目"), this);
+    this->newAction = new QAction(QIcon("..//FML//icon//new.ico"), tr("新建项目"), this);
     this->newAction->setShortcut(tr("Ctrl+N"));
     connect(newAction, SIGNAL(triggered()), this, SLOT(newSLOT()));
 
-    this->openAction = new QAction(QIcon("1.jpg"), tr("打开项目"), this);
+    this->openAction = new QAction(QIcon("..//FML//icon//open.ico"), tr("打开项目"), this);
     this->openAction->setShortcut(tr("Ctrl+O"));
     connect(openAction, SIGNAL(triggered()), this, SLOT(openSLOT()));
 
-    this->saveAction = new QAction(tr("保存项目"), this);
+    this->saveAction = new QAction(QIcon("..//FML//icon//save.bmp"), tr("保存项目"), this);
     connect(saveAction, SIGNAL(triggered()), this, SLOT(saveSLOT()));
 
     this->submitCheckingAction = new QAction(tr("提交校审"), this);
@@ -31,22 +31,26 @@ void MainWindow::createAction()
 
     //    setting menu
 
-    this->systemSettingAction = new QAction(tr("系统配置选择"), this);
-    this->proccessGenratorAction = new QAction(tr("流程图生成"), this);
-
+    this->systemSettingAction = new QAction(QIcon("..//FML//icon//setting.ico"), tr("系统配置选择"), this);
+    connect(systemSettingAction, SIGNAL(triggered(bool)), this, SLOT(configureSystemSLOT()));
+    this->createPdfAction = new QAction(tr("流程图生成"), this);
+    connect(createPdfAction, SIGNAL(triggered(bool)), this, SLOT(createPdfSLOT()));
     //    parameter input menu
 
-    this->inputParAction = new QAction(tr("输入参数"), this);
+    this->inputParAction = new QAction(QIcon("..//FML//icon//input.ico"), tr("输入参数"), this);
+    connect(inputParAction, SIGNAL(triggered(bool)), this, SLOT(inputParSLOT()));
     this->coalQualityCalculationAction = new QAction(tr("辅助煤质计算"), this);
 
     //    equipment menu
 
     this->absorberParAction = new QAction(tr("吸收塔参数"), this);
-    this->boosterFanAction = new QAction(tr("增压风机"), this);
+    this->pressureAirBlowerAction = new QAction(tr("增压风机"), this);
+    connect(pressureAirBlowerAction, SIGNAL(triggered(bool)), this, SLOT(pressureAirBlowerSLOT()));
     this->heatExchangerAction = new QAction(tr("烟气换热器"), this);
     connect(heatExchangerAction, SIGNAL(triggered(bool)), this, SLOT(heatExchangeSLOT()));
      //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->oxidationAirBlowerAction = new QAction(tr("氧化风机"), this);
+    connect(oxidationAirBlowerAction, SIGNAL(triggered(bool)), this, SLOT(oxidationAiBlowerSLOT()));
     this->slurryCirculationPumpAction = new QAction(tr("浆液循环泵"), this);
     connect(slurryCirculationPumpAction, SIGNAL(triggered(bool)), this, SLOT(absorberSryCirPumpSLOT()));
     
@@ -110,12 +114,13 @@ void MainWindow::createAction()
     this->wasteH2OfeedAction = new QAction(tr("废水旋流器给料泵"));
     connect(wasteH2OfeedAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2oFeedPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->equipmentParSetAction = new QAction(tr("设备参数汇总"));
+    this->equipmentParSetAction = new QAction(QIcon("..//FML//icon//equip.ico"), tr("设备参数汇总"));
+
 
     //    data process menu
 
-    this->balanceAction = new QAction(tr("物料平衡计算结果"));
-    this->curveAction = new QAction(tr("性能曲线"));
+    this->balanceAction = new QAction(QIcon("..//FML//icon//data.ico"), tr("物料平衡计算结果"));
+    this->curveAction = new QAction(QIcon("..//FML//icon//curve.ico"), tr("性能曲线"));
 
     //    System arrangement menu
 
@@ -154,7 +159,7 @@ void MainWindow::createMenus()
 
     this->settingmenu = menuBar()->addMenu(tr("系统配置"));
     this->settingmenu->addAction(this->systemSettingAction);
-    this->settingmenu->addAction(this->proccessGenratorAction);
+    this->settingmenu->addAction(this->createPdfAction);
 
     //    parameter input menu
 
@@ -168,7 +173,7 @@ void MainWindow::createMenus()
     this->equipmentmenu->addAction(this->absorberParAction);
     
     this->smokeSystemmenu = new QMenu("烟气系统");
-    this->smokeSystemmenu->addAction(this->boosterFanAction);
+    this->smokeSystemmenu->addAction(this->pressureAirBlowerAction);
     this->smokeSystemmenu->addAction(this->heatExchangerAction);
     this->equipmentmenu->addMenu(this->smokeSystemmenu);
     
@@ -259,6 +264,55 @@ void MainWindow::createToolBars()
     this->outputTool->addAction(this->balanceAction);
     this->outputTool->addAction(this->curveAction);
 }
+
+void MainWindow::createPdfSLOT()
+{
+    switch(QMessageBox::question(this, tr("导出PDF图"), tr("确定将此流程图导出？"),
+                                 QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
+
+    {
+    case QMessageBox::Ok:{
+        std::string a = "..\\FML\\dwg2PDF\\" ;
+        std::string b = ".pdf";
+        std::string c = a + pinf::ss.substr(0, 5) + b;
+        qDebug() << QString::fromStdString(c);
+        QString qtManulFile=QString::fromStdString(c);;
+        QDesktopServices::openUrl(QUrl::fromLocalFile(qtManulFile));
+        break;
+    }
+    case QMessageBox::Cancel:
+        break;
+    default:
+        break;
+    }
+    return;
+
+}
+
+
+void MainWindow::configureSystemSLOT()
+{
+    if (systemConfigurationWindow::num == 0){
+        this->sysConfigWindow = new systemConfigurationWindow(this);
+    }
+    else{
+        this->sysConfigWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->sysConfigWindow->showNormal();
+    }
+}
+
+
+void MainWindow::inputParSLOT()
+{
+    if (inputParameterWindow::num == 0){
+        this->inputParWindow = new inputParameterWindow(this);
+    }
+    else{
+        this->inputParWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->inputParWindow->showNormal();
+    }
+}
+
 
 void MainWindow::caco3SryCirAndAgitatorSLOT()
 {
@@ -357,7 +411,7 @@ void MainWindow::openSLOT()
     if (openPjWindow::num == 0)
     {
         qDebug() << "in openPJwindow::num ============== 0";
-        this->openProjectwindow = new openPjWindow;
+        this->openProjectwindow = new openPjWindow(this);
         connect(openProjectwindow, SIGNAL(threadStart(int)), this, SLOT(setParSLOT(int)));
     }
     else{
@@ -369,7 +423,7 @@ void MainWindow::openSLOT()
 void MainWindow::setParSLOT(int prid)
 {
     setparObj = new setParObject(prid);
-    this->myThread = new QThread();
+    this->myThread = new QThread;
     setparObj ->moveToThread(myThread);
     qDebug()<< "start,thread id = " << QThread::currentThreadId();
     connect(myThread, SIGNAL(started()), setparObj, SLOT(start()));
@@ -378,6 +432,7 @@ void MainWindow::setParSLOT(int prid)
     connect(myThread, SIGNAL(finished()), myThread, SLOT(deleteLater()));
     connect(myThread, SIGNAL(finished()), setparObj, SLOT(deleteLater()));
     myThread->start();
+    systemConfigurationWindow::pzh = 1;
 
 }
 
@@ -524,6 +579,32 @@ void MainWindow::waterPumpSLOT()
     }
 }
 
+
+
+void MainWindow::oxidationAiBlowerSLOT()
+{
+    if (oxidationAiBlowerWindow::num == 0)
+
+        this->o2AirBlowerWindow = new oxidationAiBlowerWindow(this);
+    else{
+        this->o2AirBlowerWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->o2AirBlowerWindow->showNormal();
+    }
+}
+
+void MainWindow::pressureAirBlowerSLOT()
+{
+    if (pressureAirBlowerWindow::num == 0)
+
+        this->pAirBlowerWindow = new pressureAirBlowerWindow(this);
+    else{
+        this->pAirBlowerWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->pAirBlowerWindow->showNormal();
+    }
+
+
+}
+
 void MainWindow::absorberSryCirPumpSLOT()
 {   
     if (absorberSryCirPumpWindow::num == 0)
@@ -620,7 +701,7 @@ MainWindow::MainWindow(QWidget *parent)
     this->loginWindow = new Login_window(this);
 
 
-    connect(loginWindow, SIGNAL(connectSIGNAL()), this, SLOT(show()));
+    connect(loginWindow, SIGNAL(connectSIGNAL()), this, SLOT(showMaximized()));
     connect(loginWindow, SIGNAL(connectSIGNAL()), loginWindow, SLOT(close()));
 
 
@@ -636,5 +717,6 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow()
 {
-
+    myThread->quit();
+    myThread->wait();
 }

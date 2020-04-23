@@ -2,12 +2,13 @@
 #define PINF_PAR_H
 
 
-# include <QSqlQuery>
-# include <QVariant>
-# include <iostream>
-# include "par_gslresult.h"
-# include "par_gasresult.h"
-
+#include <QSqlQuery>
+#include <QVariant>
+#include <QDebug>
+#include <iostream>
+#include "par_gslresult.h"
+#include "par_gasresult.h"
+#include "window_inputparameter.h"
 
 class pinf
 {
@@ -34,8 +35,15 @@ public:
     static float PP13 ; //局部总阻力
     static std::string ss ; //系统配置（七个数）
     static int Expid ; //设备ID
-    static int bz1;
-    static int bz2;
+
+    static int huanre ; //换热
+    static int feishui ; //废水
+    static int zhengong ; //真空皮带脱水机
+    static int shihui ; //石灰
+    static int shuibeng ; //水泵
+    static int gongyi ; //工艺水制浆
+    static int tianjia ; //添加废水制浆
+    static int zengya ; //增压
 
 
 private:

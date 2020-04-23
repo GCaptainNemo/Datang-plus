@@ -15,11 +15,11 @@
 #include <iostream>
 #include <exception>
 
-#include "window_login.h"
-#include "window_projectnew.h"
-#include "window_projectopen.h"
-#include "window_projectcheck.h"
-#include "window_about.h"
+#include "window_project_login.h"
+#include "window_project_new.h"
+#include "window_project_open.h"
+#include "window_project_check.h"
+#include "window_project_about.h"
 #include "utils.h"
 #include "par_equip.h"
 #include "par_projects.h"
@@ -28,15 +28,15 @@
 #include "window_rotationalflowwasteh2o_base.h"
 #include "window_rotationalflowcaso4.h"
 #include "window_rotationalflowcaco3.h"
-#include "window_pumpcaso4discharge_base.h"
-#include "window_pumpcaco3slurry.h"
-#include "window_pumpfilter.h"
-#include "window_pumpcaco3slurrycurculant.h"
-#include "window_pumpemergencyslurry.h"
-#include "window_pumpwasteh2ofeed.h"
-#include "window_pumpproccessh2o.h"
-#include "window_pumpwaterwindow.h"
-#include "window_pumpabsorberslurrycirculant.h"
+#include "window_pump_caso4discharge_base.h"
+#include "window_pump_caco3slurry.h"
+#include "window_pump_filter.h"
+#include "window_pump_caco3slurrycurculant.h"
+#include "window_pump_emergencyslurry.h"
+#include "window_pump_wasteh2ofeed.h"
+#include "window_pump_proccessh2o.h"
+#include "window_pump_waterwindow.h"
+#include "window_pump_absorberslurrycirculant.h"
 
 #include "window_vacuumbeltdehydrator.h"
 
@@ -49,6 +49,14 @@
 #include "window_wetballmill.h"
 #include "window_heatexchange.h"
 #include "window_housecaco3.h"
+#include "window_aiblowero2.h"
+#include "window_airblowerpressure.h"
+
+#include "window_systemconfiguration.h"
+#include "window_inputparameter.h"
+#include <QDesktopServices>
+
+
 
 class MainWindow : public QMainWindow
 {
@@ -96,6 +104,11 @@ private slots:
     void wetMillSLOT();
     void heatExchangeSLOT();
     void caco3HouseSLOT();
+    void oxidationAiBlowerSLOT();
+    void pressureAirBlowerSLOT();
+    void configureSystemSLOT();
+    void createPdfSLOT();
+    void inputParSLOT();
 
 
 private:
@@ -132,6 +145,11 @@ private:
     wetBallMillWindow * wetMillWindow;
     heatExchangeWindow * heatExWindow;
     caco3HouseWindow * caco3HosWindow;
+    oxidationAiBlowerWindow * o2AirBlowerWindow;
+    pressureAirBlowerWindow * pAirBlowerWindow;
+    systemConfigurationWindow * sysConfigWindow;
+    inputParameterWindow * inputParWindow;
+
 
     //    工具栏
 
@@ -157,7 +175,7 @@ private:
 
     QMenu *settingmenu;
     QAction *systemSettingAction;
-    QAction *proccessGenratorAction;
+    QAction *createPdfAction;
 
     //    input parameter menu
 
@@ -171,7 +189,7 @@ private:
     QAction * absorberParAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QMenu * smokeSystemmenu;
-    QAction * boosterFanAction;
+    QAction * pressureAirBlowerAction;
     QAction * heatExchangerAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QMenu * so2AbsorbSystemmenu;

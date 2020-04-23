@@ -2,7 +2,7 @@
 #define WINDOW_PUMPFILTER_H
 
 #include <QWidget>
-#include "window_pumpcaso4discharge_base.h"
+#include "window_pump_caso4discharge_base.h"
 #include "utils.h"
 
 class filterPumpWindow: public caso4DischargePumpWindow

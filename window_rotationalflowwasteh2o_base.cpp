@@ -32,6 +32,8 @@ wasteH2OrotationalFlow_window::wasteH2OrotationalFlow_window(float & qfx, float 
     this->hlayout3 = new QHBoxLayout;
     this->hlayout3->addWidget(this->okButton);
     this->hlayout3->addWidget(this->cancelButton);
+    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
 
     this->layout = new QVBoxLayout(this);
     this->layout->addLayout(this->hlayout1);
@@ -40,8 +42,6 @@ wasteH2OrotationalFlow_window::wasteH2OrotationalFlow_window(float & qfx, float 
 
     this->setWindowTitle(tr("废水旋流器"));
     this->setAttribute(Qt::WA_DeleteOnClose);
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
     this->show();
 }
 

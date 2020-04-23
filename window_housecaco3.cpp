@@ -10,7 +10,7 @@ caco3HouseWindow::caco3HouseWindow(QWidget *parent) : QDialog(parent)
     this->setWindowFlags(flags);
 
     qDebug() << "state1";
-    if (slurryPreSystem::shihui == 0)
+    if (pinf::shihui == 0)
         this->setWindowTitle(tr("石灰石仓"));
     else
         this->setWindowTitle(tr("石灰石粉仓"));
@@ -156,7 +156,8 @@ caco3HouseWindow::caco3HouseWindow(QWidget *parent) : QDialog(parent)
     calButton = new QPushButton("计算");
     okButton = new QPushButton("确定");
     cancelButton = new QPushButton("关闭");
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
     hlayout->addWidget(calButton);
     hlayout->addWidget(okButton);
     hlayout->addWidget(cancelButton);

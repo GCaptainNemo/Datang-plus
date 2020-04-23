@@ -35,22 +35,8 @@ SOURCES += \
     par_gasresult.cpp \
     par_equip.cpp \
     par_gslresult.cpp \
-    window_about.cpp \
-    window_login.cpp \
     par_projects.cpp \
-    window_projectnew.cpp \
-    window_projectopen.cpp \
-    window_projectcheck.cpp \
-    window_pumpcaco3slurry.cpp \
-    window_pumpcaso4discharge_base.cpp \
-    window_pumpfilter.cpp \
     window_rotationalflowwasteh2o_base.cpp \
-    window_pumpcaco3slurrycurculant.cpp \
-    window_pumpemergencyslurry.cpp \
-    window_pumpwasteh2ofeed.cpp \
-    window_pumpproccessh2o.cpp \
-    window_pumpwaterwindow.cpp \
-    window_pumpabsorberslurrycirculant.cpp \
     window_vacuumbeltdehydrator.cpp \
     window_srycirtank_agitator_caco3.cpp \
     window_srytank_agitatorfilter.cpp \
@@ -59,7 +45,26 @@ SOURCES += \
     window_srytank_agitatorcaco3_base.cpp \
     window_wetballmill.cpp \
     window_heatexchange.cpp \
-    window_housecaco3.cpp
+    window_housecaco3.cpp \
+    window_aiblowero2.cpp \
+    window_airblowerpressure.cpp \
+    window_systemconfiguration.cpp \
+    par_experience.cpp \
+    window_project_about.cpp \
+    window_project_check.cpp \
+    window_project_login.cpp \
+    window_project_new.cpp \
+    window_project_open.cpp \
+    window_inputparameter.cpp \
+    window_pump_absorberslurrycirculant.cpp \
+    window_pump_caco3slurry.cpp \
+    window_pump_caco3slurrycurculant.cpp \
+    window_pump_caso4discharge_base.cpp \
+    window_pump_emergencyslurry.cpp \
+    window_pump_filter.cpp \
+    window_pump_proccessh2o.cpp \
+    window_pump_wasteh2ofeed.cpp \
+    window_pump_waterwindow.cpp
 
 HEADERS += \
     central_widget.h \
@@ -69,24 +74,10 @@ HEADERS += \
     par_gasresult.h \
     par_gslresult.h \
     par_pinf.h \
-    window_login.h \
-    window_about.h \
     par_projects.h \
-    window_projectnew.h \
-    window_projectopen.h \
-    window_projectcheck.h \
-    window_pumpcaso4discharge_base.h \
-    window_pumpcaco3slurry.h \
-    window_pumpfilter.h \
     window_rotationalflowwasteh2o_base.h \
     window_rotationalflowcaco3.h \
     window_rotationalflowcaso4.h \
-    window_pumpcaco3slurrycurculant.h \
-    window_pumpemergencyslurry.h \
-    window_pumpwasteh2ofeed.h \
-    window_pumpproccessh2o.h \
-    window_pumpwaterwindow.h \
-    window_pumpabsorberslurrycirculant.h \
     window_vacuumbeltdehydrator.h \
     window_srytank_agitatorfilter.h \
     window_srytank_agitatoremergency_base.h \
@@ -95,7 +86,26 @@ HEADERS += \
     window_tankproh2o.h \
     window_wetballmill.h \
     window_heatexchange.h \
-    window_housecaco3.h
+    window_housecaco3.h \
+    window_aiblowero2.h \
+    window_airblowerpressure.h \
+    window_systemconfiguration.h \
+    par_experience.h \
+    window_project_about.h \
+    window_project_check.h \
+    window_project_login.h \
+    window_project_new.h \
+    window_project_open.h \
+    window_inputparameter.h \
+    window_pump_absorberslurrycirculant.h \
+    window_pump_caco3slurry.h \
+    window_pump_caco3slurrycurculant.h \
+    window_pump_caso4discharge_base.h \
+    window_pump_emergencyslurry.h \
+    window_pump_filter.h \
+    window_pump_proccessh2o.h \
+    window_pump_wasteh2ofeed.h \
+    window_pump_waterwindow.h
 
 DISTFILES += \
     icon/new.ico \

@@ -1,4 +1,4 @@
-#include "window_login.h"
+#include "window_project_login.h"
 
 loginThread::loginThread(QString nm, QString pw, QString ip):
     name(nm), password(pw), ip(ip){}
@@ -113,6 +113,10 @@ void Login_window::testNetSLOT()
 
 Login_window::Login_window(QWidget *parent) : QDialog(parent)
 {
+    Qt::WindowFlags flags=Qt::Dialog;
+    flags |=Qt::WindowMinimizeButtonHint;
+    flags |=Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
 
     this->hlayout1 = new QHBoxLayout;
     this->hlayout2 = new QHBoxLayout;

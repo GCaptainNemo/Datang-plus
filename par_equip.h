@@ -2,7 +2,7 @@
 #define GLOBAL_PAR_H
 #include <QSqlQuery>
 #include "utils.h"
-
+#include "par_gasresult.h"
 
 
 class Equip
@@ -39,6 +39,13 @@ public:
     static int NUMjb ; //个数
     static double V ; //浆池容量    
     absorberSystem(const std::string &s);
+
+    static float B ; //氧化空气管距正常液面高度差
+    static float Bb ; //计算最小氧化高度
+    static int Bx ; //氧化风布置方式  喷枪式
+    static int wx ; //外形
+    static double vin1 ; //入口烟气流速 选择
+
 };
 
 
@@ -48,7 +55,7 @@ public:
 //unfinished
 class flueGasSystem{
 public:
-//    增压风机选型 
+//    2. 增压风机选型
     static float Yfan ; //效率
     static float Qfan ; //BMCR流量
     static float Qfand ; //TB流量
@@ -58,12 +65,12 @@ public:
     static float Ndfan ; //TB轴功率
     static float Nefan ; //电机功率
     static float Nkfan ; //电机功率靠档
-//  换热器
+    static float Pfans ; //设计BMCR压升
+
+//  3. 换热器
     
-    
-    
-    
-    flueGasSystem(std::string &s);    
+        
+    flueGasSystem(const std::string &s1, const std::string &s2);
     
 };
 
@@ -81,6 +88,9 @@ public:
     static float Nfyang ; //轴功率
     static float Neyang ; //电机功率
     static float Nkyang ; //电机功率靠档
+
+
+
 
 //    5. 浆液循环泵
     
@@ -208,7 +218,6 @@ public:
     static float VTjshc ; //计算总容积
     static float Vjshc ; //计算有效容积
     static float Yshc ; //有效 总容积
-    static int shihui ; //石灰
 
 
 
@@ -439,13 +448,9 @@ public:
 
 //static int first ; //传递参数
 //static int frm1 ; //窗口参数
-//static int zhengong ; //真空皮带脱水机
-//static int feishui ; //废水
-//static int huanre ; //换热
-//static int zengya ; //增压
-//static int shuibeng ; //水泵
-//static int gongyi ; //工艺水制浆
-//static int tianjia ; //添加废水制浆
+
+
+
 //static float Ap ; //系数
 //static float bj ; //煤
 //static float W ; //基水分
@@ -456,11 +461,7 @@ public:
 //static float n ; //基氮分
 //static float O ; //基氧分
 //static int meidao ; //煤道
-//static float B ; //氧化空气管距正常液面高度差
-//static float Bb ; //计算最小氧化高度
-//static int Bx ; //氧化风布置方式  喷枪式
-//static int wx ; //外形
-//static double vin1 ; //入口烟气流速 选择
+
 
 
 
@@ -515,22 +516,8 @@ public:
 
 
 
-//static float GGHx ; //回转换热器泄露率
-//static float so3x ; //GGH中SO3x脱除率
-//static float hfx ; //GGH中HF脱除率
-//static float ashx ; //GGH中h脱除率
+
 //static float so2y ; //吸收塔内SO2吸收率
-//static float so3y ; //吸收塔内SO2吸收率
-//static float hcly ; //吸收塔内SO2吸收率
-//static float hfy ; //吸收塔内SO2吸收率
-//static float  ashy; //吸收塔内SO2吸收率
-//static float VCas ; //Ca /s选择（mol/mol）
-//static float CaSO3CaSO42H20; //为防止石膏结垢，采用mol(CaSO3/CaSO4·2H20)
-//static float YMgCO3; //石灰石中可反应的 MgCO3设置
-//static float Yh2o ; //工艺水的溶解物的含量
-//static float LSF ; //循环浆液安全系数
-//static float YSx ; //压损修正系数
-//static float Pfans ; //设计BMCR压升
 
 
 

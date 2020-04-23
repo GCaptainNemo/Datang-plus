@@ -15,12 +15,13 @@
 #include <QSqlTableModel>
 #include <QTableView>
 
-#include "window_login.h"
+#include "window_project_login.h"
 #include "par_equip.h"
 #include "par_gasresult.h"
 #include "par_gslresult.h"
 #include "par_pinf.h"
 #include "par_projects.h"
+#include "par_experience.h"
 
 class setParObject: public QObject
 {
@@ -54,14 +55,14 @@ private:
     QString sqlGSLResult;
     QString sqlEquip;
     QString sqlCoal;
-
+    QString sqlExp;
 };
 
 
 
 
 
-class openPjWindow : public QWidget
+class openPjWindow : public QDialog
 {
     Q_OBJECT
 public:

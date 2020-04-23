@@ -1,4 +1,4 @@
-#include "window_projectcheck.h"
+#include "window_project_check.h"
 
 int checkPjWindow::num = 0;
 

@@ -5,7 +5,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QDialog>
-#include "window_login.h"
+#include "window_project_login.h"
 
 class about_window : public QDialog
 {

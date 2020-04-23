@@ -1,7 +1,7 @@
 #ifndef WINDOW_PUMPCACO3SLURRYCURCULANT_H
 #define WINDOW_PUMPCACO3SLURRYCURCULANT_H
 
-#include "window_pumpcaso4discharge_base.h"
+#include "window_pump_caso4discharge_base.h"
 #include "utils.h"
 
 class caco3SlurryCurculantPumpWindow:public caso4DischargePumpWindow

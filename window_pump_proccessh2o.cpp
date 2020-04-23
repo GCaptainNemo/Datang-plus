@@ -1,4 +1,4 @@
-#include "window_pumpproccessh2o.h"
+#include "window_pump_proccessh2o.h"
 
 void processH2OpumpWindow::okSLOT()
 {
@@ -6,7 +6,6 @@ void processH2OpumpWindow::okSLOT()
     float a = this->efficiencyLineedt->text().toFloat(&ok);
     if (ok && a>=0 && a<=100)
     {
-
         yshpb = a / 100;
         qshpb = gslResultPar::GSL[0][15][1] * 1.1;
 

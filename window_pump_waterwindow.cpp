@@ -1,7 +1,8 @@
-#include "window_pumpwasteh2ofeed.h"
+#include "window_pump_waterwindow.h"
 
-void wasteh2ofeedPumpWindow::okSLOT()
+void waterPumpWindow::okSLOT()
 {
+    // 下标24，节点67，到除雾器的工艺水
 
     bool ok;
     float a = this->efficiencyLineedt->text().toFloat(&ok);
@@ -9,9 +10,9 @@ void wasteh2ofeedPumpWindow::okSLOT()
     {
 
         yshpb = a / 100;
-        qshpb = gslResultPar::GSL[0][9][1] * 1.1;
-        hshpb = 35;
-        nfshpb = qshpb * hshpb * gslResultPar::GSL[0][9][15] * 9.81 / 1000 / 3600 / yshpb;
+        qshpb = 150;
+        hshpb = 65;
+        nfshpb = qshpb * hshpb  * 9.81 / 3600 / yshpb;
         nfshpb = ceil(nfshpb * 10) / 10; // 向上取整
         neshpb = nfshpb * (1 + utils::YL(nfshpb)); // 余量计算
         nkshpb = utils::KD(neshpb);    // 靠档
@@ -27,6 +28,4 @@ void wasteh2ofeedPumpWindow::okSLOT()
     else
         QMessageBox::warning(this, tr("错误"), tr("数据输入错误"));
 
-
 }
-

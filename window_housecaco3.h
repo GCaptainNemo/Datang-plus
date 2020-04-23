@@ -14,7 +14,7 @@
 #include <QButtonGroup>
 #include <math.h>
 #include "par_equip.h"
-
+#include "par_pinf.h"
 
 class caco3HouseWindow : public QDialog
 {
