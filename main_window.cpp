@@ -410,7 +410,8 @@ void MainWindow::openSLOT()
 {
     if (openPjWindow::num == 0)
     {
-        qDebug() << "in openPJwindow::num ============== 0";
+        qDebug() << "openPj SLOT thread id = " << QThread::currentThreadId();
+
         this->openProjectwindow = new openPjWindow(this);
         connect(openProjectwindow, SIGNAL(threadStart(int)), this, SLOT(setParSLOT(int)));
     }

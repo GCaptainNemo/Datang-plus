@@ -4,7 +4,7 @@ int emergencySryTankAndAgitatorWindow::num = 0;
 
 emergencySryTankAndAgitatorWindow::emergencySryTankAndAgitatorWindow(float & Dshg, float & Hshg, float & HDshg, float & Vshg, float & VTshg, float & Yshg,
                                                                      float & Nbshg, float & Nfshg, float & Neshg, float & Nkshg, QWidget *parent) :
-    QDialog(parent), Dshg(Dshg), Hshg(Hshg), HDshg(HDshg), Vshg(Vshg), VTshg(VTshg), Nbshg(Nbshg), Nfshg(Nfshg), Neshg(Neshg), Nkshg(Nkshg), Yshg(Yshg)
+    Dshg(Dshg), Hshg(Hshg), HDshg(HDshg), Vshg(Vshg), VTshg(VTshg), Yshg(Yshg), Nbshg(Nbshg), Nfshg(Nfshg), Neshg(Neshg), Nkshg(Nkshg), QDialog(parent)
 {
     Qt::WindowFlags flags=Qt::Dialog;
     flags |=Qt::WindowMinimizeButtonHint;

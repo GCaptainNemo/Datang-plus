@@ -4,7 +4,7 @@ int caco3SryTankAndAgitatorWindow::num = 0;
 
 caco3SryTankAndAgitatorWindow::caco3SryTankAndAgitatorWindow(float & Qsj, int & FGDnum, float & Tsj, float & Dsj, float & Hsj, float & HDsj,  float & Vjsj, float & VTjsj, float & Ysj,
                                                              float & Nbsj, float & Nfsj, float & Nesj, float & Nksj, QWidget *parent):
-    Qsj(Qsj), FGDnum(FGDnum), Tsj(Tsj), Hsj(Hsj), Dsj(Dsj), HDsj(HDsj), Vjsj(Vjsj), VTjsj(VTjsj), Ysj(Ysj), Nbsj(Nbsj), Nfsj(Nfsj), Nesj(Nesj), Nksj(Nksj), QDialog(parent)
+    Qsj(Qsj), FGDnum(FGDnum), Tsj(Tsj),  Dsj(Dsj), Hsj(Hsj), HDsj(HDsj), Vjsj(Vjsj), VTjsj(VTjsj), Ysj(Ysj), Nbsj(Nbsj), Nfsj(Nfsj), Nesj(Nesj), Nksj(Nksj), QDialog(parent)
 {
     Qt::WindowFlags flags=Qt::Dialog;
     flags |=Qt::WindowMinimizeButtonHint;

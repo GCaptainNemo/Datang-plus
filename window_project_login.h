@@ -18,13 +18,15 @@
 #include <QtCore/QProcess>
 #include <QtNetwork/QHostInfo>
 #include <QDateTime>
+#include <QObject>
 
 #include "utils.h"
 
-class loginThread;
+class loginThreadObject;
 class Login_window : public QDialog
 {
     Q_OBJECT
+
 public:
     Login_window(QWidget *parent = nullptr);
     static QString name;
@@ -42,13 +44,19 @@ public:
         Login_window::version = vs;
     }
 
+    ~Login_window(){
+        loginThread.quit();
+        loginThread.exit();
+    }
+
 
 signals:
     void connectSIGNAL();
+    void startLoginSIGNAL();
 
 public slots:
     void clearSLOT();
-    void verifySLOT();
+    void okSLOT();
     void testNetSLOT();
     void showMsgboxSLOT(int);
 
@@ -58,21 +66,22 @@ private:
     QPushButton *testNetButton, *okButton, *clearButton, *exitButton;
     QHBoxLayout *hlayout1, *hlayout2, *hlayout3, *hlayout4;
     QVBoxLayout *layout;
-    loginThread *thread;
+    loginThreadObject *threadObject;
+    QThread loginThread;
 };
 
-
-class loginThread: public QThread
+class loginThreadObject: public QObject
 {
     Q_OBJECT
 signals:
     void msgboxShowSIGNAL(const int &res);
+    void finishedSIGNAL();
 
 public:
-    loginThread(QString nm, QString pw, QString ip);
+    loginThreadObject(QString nm, QString pw, QString ip);
 
-protected:
-    void run();
+public slots:
+    void start();
 
 
 private:
@@ -81,5 +90,27 @@ private:
     QString ip;
 
 };
+
+
+
+//class loginThread: public QThread
+//{
+//    Q_OBJECT
+//signals:
+//    void msgboxShowSIGNAL(const int &res);
+
+//public:
+//    loginThread(QString nm, QString pw, QString ip);
+
+//protected:
+//    void run();
+
+
+//private:
+//    QString name;
+//    QString password;
+//    QString ip;
+
+//};
 
 #endif // LOGIN_WINDOW_H

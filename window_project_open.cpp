@@ -14,7 +14,8 @@ setParObject::setParObject(const int &prid):prid(prid){
 
 void setParObject::start()
 {
-    qDebug() << "in successfully";
+
+    qDebug() << "openPj work thread id = " << QThread::currentThreadId();
     if (QSqlDatabase::contains("SQLserver"))
         this->db = QSqlDatabase::database("SQLserver");
     else{
@@ -101,6 +102,8 @@ void openPjWindow::setLineeditTextSLOT(const QModelIndex & index)
 
 void openPjWindow::openPjSLOT()
 {
+    qDebug() << "openPj window thread id = " << QThread::currentThreadId();
+
     QString prid = this->pjLineedit->text();
     if (prid == "")
         QMessageBox::information(this, tr("打开结果"), tr("请输入项目编号"));

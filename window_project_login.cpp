@@ -1,10 +1,12 @@
 #include "window_project_login.h"
 
-loginThread::loginThread(QString nm, QString pw, QString ip):
+loginThreadObject::loginThreadObject(QString nm, QString pw, QString ip):
     name(nm), password(pw), ip(ip){}
 
-void loginThread::run()
+void loginThreadObject::start()
 {
+    qDebug() << "I'm working in thread:" << QThread::currentThreadId();
+
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
     QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
             "UID=sa;PWD=123456;";
@@ -41,10 +43,10 @@ void loginThread::run()
                 Login_window::setVersion(version);
                 qDebug() << "version = " << version;
             }
+//            emit finishedSIGNAL();
             emit msgboxShowSIGNAL(0);
         }
         else{
-
             emit msgboxShowSIGNAL(-1);
        }
     }
@@ -58,6 +60,7 @@ QString Login_window::ip = "";
 QString Login_window::version = "";
 
 
+
 void Login_window::clearSLOT()
 {
     this->usrnameLineedit->clear();
@@ -68,10 +71,12 @@ void Login_window::clearSLOT()
 void Login_window::showMsgboxSLOT(int res)
 {
     switch (res){
-    case 0:
+    case 0:{
         QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
+        this->loginThread.quit();
         emit connectSIGNAL();
         break;
+    }
     case 1:
         QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));
         break;
@@ -83,18 +88,16 @@ void Login_window::showMsgboxSLOT(int res)
 }
 
 
-void Login_window::verifySLOT()
+void Login_window::okSLOT()
 {
 //    给静态全局变量赋值
     Login_window::setGloabalvar(this);
 
     if (utils::ping(Login_window::ip)==0)
     {
-        this->thread = new
-                loginThread(Login_window::name, Login_window::password, Login_window::ip);
-        this->thread->start();
-        connect(thread, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
-    }
+        emit startLoginSIGNAL();
+//        this->threadObject->start();
+     }
     else
         QMessageBox::information(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
 }
@@ -113,6 +116,7 @@ void Login_window::testNetSLOT()
 
 Login_window::Login_window(QWidget *parent) : QDialog(parent)
 {
+    qDebug() << "Main thread ID = " << QThread::currentThreadId();
     Qt::WindowFlags flags=Qt::Dialog;
     flags |=Qt::WindowMinimizeButtonHint;
     flags |=Qt::WindowCloseButtonHint;
@@ -155,7 +159,7 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
 
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clearSLOT()));
     connect(exitButton, SIGNAL(clicked()), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked()), this, SLOT(verifySLOT()));
+    connect(okButton, SIGNAL(clicked()), this, SLOT(okSLOT()));
     connect(testNetButton, SIGNAL(clicked()), this, SLOT(testNetSLOT()));
 
     this->ipLineedit->setText("10.168.1.147");
@@ -163,5 +167,15 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     this->pwordLineedit->setText("admin");
 
     this->setAttribute(Qt::WA_DeleteOnClose);
+
+    this->threadObject = new
+            loginThreadObject(Login_window::name, Login_window::password, Login_window::ip);
+    this->threadObject->moveToThread(&loginThread);
+    connect(&loginThread, SIGNAL(finished()), threadObject, SLOT(deleteLater()));
+    connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
+    connect(threadObject, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
+    connect(this, SIGNAL(startLoginSIGNAL()), threadObject, SLOT(start()));
+    loginThread.start();
     this->show();
+
 }
