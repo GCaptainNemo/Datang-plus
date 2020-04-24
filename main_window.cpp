@@ -699,25 +699,20 @@ void MainWindow::aboutSLOT()
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    this->loginWindow = new Login_window(this);
+    this->setAttribute(Qt::WA_QuitOnClose, true);
 
-
-    connect(loginWindow, SIGNAL(connectSIGNAL()), this, SLOT(showMaximized()));
-    connect(loginWindow, SIGNAL(connectSIGNAL()), loginWindow, SLOT(close()));
-
-
-    this->resize(1000, 800);
     this->setWindowTitle(tr("湿法烟气脱硫系统"));
     CentralWidget *central_widget = new CentralWidget(this);
     this->setCentralWidget(central_widget);
     this->createAction();
     this->createMenus();
     this->createToolBars();
-
 }
+
 
 MainWindow::~MainWindow()
 {
+    delete myThread;
     myThread->quit();
     myThread->wait();
 }

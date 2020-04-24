@@ -21,6 +21,8 @@
 #include <QObject>
 
 #include "utils.h"
+#include "par_others.h"
+
 
 class loginThreadObject;
 class Login_window : public QDialog
@@ -29,20 +31,6 @@ class Login_window : public QDialog
 
 public:
     Login_window(QWidget *parent = nullptr);
-    static QString name;
-    static QString password;
-    static QString ip;
-    static QString version;
-    static void setGloabalvar(Login_window *ptr){
-        Login_window::name = ptr->usrnameLineedit->text();
-        Login_window::password = ptr->pwordLineedit->text();
-        Login_window::ip = ptr->ipLineedit->text();
-        qDebug() << "name = "<<name << "password = "<<password << ip;
-    }
-    static void setVersion(QString vs)
-    {
-        Login_window::version = vs;
-    }
 
     ~Login_window(){
         loginThread.quit();
@@ -51,12 +39,12 @@ public:
 
 
 signals:
-    void connectSIGNAL();
     void startLoginSIGNAL();
 
 public slots:
     void clearSLOT();
     void okSLOT();
+    void exitSLOT();
     void testNetSLOT();
     void showMsgboxSLOT(int);
 
@@ -68,7 +56,9 @@ private:
     QVBoxLayout *layout;
     loginThreadObject *threadObject;
     QThread loginThread;
+//    MainWindow * mainWindow;
 };
+
 
 class loginThreadObject: public QObject
 {

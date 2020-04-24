@@ -7,6 +7,12 @@
 #include <math.h>
 #include "utils.h"
 #include "par_equip.h"
+#include <QGridLayout>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 
 
 class caco3SryTankAndAgitatorWindow: public QDialog
@@ -46,13 +52,10 @@ protected:
     void setKdComboBox(QComboBox * kdComboBox, const float &nkshpb);
     float YL(const float &p);
 
-    float & Qsj,  & Tsj;
+    float & Qsj;
     int &FGDnum;
-    float & Dsj, & Hsj, & HDsj, & Vjsj, & VTjsj, & Ysj;
+    float & Tsj, & Dsj, & Hsj, & HDsj, & Vjsj, & VTjsj, & Ysj;
     float & Nbsj, & Nfsj,  & Nesj,  & Nksj;
-
-
-
 };
 
 #endif // WINDOW_SRYTANKANDAGITATORCACO3_H

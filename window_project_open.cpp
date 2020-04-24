@@ -20,7 +20,7 @@ void setParObject::start()
         this->db = QSqlDatabase::database("SQLserver");
     else{
         this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-        QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
+        QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
                 "UID=sa;PWD=123456;";
         db.setDatabaseName(dsn);
     }
@@ -127,13 +127,13 @@ void openPjWindow::openPjSLOT()
 
 void openPjWindow::setPjModel()
 {
-    if (utils::ping(Login_window::ip)==0)
+    if (utils::ping(otherPar::ip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }

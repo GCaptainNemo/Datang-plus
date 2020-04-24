@@ -116,23 +116,6 @@ QString utils::getIPV4address()
 }
 
 
-//QSqlQuery dbUtils::executeSQL(QString sql, QSqlDatabase db)
-QSqlQuery utils::executeSQL(QString sql, int & res)
-
-{
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
-            "UID=sa;PWD=123456;";
-    db.setDatabaseName(dsn);
-    QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-    query.exec(sql);
-//    db.close();
-    if (db.open())
-        res = 1;
-    else
-        res = 0;
-    return query;
-}
 
 
 float utils::YL(const float &dj)

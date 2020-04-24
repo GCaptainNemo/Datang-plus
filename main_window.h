@@ -14,8 +14,9 @@
 #include <QDebug>
 #include <iostream>
 #include <exception>
+#include <QThread>
 
-#include "window_project_login.h"
+//#include "window_project_login.h"
 #include "window_project_new.h"
 #include "window_project_open.h"
 #include "window_project_check.h"
@@ -119,7 +120,7 @@ private:
     QSqlDatabase db;
 //    QSqlQuery query;
 
-    Login_window * loginWindow;
+//    Login_window * loginWindow;
     newPjWindow * newWindow;
     openPjWindow * openProjectwindow;
     checkPjWindow * checkOpinionWindow ;

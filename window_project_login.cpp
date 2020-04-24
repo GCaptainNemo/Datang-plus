@@ -8,7 +8,7 @@ void loginThreadObject::start()
     qDebug() << "I'm working in thread:" << QThread::currentThreadId();
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + Login_window::ip + ";DATABASE=p;"
+    QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
             "UID=sa;PWD=123456;";
     db.setDatabaseName(dsn);
 
@@ -19,7 +19,7 @@ void loginThreadObject::start()
     else
     {
         QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(Login_window::name).arg(Login_window::password);
+        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(otherPar::name, otherPar::password);
 
         query.exec(sqlVerify);
         if (query.next()){
@@ -32,7 +32,7 @@ void loginThreadObject::start()
 
             int recid = query.value(0).toInt() + 1;
             QString sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '登录成功')").arg(recid).
-                    arg(Login_window::name).arg(ipv4).arg(date);
+                    arg(otherPar::name).arg(ipv4).arg(date);
             query.exec(sqlInsertRecord);
 
             QString sqlVersion = "SELECT * FROM version";
@@ -40,10 +40,8 @@ void loginThreadObject::start()
             if (query.next())
             {
                 QString version = query.value(0).toString();
-                Login_window::setVersion(version);
-                qDebug() << "version = " << version;
+                otherPar::setVersion(version);
             }
-//            emit finishedSIGNAL();
             emit msgboxShowSIGNAL(0);
         }
         else{
@@ -52,13 +50,6 @@ void loginThreadObject::start()
     }
     db.close();
 }
-
-
-QString Login_window::name = "";
-QString Login_window::password = "";
-QString Login_window::ip = "";
-QString Login_window::version = "";
-
 
 
 void Login_window::clearSLOT()
@@ -74,7 +65,8 @@ void Login_window::showMsgboxSLOT(int res)
     case 0:{
         QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
         this->loginThread.quit();
-        emit connectSIGNAL();
+        accept();
+        this->close();
         break;
     }
     case 1:
@@ -91,15 +83,21 @@ void Login_window::showMsgboxSLOT(int res)
 void Login_window::okSLOT()
 {
 //    给静态全局变量赋值
-    Login_window::setGloabalvar(this);
+    otherPar::setGloabalvar(usrnameLineedit->text(), pwordLineedit->text(), ipLineedit->text());
 
-    if (utils::ping(Login_window::ip)==0)
+    if (utils::ping(otherPar::ip)==0)
     {
-        emit startLoginSIGNAL();
+        this->loginThread.start();
+//        emit startLoginSIGNAL();
 //        this->threadObject->start();
      }
     else
         QMessageBox::information(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
+}
+
+void Login_window::exitSLOT()
+{
+    QDialog::reject();
 }
 
 
@@ -158,7 +156,7 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     this->setWindowTitle("登录窗口");
 
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clearSLOT()));
-    connect(exitButton, SIGNAL(clicked()), this, SLOT(close()));
+    connect(exitButton, SIGNAL(clicked()), this, SLOT(exitSLOT()));
     connect(okButton, SIGNAL(clicked()), this, SLOT(okSLOT()));
     connect(testNetButton, SIGNAL(clicked()), this, SLOT(testNetSLOT()));
 
@@ -166,16 +164,16 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     this->usrnameLineedit->setText("admin");
     this->pwordLineedit->setText("admin");
 
-    this->setAttribute(Qt::WA_DeleteOnClose);
 
     this->threadObject = new
-            loginThreadObject(Login_window::name, Login_window::password, Login_window::ip);
+            loginThreadObject(otherPar::name, otherPar::password, otherPar::ip);
     this->threadObject->moveToThread(&loginThread);
     connect(&loginThread, SIGNAL(finished()), threadObject, SLOT(deleteLater()));
     connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
+    connect(&loginThread, SIGNAL(started()), threadObject, SLOT(start()));
     connect(threadObject, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
-    connect(this, SIGNAL(startLoginSIGNAL()), threadObject, SLOT(start()));
-    loginThread.start();
+//    connect(this, SIGNAL(startLoginSIGNAL()), threadObject, SLOT(start()));
+//    loginThread.start();
     this->show();
 
 }

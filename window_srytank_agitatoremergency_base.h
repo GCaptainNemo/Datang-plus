@@ -55,9 +55,7 @@ protected:
     float YL(const float &p);
     
     float & Dshg, & Hshg, & HDshg, & Vshg, & VTshg, & Yshg;
-    float & Nbshg, & Nfshg,  & Neshg,  & Nkshg;
-    
-    
+    float & Nbshg, & Nfshg,  & Neshg,  & Nkshg;    
 };
 
 #endif // WINDOW_EMERGENCYSRYTANKANDAGITATOR_H
