@@ -411,7 +411,7 @@ void MainWindow::openSLOT()
         qDebug() << "openPj SLOT thread id = " << QThread::currentThreadId();
 
         this->openProjectwindow = new openPjWindow(this);
-        connect(openProjectwindow, SIGNAL(threadStart(int)), this, SLOT(setParSLOT(int)));
+        connect(openProjectwindow, SIGNAL(finishedSIGNAL()), this, SLOT(setTitleSLOT()));
     }
     else{
         this->openProjectwindow->setWindowFlag(Qt::WindowStaysOnTopHint);
@@ -419,21 +419,6 @@ void MainWindow::openSLOT()
     }
 }
 
-void MainWindow::setParSLOT(int prid)
-{
-    setparObj = new setParObject(prid);
-    this->myThread = new QThread;
-    setparObj ->moveToThread(myThread);
-    qDebug()<< "start,thread id = " << QThread::currentThreadId();
-    connect(myThread, SIGNAL(started()), setparObj, SLOT(start()));
-    connect(setparObj, SIGNAL(finishedSIGNAL()), myThread, SLOT(quit()));
-    connect(setparObj, SIGNAL(finishedSIGNAL()), this, SLOT(setTitleSLOT()));
-    connect(myThread, SIGNAL(finished()), myThread, SLOT(deleteLater()));
-    connect(myThread, SIGNAL(finished()), setparObj, SLOT(deleteLater()));
-    myThread->start();
-    systemConfigurationWindow::pzh = 1;
-
-}
 
 void MainWindow::setTitleSLOT()
 {
@@ -442,6 +427,7 @@ void MainWindow::setTitleSLOT()
 
 
     this->setWindowTitle(QString::fromStdString("湿法烟气脱硫系统 - [" + projects::pj_name + "]"));
+    systemConfigurationWindow::pzh = 1;
 }
 
 
@@ -656,15 +642,15 @@ void MainWindow::caco3RotationalFlowSLOT()
 
 void MainWindow::saveSLOT()
 {
-    this->saveObject = new saveObjectThread;
-    connect(saveObject, SIGNAL(messageboxShowSIGNAL(int)), this, SLOT(messageboxShowSLOT(int)));
+    this->saveObj = new saveObject;
+    connect(saveObj, SIGNAL(messageboxShowSIGNAL(int)), this, SLOT(messageboxShowSLOT(int)));
 
     switch(QMessageBox::question(this, tr("保存项目"), tr("是否确定保存该项目？"),
                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
     
     {
     case QMessageBox::Ok:{
-        this->saveObject->start();
+        this->saveObj->start();
         break;
     }
     case QMessageBox::Cancel:

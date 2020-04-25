@@ -25,46 +25,6 @@
 #include "par_experience.h"
 #include "par_others.h"
 
-
-class setParObject: public QObject
-{
-    Q_OBJECT
-signals:
-//    void msgboxShowSIGNAL(const int &res);
-    void finishedSIGNAL();
-
-public slots:
-    void start();
-
-public:
-//    explicit setParThread(QObject *parent=0);
-    setParObject(const int &prid);
-
-
-private:
-    int prid;
-    QSqlDatabase db;
-    QSqlQuery * query;
-
-    absorberSystem * absorberPtr;
-    Equip * equipPtr;
-    Coal * coalPtr;
-    gasResultPar * gasResultPtr;
-    gslResultPar * gslResultPtr;
-//    pinfPar * pinfPtr;
-
-    QString sqlPinf;
-    QString sqlGasResult;
-    QString sqlGSLResult;
-    QString sqlEquip;
-    QString sqlCoal;
-    QString sqlExp;
-};
-
-
-
-
-
 class openPjWindow : public QDialog
 {
     Q_OBJECT
@@ -76,6 +36,7 @@ public:
 
 signals:
     void threadStart(int p);
+    void finishedSIGNAL();
     
 
 public slots:
@@ -84,6 +45,26 @@ public slots:
 
 
 private:
+
+    // sql statment
+
+    QString sqlPinf;
+    QString sqlGasResult;
+    QString sqlGSLResult;
+    QString sqlEquip;
+    QString sqlCoal;
+    QString sqlExp;
+
+
+    // parameter
+
+    absorberSystem * absorberPtr;
+    Equip * equipPtr;
+    Coal * coalPtr;
+    gasResultPar * gasResultPtr;
+    gslResultPar * gslResultPtr;
+//
+    // layout
 
     QLabel * pjLabel;
     QLineEdit * pjLineedit;
@@ -94,9 +75,13 @@ private:
     QTableView * tableView;
     QSqlDatabase db;
     QSqlQueryModel * pjModel;
-    void setPjModel();
-    setParObject * setparTHREAD;
+//    setParObject * setparTHREAD;
     QThread * myThread;
+
+    QSqlQuery * query;
+    void initSqlStatement(QString prid);
+    void setPjModel();
+    void start(QString prid);
 };
 
 

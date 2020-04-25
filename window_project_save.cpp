@@ -1,6 +1,6 @@
 #include "window_project_save.h"
 
-saveObjectThread::saveObjectThread(QObject *parent) : QObject(parent)
+saveObject::saveObject(QObject *parent) : QObject(parent)
 {
 
     this->sqlVerifyPj = "SELECT * FROM projects WHERE PRID=" + otherPar::prid;
@@ -15,7 +15,7 @@ saveObjectThread::saveObjectThread(QObject *parent) : QObject(parent)
 //    this->start();
 }
 
-void saveObjectThread::start()
+void saveObject::start()
 {
     qDebug() << "SavePj work thread id = " << QThread::currentThreadId();
     if (otherPar::prid.toStdString() == "")
@@ -65,7 +65,7 @@ void saveObjectThread::start()
 }
 
 
-void saveObjectThread::commandSave()
+void saveObject::commandSave()
 {
 
 
@@ -625,8 +625,9 @@ void saveObjectThread::commandSave()
 
     emit messageboxShowSIGNAL(4);
 
-
+    delete query;
 }
+
 
 
 

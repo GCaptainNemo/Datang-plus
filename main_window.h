@@ -86,7 +86,6 @@ private slots:
     void caco3RotationalFlowSLOT();
     void wasteH2oFeedPumpSLOT();
 
-    void setParSLOT(int prid);
     void caso4DischargePumpSLOT();
     void filterPumpSLOT();
     void caco3SryPumpSLOT();
@@ -114,10 +113,7 @@ private slots:
     void messageboxShowSLOT(int num);
 
 private:
-    setParObject * setparObj;
-    saveObjectThread * saveObject;
-
-
+    saveObject * saveObj;
     QThread * myThread;
 
 
@@ -195,12 +191,12 @@ private:
     QAction * pressureAirBlowerAction;
     QAction * heatExchangerAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     QMenu * so2AbsorbSystemmenu;
     QAction * oxidationAirBlowerAction;
     QAction * slurryCirculationPumpAction;
-
-
     QAction * caso4DischargePumpAction;
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QMenu * caso4DehydrationSystemmenu;
     QAction * caso4RotationalFlowAction;

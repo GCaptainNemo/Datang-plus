@@ -1,20 +1,75 @@
 #include "window_project_open.h"
 
+int openPjWindow::num = 0;
 
 
-setParObject::setParObject(const int &prid):prid(prid){
-    QString pd = QString::number(this->prid);
+
+openPjWindow::openPjWindow(QWidget *parent) : QDialog(parent)
+{
+    Qt::WindowFlags flags=Qt::Dialog;
+    flags |=Qt::WindowMinMaxButtonsHint;
+    flags |=Qt::WindowCloseButtonHint;
+    this->setWindowFlags(flags);
+
+
+    openPjWindow::num += 1;
+    qDebug() << "openPjWindow::num =  " <<openPjWindow::num ;
+    this->setWindowTitle(tr("打开项目"));
+
+    this->pjLabel = new QLabel("点击项目或输入项目号");
+    this->pjLineedit = new QLineEdit;
+    this->openButton = new QPushButton("打开");
+    connect(openButton, SIGNAL(clicked(bool)), this, SLOT(openPjSLOT()));
+    this->tableView = new QTableView;
+
+    this->projectModel = new QSqlTableModel;
+
+    this->hlayout = new QHBoxLayout;
+    this->hlayout->addWidget(this->pjLabel);
+    this->hlayout->addWidget(this->pjLineedit);
+    this->hlayout->addWidget(this->openButton);
+
+    this->layout = new QVBoxLayout(this);
+    this->layout->addWidget(this->tableView);
+    this->layout->addLayout(this->hlayout);
+
+    this->setPjModel();
+    connect(tableView, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setLineeditTextSLOT(const QModelIndex &)));
+
+    this->setAttribute(Qt::WA_DeleteOnClose);
+    this->showMaximized();
+
+}
+
+
+
+void openPjWindow::initSqlStatement(QString pd){
+
     sqlPinf = "SELECT * FROM Pinf with(nolock) WHERE prid=" + pd;
     sqlGasResult = "SELECT * FROM GasResult WHERE prid=" + pd;
     sqlGSLResult = "SELECT * FROM GSLResult WHERE prid=" + pd;
     sqlEquip = "SELECT * FROM Equip WHERE prid=" + pd;
     sqlCoal = "SELECT * FROM Coal WHERE prid=" + pd;
     sqlExp = "SELECT * FROM Experience  WHERE Eid=" +pd;
+
 }
 
-void setParObject::start()
+
+
+void openPjWindow::setLineeditTextSLOT(const QModelIndex & index)
 {
 
+    QModelIndex i = pjModel->index(index.row(), 0);
+    QString prid = pjModel->data(i).toString();
+    this->pjLineedit->setText(prid);
+
+}
+
+
+void openPjWindow::start(QString prid)
+{
+
+    this->initSqlStatement(prid);
     qDebug() << "openPj work thread id = " << QThread::currentThreadId();
     if (QSqlDatabase::contains("SQLserver"))
         this->db = QSqlDatabase::database("SQLserver");
@@ -85,14 +140,9 @@ void setParObject::start()
     }
 
 
-
     //    保存prid，用于保存操作
 
-
-
-    otherPar::prid = QString("%1").arg(this->prid);
-
-
+    otherPar::prid = prid;
 
     //  保存操作插入记录表
 
@@ -109,7 +159,6 @@ void setParObject::start()
     query->exec(sqlInsertRecord);
 
 
-    // 删除线程
 
     delete query;
     db.close();
@@ -117,16 +166,6 @@ void setParObject::start()
 }
 
 
-
-int openPjWindow::num = 0;
-
-
-void openPjWindow::setLineeditTextSLOT(const QModelIndex & index)
-{
-    QModelIndex i = pjModel->index(index.row(), 0);
-    QString prid = pjModel->data(i).toString();
-    this->pjLineedit->setText(prid);
-}
 
 void openPjWindow::openPjSLOT()
 {
@@ -145,7 +184,7 @@ void openPjWindow::openPjSLOT()
             QMessageBox::information(this, tr("打开结果"), tr("项目打开成功"));
             projects::setPar(query.value(1).toString().toStdString(), query.value(2).toInt());
             qDebug() << "pj_name = " << QString::fromStdString(projects::pj_name);
-            emit threadStart(prid.toInt());
+            this->start(prid);
             this->close();
         }
     }
@@ -193,44 +232,8 @@ void openPjWindow::setPjModel()
 
 openPjWindow::~openPjWindow(){
     openPjWindow::num -= 1;
+    delete pjModel;
     qDebug() << "openPjWindow::num =  " <<openPjWindow::num ;
 }
 
 
-
-openPjWindow::openPjWindow(QWidget *parent) : QDialog(parent)
-{
-    Qt::WindowFlags flags=Qt::Dialog;
-    flags |=Qt::WindowMinMaxButtonsHint;
-    flags |=Qt::WindowCloseButtonHint;
-    this->setWindowFlags(flags);
-
-
-    openPjWindow::num += 1;
-    qDebug() << "openPjWindow::num =  " <<openPjWindow::num ;
-    this->setWindowTitle(tr("打开项目"));
-
-    this->pjLabel = new QLabel("点击项目或输入项目号");
-    this->pjLineedit = new QLineEdit;
-    this->openButton = new QPushButton("打开");
-    connect(openButton, SIGNAL(clicked(bool)), this, SLOT(openPjSLOT()));
-    this->tableView = new QTableView;
-
-    this->projectModel = new QSqlTableModel;
- 
-    this->hlayout = new QHBoxLayout;
-    this->hlayout->addWidget(this->pjLabel);
-    this->hlayout->addWidget(this->pjLineedit);
-    this->hlayout->addWidget(this->openButton);
-
-    this->layout = new QVBoxLayout(this);
-    this->layout->addWidget(this->tableView);
-    this->layout->addLayout(this->hlayout);
-
-    this->setPjModel();
-    connect(tableView, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setLineeditTextSLOT(const QModelIndex &)));
-
-    this->setAttribute(Qt::WA_DeleteOnClose);
-    this->showMaximized();
-
-}

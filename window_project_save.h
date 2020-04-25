@@ -18,11 +18,11 @@
 #include "utils.h"
 #include <QDateTime>
 
-class saveObjectThread : public QObject
+class saveObject : public QObject
 {
     Q_OBJECT
 public:
-    explicit saveObjectThread(QObject *parent = nullptr);
+    explicit saveObject(QObject *parent = nullptr);
 
 signals:
     void messageboxShowSIGNAL(int);
