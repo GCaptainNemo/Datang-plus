@@ -16,7 +16,6 @@
 #include <exception>
 #include <QThread>
 
-//#include "window_project_login.h"
 #include "window_project_new.h"
 #include "window_project_open.h"
 #include "window_project_check.h"
@@ -55,6 +54,7 @@
 
 #include "window_systemconfiguration.h"
 #include "window_inputparameter.h"
+#include "window_project_save.h"
 #include <QDesktopServices>
 
 
@@ -111,16 +111,18 @@ private slots:
     void createPdfSLOT();
     void inputParSLOT();
 
+    void messageboxShowSLOT(int num);
 
 private:
     setParObject * setparObj;
+    saveObjectThread * saveObject;
+
+
     QThread * myThread;
 
 
     QSqlDatabase db;
-//    QSqlQuery query;
 
-//    Login_window * loginWindow;
     newPjWindow * newWindow;
     openPjWindow * openProjectwindow;
     checkPjWindow * checkOpinionWindow ;
@@ -196,7 +198,8 @@ private:
     QMenu * so2AbsorbSystemmenu;
     QAction * oxidationAirBlowerAction;
     QAction * slurryCirculationPumpAction;
-    QAction * absorberAgitatorAction;
+
+
     QAction * caso4DischargePumpAction;
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QMenu * caso4DehydrationSystemmenu;

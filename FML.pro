@@ -65,7 +65,8 @@ SOURCES += \
     window_pump_proccessh2o.cpp \
     window_pump_wasteh2ofeed.cpp \
     window_pump_waterwindow.cpp \
-    par_others.cpp
+    par_others.cpp \
+    window_project_save.cpp
 
 HEADERS += \
     central_widget.h \
@@ -107,7 +108,8 @@ HEADERS += \
     window_pump_proccessh2o.h \
     window_pump_wasteh2ofeed.h \
     window_pump_waterwindow.h \
-    par_others.h
+    par_others.h \
+    window_project_save.h
 
 DISTFILES += \
     icon/new.ico \

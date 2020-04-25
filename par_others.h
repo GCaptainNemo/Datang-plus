@@ -12,6 +12,7 @@ public:
     static QString password;
     static QString ip;
     static QString version;
+    static QString prid;
     static void setGloabalvar(QString name, QString p, QString ip){
         otherPar::name = name;
         otherPar::password = p;

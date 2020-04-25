@@ -25,7 +25,7 @@ inputParameterWindow::inputParameterWindow(QWidget *parent) : QDialog(parent)
     this->setWindowFlags(flags);
 
     inputParameterWindow::num += 1;
-
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     this->initWidget1();
     this->initWidget2();
@@ -41,6 +41,8 @@ inputParameterWindow::inputParameterWindow(QWidget *parent) : QDialog(parent)
     cancelButton = new QPushButton(tr("关闭"));
     zongLayout->addWidget(okButton, 6, 0, 1, 3);
     zongLayout->addWidget(cancelButton, 6, 3, 1, 3);
+    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
 
     this->initParWidget1();
     this->initParWidget2();

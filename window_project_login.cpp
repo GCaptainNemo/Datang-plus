@@ -88,8 +88,6 @@ void Login_window::okSLOT()
     if (utils::ping(otherPar::ip)==0)
     {
         this->loginThread.start();
-//        emit startLoginSIGNAL();
-//        this->threadObject->start();
      }
     else
         QMessageBox::information(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));

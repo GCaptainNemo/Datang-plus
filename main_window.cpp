@@ -55,7 +55,6 @@ void MainWindow::createAction()
     connect(slurryCirculationPumpAction, SIGNAL(triggered(bool)), this, SLOT(absorberSryCirPumpSLOT()));
     
     
-    this->absorberAgitatorAction = new QAction(tr("吸收塔搅拌器"), this);
     this->caso4DischargePumpAction = new QAction(tr("石膏排出泵"), this);
     connect(caso4DischargePumpAction, SIGNAL(triggered(bool)), this, SLOT(caso4DischargePumpSLOT()));
 
@@ -180,7 +179,6 @@ void MainWindow::createMenus()
     this->so2AbsorbSystemmenu = new QMenu("SO2吸收系统");
     this->so2AbsorbSystemmenu ->addAction(this->oxidationAirBlowerAction);
     this->so2AbsorbSystemmenu ->addAction(this->slurryCirculationPumpAction);
-    this->so2AbsorbSystemmenu ->addAction(this->absorberAgitatorAction);
     this->so2AbsorbSystemmenu ->addAction(this->caso4DischargePumpAction);
     this->equipmentmenu->addMenu(this->so2AbsorbSystemmenu );
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -658,13 +656,17 @@ void MainWindow::caco3RotationalFlowSLOT()
 
 void MainWindow::saveSLOT()
 {
+    this->saveObject = new saveObjectThread;
+    connect(saveObject, SIGNAL(messageboxShowSIGNAL(int)), this, SLOT(messageboxShowSLOT(int)));
+
     switch(QMessageBox::question(this, tr("保存项目"), tr("是否确定保存该项目？"),
                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
     
     {
-    case QMessageBox::Ok:
-        QMessageBox::information(this, tr("保存结果"), tr("保存成功"));
+    case QMessageBox::Ok:{
+        this->saveObject->start();
         break;
+    }
     case QMessageBox::Cancel:
         break;
     default:
@@ -672,6 +674,33 @@ void MainWindow::saveSLOT()
     }
     return;
 }
+
+void MainWindow::messageboxShowSLOT(int num)
+{
+    qDebug() << "in messageboxshowslot";
+    switch(num)
+    {
+    case 0:
+        QMessageBox::warning(this, tr("保存结果"), tr("未打开任何项目"));
+        break;
+    case 1:
+        QMessageBox::warning(this, tr("连接结果"), tr("数据库连接失败"));
+        break;
+    case 2:
+        QMessageBox::warning(this, tr("保存结果"), tr("项目为只读模式打开,无法保存"));
+        break;
+    case 3:
+        QMessageBox::warning(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
+        break;
+    case 4:
+        QMessageBox::warning(this, tr("保存结果"), tr("项目保存成功"));
+        break;
+    default:
+        break;
+    }
+}
+
+
 
 void MainWindow::checkSLOT()
 {

@@ -83,6 +83,34 @@ void setParObject::start()
         }
 
     }
+
+
+
+    //    保存prid，用于保存操作
+
+
+
+    otherPar::prid = QString("%1").arg(this->prid);
+
+
+
+    //  保存操作插入记录表
+
+
+    QString ipv4 = utils::getIPV4address();
+    QDateTime curDateTime = QDateTime::currentDateTime();
+    QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+    query->exec("SELECT MAX(recid) FROM records");
+    query->next();
+    int recid = query->value(0).toInt() + 1;
+    QString sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '打开项目%5')").arg(recid).
+            arg(otherPar::name).arg(ipv4).arg(date).arg(otherPar::prid);
+    query->exec(sqlInsertRecord);
+
+
+    // 删除线程
+
     delete query;
     db.close();
     emit finishedSIGNAL();

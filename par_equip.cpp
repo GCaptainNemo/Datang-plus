@@ -3,21 +3,21 @@
 
 float Coal::Ap = 0;
 float Coal::C = 0;
-float Coal::coal = 0;
-float Coal::Dust = 0;
+float Coal::bj = 0;
+float Coal::A = 0;
 float Coal::H = 0;
 float Coal::N = 0;
 float Coal::O = 0;
 float Coal::S = 0;
-float Coal::Water = 0;
+float Coal::W = 0;
 
 Coal::Coal(const float &ap, const float &coal, const float &water, const float &dust,
                const float &s, const float &h, const float &c, const float &n, const float &o)
 {
     Coal::Ap = ap;
-    Coal::coal = coal;
-    Coal::Water = water;
-    Coal::Dust = dust;
+    Coal::bj = coal;
+    Coal::W = water;
+    Coal::A = dust;
     Coal::S = s;
     Coal::H = h;
     Coal::C = c;
@@ -209,12 +209,12 @@ float so2AbsorbSystem::Nkxsh = 0;
 
 // 系统2 - 7石膏排除泵
 
-float so2AbsorbSystem::Yshpb = 0; //效率
-float so2AbsorbSystem::Qshpb = 0; //流量
-float so2AbsorbSystem::Hshpb = 0; //扬程
-float so2AbsorbSystem::Nfshpb = 0; //轴功率
-float so2AbsorbSystem::Neshpb = 0; //电机功率
-float so2AbsorbSystem::Nkshpb = 0; //电机功率靠档
+    float so2AbsorbSystem::Yshpb = 0; //效率
+    float so2AbsorbSystem::Qshpb = 0; //流量
+    float so2AbsorbSystem::Hshpb = 0; //扬程
+    float so2AbsorbSystem::Nfshpb = 0; //轴功率
+    float so2AbsorbSystem::Neshpb = 0; //电机功率
+    float so2AbsorbSystem::Nkshpb = 0; //电机功率靠档
 
 
 so2AbsorbSystem::so2AbsorbSystem(std::string &s4, std::string &s5, std::string &s6, std::string &s7)

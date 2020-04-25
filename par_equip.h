@@ -420,15 +420,15 @@ class Coal
 {
 public:
     static float Ap;    //系数
-    static float coal;
-    static float Water;
-    static float Dust;
+    static float bj;
+    static float W;
+    static float A;
     static float S;
     static float H;
     static float C;
     static float N;
     static float O;
-    Coal(const float &ap, const float &coal, const float &water, const float &dust,
+    Coal(const float &ap, const float &bj, const float &water, const float &dust,
                            const float &s, const float &h, const float &c, const float &n, const float &o);
 
 };
