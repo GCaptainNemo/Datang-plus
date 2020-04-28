@@ -2,7 +2,12 @@
 #include <QApplication>
 #include "window_project_login.h"
 #include "main_window.h"
+
 #include <QDialog>
+
+
+
+
 
 int main(int argc, char *argv[])
 {

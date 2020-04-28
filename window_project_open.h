@@ -48,6 +48,7 @@ private:
 
     // sql statment
 
+
     QString sqlPinf;
     QString sqlGasResult;
     QString sqlGSLResult;
@@ -75,6 +76,7 @@ private:
     QTableView * tableView;
     QSqlDatabase db;
     QSqlQueryModel * pjModel;
+    QWidget * widget;
 //    setParObject * setparTHREAD;
     QThread * myThread;
 

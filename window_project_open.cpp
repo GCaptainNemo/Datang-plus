@@ -16,23 +16,22 @@ openPjWindow::openPjWindow(QWidget *parent) : QDialog(parent)
     qDebug() << "openPjWindow::num =  " <<openPjWindow::num ;
     this->setWindowTitle(tr("打开项目"));
 
-    this->pjLabel = new QLabel("点击项目或输入项目号");
-    this->pjLineedit = new QLineEdit;
-    this->openButton = new QPushButton("打开");
+    this->pjLabel = new QLabel("点击项目或输入项目号", this);
+    this->pjLineedit = new QLineEdit(this);
+    this->openButton = new QPushButton("打开", this);
     connect(openButton, SIGNAL(clicked(bool)), this, SLOT(openPjSLOT()));
-    this->tableView = new QTableView;
+    this->tableView = new QTableView(this);
 
-    this->projectModel = new QSqlTableModel;
-
-    this->hlayout = new QHBoxLayout;
+    this->projectModel = new QSqlTableModel(this);
+    this->widget = new QWidget(this);
+    this->hlayout = new QHBoxLayout(this->widget);
     this->hlayout->addWidget(this->pjLabel);
     this->hlayout->addWidget(this->pjLineedit);
     this->hlayout->addWidget(this->openButton);
 
     this->layout = new QVBoxLayout(this);
     this->layout->addWidget(this->tableView);
-    this->layout->addLayout(this->hlayout);
-
+    this->layout->addWidget(this->widget);
     this->setPjModel();
     connect(tableView, SIGNAL(clicked(const QModelIndex &)), this, SLOT(setLineeditTextSLOT(const QModelIndex &)));
 
