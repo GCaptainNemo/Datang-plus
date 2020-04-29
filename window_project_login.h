@@ -7,6 +7,7 @@
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QDebug>
 #include <QMessageBox>
 #include<QSql>
@@ -52,10 +53,10 @@ private:
     QLabel *usrnameLabel, *passwordLabel, *ipAddressLabel;
     QLineEdit *usrnameLineedit, *pwordLineedit, *ipLineedit;
     QPushButton *testNetButton, *okButton, *clearButton, *exitButton;
-    QHBoxLayout *hlayout1, *hlayout2, *hlayout3, *hlayout4;
-    QVBoxLayout *layout;
+    QGridLayout * layout, *layout1;
     loginThreadObject *threadObject;
     QThread loginThread;
+    QWidget * buttonWidget;
 //    MainWindow * mainWindow;
 };
 
@@ -82,25 +83,5 @@ private:
 };
 
 
-
-//class loginThread: public QThread
-//{
-//    Q_OBJECT
-//signals:
-//    void msgboxShowSIGNAL(const int &res);
-
-//public:
-//    loginThread(QString nm, QString pw, QString ip);
-
-//protected:
-//    void run();
-
-
-//private:
-//    QString name;
-//    QString password;
-//    QString ip;
-
-//};
 
 #endif // LOGIN_WINDOW_H

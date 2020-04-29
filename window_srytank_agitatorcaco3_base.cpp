@@ -17,32 +17,57 @@ caco3SryTankAndAgitatorWindow::caco3SryTankAndAgitatorWindow(float & Qsj, int & 
 
     // 事故浆液箱
 
-    this->sryTankWidget = new QWidget;
+    initSryTank();
+
+    // 事故浆液箱搅拌器
+
+    initAgitator();
+
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+
+    this->layout = new QVBoxLayout(this);
+    this->layout->addWidget(this->sryTankWidget);
+    this->layout->addWidget(this->agitatorWidget);
+    this->layout->addWidget(this->buttonWidget);
+    this->show();
+}
+
+caco3SryTankAndAgitatorWindow::~caco3SryTankAndAgitatorWindow()
+{
+    caco3SryTankAndAgitatorWindow::num -= 1;
+}
+
+
+void caco3SryTankAndAgitatorWindow::initSryTank()
+{
+    this->sryTankWidget = new QWidget(this);
     this->layout1 = new QGridLayout(this->sryTankWidget);
-    sryTankLabel = new QLabel(tr("石灰石浆液箱"));
+    sryTankLabel = new QLabel(tr("石灰石浆液箱"), sryTankWidget);
 
 
-    singleFurnaceLabel = new QLabel(tr("单台炉耗量(m3/h):"));
-    fgdNumLabel = new QLabel(tr("FGD数量:"));
-    bufferTimeLabel = new QLabel(tr("要求的缓冲时间(h):"));
-    dLabel = new QLabel(tr("直径(m):"));
-    hLabel = new QLabel(tr("高度(m):"));
-    hdLabel = new QLabel(tr("高径比"));
-    veLabel = new QLabel(tr("有效容积(m3):"));
-    vLabel = new QLabel(tr("总容积(m3)"));
-    vevLabel = new QLabel(tr("有效/总容积(%)"));
-    singleFurnaceLineedit = new QLineEdit;
-    fgdNumLineedit= new QLineEdit;
-    bufferTimeLineedit = new QLineEdit;
-    dLineedit= new QLineEdit;
-    hLineedit= new QLineEdit;
-    hdLineedit = new QLineEdit;
+    singleFurnaceLabel = new QLabel(tr("单台炉耗量(m3/h):"), sryTankWidget);
+    fgdNumLabel = new QLabel(tr("FGD数量:"), sryTankWidget);
+    bufferTimeLabel = new QLabel(tr("要求的缓冲时间(h):"), sryTankWidget);
+    dLabel = new QLabel(tr("直径(m):"), sryTankWidget);
+    hLabel = new QLabel(tr("高度(m):"), sryTankWidget);
+    hdLabel = new QLabel(tr("高径比"), sryTankWidget);
+    veLabel = new QLabel(tr("有效容积(m3):"), sryTankWidget);
+    vLabel = new QLabel(tr("总容积(m3)"), sryTankWidget);
+    vevLabel = new QLabel(tr("有效/总容积(%)"), sryTankWidget);
+    singleFurnaceLineedit = new QLineEdit(sryTankWidget);
+    fgdNumLineedit= new QLineEdit(sryTankWidget);
+    bufferTimeLineedit = new QLineEdit(sryTankWidget);
+    dLineedit= new QLineEdit(sryTankWidget);
+    hLineedit= new QLineEdit(sryTankWidget);
+    hdLineedit = new QLineEdit(sryTankWidget);
     hdLineedit->setReadOnly(true);
-    veLineedit = new QLineEdit;
+    veLineedit = new QLineEdit(sryTankWidget);
     veLineedit->setReadOnly(true);
-    vLineedit = new QLineEdit;
+    vLineedit = new QLineEdit(sryTankWidget);
     vLineedit->setReadOnly(true);
-    vevLineedit = new QLineEdit;
+    vevLineedit = new QLineEdit(sryTankWidget);
     this->singleFurnaceLineedit->setText(QString("%1").arg(round(this->Qsj* 10) / 10));
     this->fgdNumLineedit->setText(QString("%1").arg(round(this->FGDnum)));
     this->bufferTimeLineedit->setText(QString("%1").arg(round(this->Tsj* 10) / 10));
@@ -72,28 +97,29 @@ caco3SryTankAndAgitatorWindow::caco3SryTankAndAgitatorWindow(float & Qsj, int & 
     this->layout1->addWidget(this->vLineedit, 8, 3, 1, 3);
     this->layout1->addWidget(this->vevLabel, 9, 0, 1, 3);
     this->layout1->addWidget(this->vevLineedit, 9, 3, 1, 3);
+}
 
-    // 事故浆液箱搅拌器
 
-    this->agitatorWidget = new QWidget;
-    this->agitatorLabel = new QLabel(tr("石灰石浆液箱搅拌器"));
-    this->rPowerLabel = new QLabel(tr("比功率(kW):"));
-    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"));
-    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"));
-    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"));
-    this->rPowerLineedit = new QLineEdit;
+void caco3SryTankAndAgitatorWindow::initAgitator()
+{
+    this->agitatorWidget = new QWidget(this);
+    this->agitatorLabel = new QLabel(tr("石灰石浆液箱搅拌器"), agitatorWidget);
+    this->rPowerLabel = new QLabel(tr("比功率(kW):"), agitatorWidget);
+    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"), agitatorWidget);
+    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"), agitatorWidget);
+    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"), agitatorWidget);
+    this->rPowerLineedit = new QLineEdit(agitatorWidget);
     this->rPowerLineedit->setReadOnly(true);
-    this->shaftPowerLineedit= new QLineEdit;
+    this->shaftPowerLineedit= new QLineEdit(agitatorWidget);
     this->shaftPowerLineedit->setReadOnly(true);
-    this->motorPowerLineedit= new QLineEdit;
+    this->motorPowerLineedit= new QLineEdit(agitatorWidget);
     this->motorPowerLineedit->setReadOnly(true);
-    this->kdComBox = new QComboBox;
+    this->kdComBox = new QComboBox(agitatorWidget);
     this->kdComBox->setEditable(false);
     utils::setKdComboBox(kdComBox, Nesj);
     this->rPowerLineedit->setText(QString("%1").arg(round(this->Nbsj * 1000) / 1000));
     this->shaftPowerLineedit->setText(QString("%1").arg(round(this->Nfsj * 10) / 10));
     this->motorPowerLineedit->setText(QString("%1").arg(round(this->Nesj * 10) / 10));
-
 
     this->layout2 = new QGridLayout(this->agitatorWidget);
     this->layout2->addWidget(this->agitatorLabel, 0, 0, 1, 6);
@@ -106,26 +132,7 @@ caco3SryTankAndAgitatorWindow::caco3SryTankAndAgitatorWindow(float & Qsj, int & 
     this->layout2->addWidget(this->kdLabel, 4, 0, 1, 3);
     this->layout2->addWidget(this->kdComBox, 4, 3, 1, 3);
 
-
-    this->okButton = new QPushButton(tr("确定"));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
-    this->cancelButton = new QPushButton(tr("关闭"));
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    this->hlayout = new QHBoxLayout;
-    this->hlayout->addWidget(this->okButton);
-    this->hlayout->addWidget(this->cancelButton);
-    this->layout = new QVBoxLayout(this);
-    this->layout->addWidget(this->sryTankWidget);
-    this->layout->addWidget(this->agitatorWidget);
-    this->layout->addLayout(this->hlayout);
-    this->show();
 }
-
-caco3SryTankAndAgitatorWindow::~caco3SryTankAndAgitatorWindow()
-{
-    caco3SryTankAndAgitatorWindow::num -= 1;
-}
-
 
 
 void caco3SryTankAndAgitatorWindow::okSLOT()

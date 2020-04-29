@@ -16,12 +16,12 @@ checkPjWindow::checkPjWindow(QWidget *parent) : QDialog(parent)
     this->resize(1000, 800);
 
 
-    this->checkOpinionTextedit = new QTextEdit;
+    this->checkOpinionTextedit = new QTextEdit(this);
 
 
     this->bg = new QButtonGroup(this);
-    this->passRadioButton = new QRadioButton(tr("校核通过"));
-    this->recalculateRadioButton= new QRadioButton(tr("重新计算"));
+    this->passRadioButton = new QRadioButton(tr("校核通过"), this);
+    this->recalculateRadioButton= new QRadioButton(tr("重新计算"), this);
     this->bg->addButton(this->passRadioButton, 1);
     this->bg->addButton(this->recalculateRadioButton, 0);
 
@@ -31,8 +31,8 @@ checkPjWindow::checkPjWindow(QWidget *parent) : QDialog(parent)
     this->hlayout1->addWidget(this->recalculateRadioButton);
 
 
-    this->okButton = new QPushButton("确定");
-    this->cancelButton = new QPushButton("取消");
+    this->okButton = new QPushButton("确定", this);
+    this->cancelButton = new QPushButton("取消", this);
 
 
     this->hlayout2 = new QHBoxLayout;

@@ -11,43 +11,37 @@ absorberSryCirPumpWindow::absorberSryCirPumpWindow(float & Yjxb, float & Qjxb, f
     this->setWindowFlags(flags);
 
     absorberSryCirPumpWindow::num += 1;
-    this->hlayout1 = new QHBoxLayout;
-    this->efficiencyLabel = new QLabel(tr("效率(%):"));
-    this->efficiencyLineedit = new QLineEdit;
+    layout = new QGridLayout(this);
+    this->efficiencyLabel = new QLabel(tr("效率(%):"), this);
+    this->efficiencyLineedit = new QLineEdit(this);
     this->efficiencyLineedit->setText(QString("%1").arg(yjxb * 100));
-    this->hlayout1->addWidget(this->efficiencyLabel);
-    this->hlayout1->addWidget(this->efficiencyLineedit);
 
-    this->numLabel = new QLabel(tr("数量:"));
-    this->numLineedit = new QLineEdit;
+    this->numLabel = new QLabel(tr("数量:"), this);
+    this->numLineedit = new QLineEdit(this);
     this->numLineedit->setReadOnly(true);
     this->numLineedit->setText(QString("%1").arg(xg));
-    this->hlayout1->addWidget(this->numLabel);
-    this->hlayout1->addWidget(this->numLineedit);
 
-    this->flowLabel = new QLabel(tr("流量(m3/h):"));
-    this->flowLineedit = new QLineEdit;
+    this->flowLabel = new QLabel(tr("流量(m3/h):"), this);
+    this->flowLineedit = new QLineEdit(this);
     this->flowLineedit->setText(QString("%1").arg(qjxb));
     this->flowLineedit->setReadOnly(true);
-    this->hlayout1->addWidget(this->flowLabel);
-    this->hlayout1->addWidget(this->flowLineedit);
-    this->tableWidget = new QTableWidget;
+    layout->addWidget(this->efficiencyLabel, 0, 0, 1, 3);
+    layout->addWidget(this->efficiencyLineedit, 0, 3, 1, 3);
+    layout->addWidget(this->numLabel, 0, 6, 1, 3);
+    layout->addWidget(this->numLineedit, 0, 9, 1, 3);
+    layout->addWidget(this->flowLabel, 0, 12, 1, 3);
+    layout->addWidget(this->flowLineedit, 0, 15, 1, 3);
+
+
+    this->tableWidget = new QTableWidget(this);
     this->initTableWidget();
 
 
-    this->hlayout2 = new QHBoxLayout;
-    this->okButton = new QPushButton(tr("确定"));
-    this->cancelButton = new QPushButton(tr("关闭"));
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    hlayout2->addWidget(this->okButton);
-    hlayout2->addWidget(this->cancelButton);
+    layout->addWidget(this->tableWidget, 1, 0, 6, 18);
 
-
-    this->layout = new QVBoxLayout(this);
-    this->layout->addLayout(this->hlayout1);
-    this->layout->addWidget(this->tableWidget);
-    this->layout->addLayout(this->hlayout2);
-
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    layout->addWidget(this->buttonWidget, 7, 0, 1, 18);
 
     this->setWindowTitle(tr("吸收塔浆液循环泵"));
     this->show();

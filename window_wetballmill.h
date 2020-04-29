@@ -2,14 +2,13 @@
 #define WINDOW_WETBALLMILL_H
 
 #include <QWidget>
-#include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QVBoxLayout>
-#include <QVBoxLayout>
 #include <QDebug>
 #include <QDialog>
+#include "widget_okcancel.h"
 
 class wetBallMillWindow : public QDialog
 {
@@ -26,9 +25,8 @@ public slots:
 protected:
     QLabel * millMaxForceLabel, * rotatePowerLabel, * motorPowerLabel;
     QLineEdit* millMaxForceLineedit, * rotatePowerLineedit, * motorPowerLineedit;
-    QPushButton * okButton, *cancelButton;
+    widget_okcancel * buttonWidget;
     QGridLayout * gridLayout;
-    QHBoxLayout * hlayout;
     QVBoxLayout * layout;
 
 

@@ -16,21 +16,56 @@ vacuumBeltDehydratorWindow::vacuumBeltDehydratorWindow(float & Qzhk,
 
     vacuumBeltDehydratorWindow::num += 1;
     this->setAttribute(Qt::WA_DeleteOnClose);
-    vacuumBeltWidget = new QWidget;
-    layout1 = new QGridLayout(vacuumBeltWidget);
-    this->vacuumBeltLabel = new QLabel(tr("真空皮带脱水机"));
-    this->maxForceLabel = new QLabel(tr("最大出力(t/h):"));
-    this->maxForceLineeidt = new QLineEdit;
-    this->maxForceLineeidt->setReadOnly(true);
+
+    initVacuumBelt();
+    initVacuumPump();
+    initWaterPump();
+    initWaterTank();
+
     this->maxForceLineeidt->setText(QString("%1").arg(Qzhk));
-    this->filtAreaLabel = new QLabel(tr("过滤面积(m2):"));
-    this->filtAreaLineeidt = new QLineEdit;
-    this->filtAreaLineeidt->setReadOnly(true);
     this->filtAreaLineeidt->setText(QString("%1").arg(Szhk));
-    this->motorPowerLabel = new QLabel(tr("主驱动电机功率(kW):"));
-    this->motorPowerLineeidt = new QLineEdit;
-    this->motorPowerLineeidt->setReadOnly(true);
     this->motorPowerLineeidt->setText(QString("%1").arg(Nezhk));
+    this->vacuumForceLineedit ->setText(QString("%1").arg(Qzhb));
+    this->shaftPowerLineedit->setText(QString("%1").arg(Nfzhb));
+    this->vacuumPumpPowerLineedit->setText(QString("%1").arg(Nezhb));
+    this->flowLineedit->setText(QString("%1").arg(Qlbb));
+    this->liftLineedit->setText(QString("%1").arg(Hlbb));
+    this->waterPumpPowerLineedit->setText(QString("%1").arg(Nelbb));
+    this->dLineedit->setText(QString("%1").arg(Dlb));
+    this->hLineedit ->setText(QString("%1").arg(Hlb));
+    this->vLineedit->setText(QString("%1").arg(Vjlb));
+
+
+
+
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+
+    vlayout = new QVBoxLayout(this);
+    vlayout->addWidget(vacuumBeltWidget);
+    vlayout->addWidget(vacuumPumpWidget);
+    vlayout->addWidget(waterTankWidget);
+    vlayout->addWidget(waterPumpWidget);
+    vlayout->addWidget(buttonWidget);
+
+    this->setWindowTitle(tr("真空皮带脱水机"));
+    this->show();
+}
+
+void vacuumBeltDehydratorWindow::initVacuumBelt()
+{
+    vacuumBeltWidget = new QWidget(this);
+    layout1 = new QGridLayout(vacuumBeltWidget);
+    this->vacuumBeltLabel = new QLabel(tr("真空皮带脱水机"), vacuumBeltWidget);
+    this->maxForceLabel = new QLabel(tr("最大出力(t/h):"), vacuumBeltWidget);
+    this->maxForceLineeidt = new QLineEdit(vacuumBeltWidget);
+    this->maxForceLineeidt->setReadOnly(true);
+    this->filtAreaLabel = new QLabel(tr("过滤面积(m2):"), vacuumBeltWidget);
+    this->filtAreaLineeidt = new QLineEdit(vacuumBeltWidget);
+    this->filtAreaLineeidt->setReadOnly(true);
+    this->motorPowerLabel = new QLabel(tr("主驱动电机功率(kW):"), vacuumBeltWidget);
+    this->motorPowerLineeidt = new QLineEdit(vacuumBeltWidget);
+    this->motorPowerLineeidt->setReadOnly(true);
     layout1->addWidget(this->vacuumBeltLabel);
     layout1->addWidget(this->maxForceLabel, 1, 0, 1, 3);
     layout1->addWidget(this->maxForceLineeidt, 1, 3, 1, 3);
@@ -38,23 +73,22 @@ vacuumBeltDehydratorWindow::vacuumBeltDehydratorWindow(float & Qzhk,
     layout1->addWidget(this->filtAreaLineeidt, 2, 3, 1, 3);
     layout1->addWidget(this->motorPowerLabel, 3, 0, 1, 3);
     layout1->addWidget(this->motorPowerLineeidt, 3, 3, 1, 3);
+}
 
-
-    this->vacuumPumpWidget = new QWidget;
-    this->vacuumPumpLabel = new QLabel(tr("真空泵"));
+void vacuumBeltDehydratorWindow::initVacuumPump()
+{
+    this->vacuumPumpWidget = new QWidget(this);
+    this->vacuumPumpLabel = new QLabel(tr("真空泵"), vacuumPumpWidget);
     this->layout2 = new QGridLayout(vacuumPumpWidget);
-    this->vacuumForceLabel = new QLabel(tr("真空泵出力(m3/h):"));
-    this->vacuumForceLineedit = new QLineEdit;
+    this->vacuumForceLabel = new QLabel(tr("真空泵出力(m3/h):"), vacuumPumpWidget);
+    this->vacuumForceLineedit = new QLineEdit(vacuumPumpWidget);
     this->vacuumForceLineedit ->setReadOnly(true);
-    this->vacuumForceLineedit ->setText(QString("%1").arg(Qzhb));
-    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"));
-    this->shaftPowerLineedit = new QLineEdit;
+    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"), vacuumPumpWidget);
+    this->shaftPowerLineedit = new QLineEdit(vacuumPumpWidget);
     this->shaftPowerLineedit->setReadOnly(true);
-    this->shaftPowerLineedit->setText(QString("%1").arg(Nfzhb));
-    this->vacuumPumpPowerLabel= new QLabel(tr("功率(kW):"));
-    this->vacuumPumpPowerLineedit = new QLineEdit;
+    this->vacuumPumpPowerLabel= new QLabel(tr("功率(kW):"), vacuumPumpWidget);
+    this->vacuumPumpPowerLineedit = new QLineEdit(vacuumPumpWidget);
     this->vacuumPumpPowerLineedit->setReadOnly(true);
-    this->vacuumPumpPowerLineedit->setText(QString("%1").arg(Nezhb));
     layout2->addWidget(this->vacuumPumpLabel);
     layout2->addWidget(this->vacuumForceLabel, 1, 0, 1, 3);
     layout2->addWidget(this->vacuumForceLineedit, 1, 3, 1, 3);
@@ -63,22 +97,23 @@ vacuumBeltDehydratorWindow::vacuumBeltDehydratorWindow(float & Qzhk,
     layout2->addWidget(this->vacuumPumpPowerLabel, 3, 0, 1, 3);
     layout2->addWidget(this->vacuumPumpPowerLineedit, 3, 3, 1, 3);
 
+}
 
-    this->waterTankWidget = new QWidget;
-    this->waterTankLabel = new QLabel(tr("滤布洗水箱"));
+void vacuumBeltDehydratorWindow::initWaterTank()
+{
+
+    this->waterTankWidget = new QWidget(this);
+    this->waterTankLabel = new QLabel(tr("滤布洗水箱"), waterTankWidget);
     this->layout3 = new QGridLayout(waterTankWidget);
-    this->dLabel = new QLabel(tr("直径(m):"));
-    this->dLineedit = new QLineEdit;
+    this->dLabel = new QLabel(tr("直径(m):"), waterTankWidget);
+    this->dLineedit = new QLineEdit(waterTankWidget);
     this->dLineedit->setReadOnly(true);
-    this->dLineedit->setText(QString("%1").arg(Dlb));
-    this->hLabel = new QLabel(tr("高度(m):"));
-    this->hLineedit = new QLineEdit;
+    this->hLabel = new QLabel(tr("高度(m):"), waterTankWidget);
+    this->hLineedit = new QLineEdit(waterTankWidget);
     this->hLineedit ->setReadOnly(true);
-    this->hLineedit ->setText(QString("%1").arg(Hlb));
-    this->vLabel = new QLabel(tr("有效容积(m3):"));
-    this->vLineedit = new QLineEdit;
+    this->vLabel = new QLabel(tr("有效容积(m3):"), waterTankWidget);
+    this->vLineedit = new QLineEdit(waterTankWidget);
     this->vLineedit->setReadOnly(true);
-    this->vLineedit->setText(QString("%1").arg(Vjlb));
     layout3->addWidget(this->waterTankLabel, 0, 0, 1, 6);
     layout3->addWidget(this->dLabel, 1, 0, 1, 3);
     layout3->addWidget(this->dLineedit, 1, 3, 1, 3);
@@ -86,24 +121,23 @@ vacuumBeltDehydratorWindow::vacuumBeltDehydratorWindow(float & Qzhk,
     layout3->addWidget(this->hLineedit, 2, 3, 1, 3);
     layout3->addWidget(this->vLabel, 3, 0, 1, 3);
     layout3->addWidget(this->vLineedit, 3, 3, 1, 3);
+}
 
-
-
-    this->waterPumpWidget = new QWidget;
-    this->waterPumpLabel = new QLabel(tr("滤布冲洗水泵"));
+void vacuumBeltDehydratorWindow::initWaterPump()
+{
+    this->waterPumpWidget = new QWidget(this);
+    this->waterPumpLabel = new QLabel(tr("滤布冲洗水泵"), waterPumpWidget);
     this->layout4 = new QGridLayout(waterPumpWidget);
-    this->flowLabel = new QLabel(tr("流量(m3/h):"));
-    this->flowLineedit = new QLineEdit;
+    this->flowLabel = new QLabel(tr("流量(m3/h):"), waterPumpWidget);
+    this->flowLineedit = new QLineEdit(waterPumpWidget);
     this->flowLineedit->setReadOnly(true);
-    this->flowLineedit->setText(QString("%1").arg(Qlbb));
-    this->liftLabel = new QLabel(tr("扬程(m):"));
-    this->liftLineedit = new QLineEdit;
+    this->liftLabel = new QLabel(tr("扬程(m):"), waterPumpWidget);
+    this->liftLineedit = new QLineEdit(waterPumpWidget);
     this->liftLineedit->setReadOnly(true);
-    this->liftLineedit->setText(QString("%1").arg(Hlbb));
-    this->waterPumpPowerLabel = new QLabel(tr("功率(kW):"));
-    this->waterPumpPowerLineedit = new QLineEdit;
+
+    this->waterPumpPowerLabel = new QLabel(tr("功率(kW):"), waterPumpWidget);
+    this->waterPumpPowerLineedit = new QLineEdit(waterPumpWidget);
     this->waterPumpPowerLineedit->setReadOnly(true);
-    this->waterPumpPowerLineedit->setText(QString("%1").arg(Nelbb));
     layout4->addWidget(this->waterPumpLabel, 0, 0, 1, 6);
     layout4->addWidget(this->flowLabel, 1, 0, 1, 3);
     layout4->addWidget(this->flowLineedit, 1, 3, 1, 3);
@@ -111,24 +145,9 @@ vacuumBeltDehydratorWindow::vacuumBeltDehydratorWindow(float & Qzhk,
     layout4->addWidget(this->liftLineedit, 2, 3, 1, 3);
     layout4->addWidget(this->waterPumpPowerLabel, 3, 0, 1, 3);
     layout4->addWidget(this->waterPumpPowerLineedit, 3, 3, 1, 3);
-
-    vlayout = new QVBoxLayout(this);
-    vlayout->addWidget(vacuumBeltWidget);
-    vlayout->addWidget(vacuumPumpWidget);
-    vlayout->addWidget(waterTankWidget);
-    vlayout->addWidget(waterPumpWidget);
-
-
-    hlayout = new QHBoxLayout;
-    this->okButton = new QPushButton(tr("确定"));
-    this->cancelButton = new QPushButton(tr("关闭"));
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    hlayout->addWidget(this->okButton);
-    hlayout->addWidget(this->cancelButton);
-    vlayout->addLayout(hlayout);
-    this->setWindowTitle(tr("真空皮带脱水机"));
-    this->show();
 }
+
+
 
 vacuumBeltDehydratorWindow::~vacuumBeltDehydratorWindow()
 {

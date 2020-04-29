@@ -28,7 +28,6 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-    central_widget.cpp \
     main_window.cpp \
     utils.cpp \
     par_pinf.cpp \
@@ -66,10 +65,11 @@ SOURCES += \
     window_pump_wasteh2ofeed.cpp \
     window_pump_waterwindow.cpp \
     par_others.cpp \
-    window_project_save.cpp
+    window_project_save.cpp \
+    widget_central.cpp \
+    widget_okcancel.cpp
 
 HEADERS += \
-    central_widget.h \
     main_window.h \
     utils.h \
     par_equip.h \
@@ -109,7 +109,9 @@ HEADERS += \
     window_pump_wasteh2ofeed.h \
     window_pump_waterwindow.h \
     par_others.h \
-    window_project_save.h
+    window_project_save.h \
+    widget_central.h \
+    widget_okcancel.h
 
 DISTFILES += \
     icon/new.ico \

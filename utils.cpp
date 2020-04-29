@@ -1,5 +1,6 @@
 # include "utils.h"
 
+
 int utils::ping(QString ip)
 {
     QString strArg = "ping " + ip + " -n 1 -w 1000";

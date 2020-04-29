@@ -30,23 +30,26 @@ inputParameterWindow::inputParameterWindow(QWidget *parent) : QDialog(parent)
     this->initWidget1();
     this->initWidget2();
     this->initWidget3();
-    this->tabwidget = new QTabWidget;
+    this->tabwidget = new QTabWidget(this);
     this->tabwidget->clear();
     this->tabwidget->addTab(tabInWidget1, tr("烟气参数"));
     this->tabwidget->addTab(tabInWidget2, tr("其它参数"));
     this->tabwidget->addTab(tabInWidget3, tr("烟道阻力降"));
     zongLayout = new QGridLayout(this);
     zongLayout->addWidget(this->tabwidget, 0, 0, 6, 6);
-    okButton = new QPushButton(tr("确定"));
-    cancelButton = new QPushButton(tr("关闭"));
-    zongLayout->addWidget(okButton, 6, 0, 1, 3);
-    zongLayout->addWidget(cancelButton, 6, 3, 1, 3);
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+
+
+    buttonWidget = new widget_okcancel(this);
+    zongLayout->addWidget(buttonWidget, 6, 0, 1, 6);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
 
     this->initParWidget1();
+    qDebug() << "initParWidget1";
     this->initParWidget2();
+    qDebug() << "initParWidget2";
     this->initParWidget3();
+    qDebug() << "initParWidget3";
 
     this->show();
     this->setWindowTitle(tr("输入参数"));
@@ -158,19 +161,19 @@ void inputParameterWindow::initWidget1()
 {
     // widget11
 
-    widget11 = new QWidget;
+    widget11 = new QWidget(tabInWidget1);
     gridLayout11 = new QGridLayout(widget11);
-    wetRadiobutton = new QRadioButton(tr("湿基标态"));
-    dryRadiobutton = new QRadioButton(tr("干基标态"));
-    group1 = new QButtonGroup(this);
+    wetRadiobutton = new QRadioButton(tr("湿基标态"), widget11);
+    dryRadiobutton = new QRadioButton(tr("干基标态"), widget11);
+    group1 = new QButtonGroup(widget11);
     group1->addButton(wetRadiobutton, 0);
     group1->addButton(dryRadiobutton, 1);
-    gasNumLabel = new QLabel(tr("烟气量(Nm3/h):"));
-    gasTempLabel = new QLabel(tr("烟气温度(°C):"));
-    pressureLabel = new QLabel(tr("当地平均大气压(mbar):"));
-    gasNumLineedit = new QLineEdit;
-    gasTempLineedit = new QLineEdit;
-    pressureLineedit = new QLineEdit;
+    gasNumLabel = new QLabel(tr("烟气量(Nm3/h):"), widget11);
+    gasTempLabel = new QLabel(tr("烟气温度(°C):"), widget11);
+    pressureLabel = new QLabel(tr("当地平均大气压(mbar):"), widget11);
+    gasNumLineedit = new QLineEdit(widget11);
+    gasTempLineedit = new QLineEdit(widget11);
+    pressureLineedit = new QLineEdit(widget11);
     gridLayout11->addWidget(wetRadiobutton, 0, 0, 1, 3);
     gridLayout11->addWidget(dryRadiobutton, 0, 3, 1, 3);
     gridLayout11->addWidget(gasNumLabel, 1, 0, 1, 3);
@@ -182,15 +185,15 @@ void inputParameterWindow::initWidget1()
 
     // widget12
 
-    widget12 = new QWidget;
+    widget12 = new QWidget(tabInWidget1);
     gridLayout12 = new QGridLayout(widget12);
-    gasComponentLabel = new QLabel(tr("烟气成分"));
-    o2Label = new QLabel(tr("干基O2(vol%):"));
-    co2Label = new QLabel(tr("干基CO2(vol%):"));
-    h2oLabel = new QLabel(tr("烟气湿度(vol%):"));
-    o2Lineedit = new QLineEdit;
-    co2Lineedit = new QLineEdit;
-    h2oLineedit = new QLineEdit;
+    gasComponentLabel = new QLabel(tr("烟气成分"), widget12);
+    o2Label = new QLabel(tr("干基O2(vol%):"), widget12);
+    co2Label = new QLabel(tr("干基CO2(vol%):"), widget12);
+    h2oLabel = new QLabel(tr("烟气湿度(vol%):"), widget12);
+    o2Lineedit = new QLineEdit(widget12);
+    co2Lineedit = new QLineEdit(widget12);
+    h2oLineedit = new QLineEdit(widget12);
     gridLayout12->addWidget(gasComponentLabel, 0, 0, 1, 6);
     gridLayout12->addWidget(o2Label, 1, 0, 1, 3);
     gridLayout12->addWidget(o2Lineedit, 1, 3, 1, 3);
@@ -201,19 +204,19 @@ void inputParameterWindow::initWidget1()
 
     // widget13
 
-    widget13 = new QWidget;
+    widget13 = new QWidget(tabInWidget2);
     gridLayout13 = new QGridLayout(widget13);
-    dryCheckbox = new QCheckBox(tr("干基标态6%O2"));
-    so2Label = new QLabel(tr("SO2(mg/Nm3):"));
-    so3Label = new QLabel(tr("SO3(mg/Nm3):"));
-    hclLabel = new QLabel(tr("HCL(mg/Nm3):"));
-    hfLabel = new QLabel(tr("HF(mg/Nm3):"));
-    dustLabel = new QLabel(tr("灰(mg/Nm3)"));
-    so2Lineedit = new QLineEdit;
-    so3Lineedit = new QLineEdit;
-    hclLineedit = new QLineEdit;
-    hfLineedit = new QLineEdit;
-    dustLineedit = new QLineEdit;
+    dryCheckbox = new QCheckBox(tr("干基标态6%O2"), widget13);
+    so2Label = new QLabel(tr("SO2(mg/Nm3):"), widget13);
+    so3Label = new QLabel(tr("SO3(mg/Nm3):"), widget13);
+    hclLabel = new QLabel(tr("HCL(mg/Nm3):"), widget13);
+    hfLabel = new QLabel(tr("HF(mg/Nm3):"), widget13);
+    dustLabel = new QLabel(tr("灰(mg/Nm3)"), widget13);
+    so2Lineedit = new QLineEdit(widget13);
+    so3Lineedit = new QLineEdit(widget13);
+    hclLineedit = new QLineEdit(widget13);
+    hfLineedit = new QLineEdit(widget13);
+    dustLineedit = new QLineEdit(widget13);
     gridLayout13->addWidget(dryCheckbox, 0, 0, 1, 6);
     gridLayout13->addWidget(so2Label, 1, 0, 1, 3);
     gridLayout13->addWidget(so2Lineedit, 1, 3, 1, 3);
@@ -228,7 +231,7 @@ void inputParameterWindow::initWidget1()
 
     // tabInwidget1
 
-    tabInWidget1 = new QWidget;
+    tabInWidget1 = new QWidget(this);
     layout1 = new QVBoxLayout(tabInWidget1);
     layout1->addWidget(widget11);
     layout1->addWidget(widget12);
@@ -237,20 +240,20 @@ void inputParameterWindow::initWidget1()
 
 void inputParameterWindow::initWidget2()
 {
-    tabInWidget2 = new QWidget;
+    tabInWidget2 = new QWidget(this);
     layout2 = new QVBoxLayout(tabInWidget2);
 
     // widget21
 
-    widget21 = new QWidget;
-    caco3Combobox1 = new QComboBox;
-    caco3Combobox2 = new QComboBox;
-    otherCombobox = new QComboBox;
-    caco3Lineedit1 = new QLineEdit;
-    caco3Lineedit2 = new QLineEdit;
-    otherLineedit = new QLineEdit;
+    widget21 = new QWidget(tabInWidget2);
+    caco3Combobox1 = new QComboBox(widget21);
+    caco3Combobox2 = new QComboBox(widget21);
+    otherCombobox = new QComboBox(widget21);
+    caco3Lineedit1 = new QLineEdit(widget21);
+    caco3Lineedit2 = new QLineEdit(widget21);
+    otherLineedit = new QLineEdit(widget21);
 
-    caco3ComponentLabel = new QLabel(tr("石灰石成分"));
+    caco3ComponentLabel = new QLabel(tr("石灰石成分"), widget21);
     gridLayout21 = new QGridLayout(widget21);
     gridLayout21->addWidget(this->caco3ComponentLabel, 0, 0, 1, 6);
     gridLayout21->addWidget(this->caco3Combobox1, 1, 0, 1, 3);
@@ -262,32 +265,32 @@ void inputParameterWindow::initWidget2()
 
     // widget22
 
-    widget22 = new QWidget;
+    widget22 = new QWidget(tabInWidget2);
     gridLayout22 = new QGridLayout(widget22);
-    h2oQualityLabel = new QLabel(tr("工艺水质"));
-    clLabel = new QLabel(tr("CL-(ppm):"));
-    clLineedit = new QLineEdit;
+    h2oQualityLabel = new QLabel(tr("工艺水质"), widget22);
+    clLabel = new QLabel(tr("CL-(ppm):"), widget22);
+    clLineedit = new QLineEdit(widget22);
     gridLayout22->addWidget(this->h2oQualityLabel, 0, 0, 1, 6);
     gridLayout22->addWidget(this->clLabel, 1, 0, 1, 3);
     gridLayout22->addWidget(this->clLineedit, 1, 3, 1, 3);
 
     // widget23
 
-    widget23 = new QWidget;
+    widget23 = new QWidget(tabInWidget2);
     gridLayout23 = new QGridLayout(widget23);
-    label20 = new QLabel(tr("其它参数"));
-    label21 = new QLabel(tr("CaCO3(%)"));
-    label22 = new QLabel(tr("脱硫效率(%)"));
-    label23 = new QLabel(tr("氯化物含量(ppm)"));
-    label24 = new QLabel(tr("石膏旋流器顶流含固量(%)"));
-    label25 = new QLabel(tr("增压风机温升计算百分比(%)"));
-    label26 = new QLabel(tr("GGH出口温度(°C)"));
-    lineedit21 = new QLineEdit;
-    lineedit22 = new QLineEdit;
-    lineedit23 = new QLineEdit;
-    lineedit24 = new QLineEdit;
-    lineedit25 = new QLineEdit;
-    lineedit26 = new QLineEdit;
+    label20 = new QLabel(tr("其它参数"), widget23);
+    label21 = new QLabel(tr("CaCO3(%)"), widget23);
+    label22 = new QLabel(tr("脱硫效率(%)"), widget23);
+    label23 = new QLabel(tr("氯化物含量(ppm)"), widget23);
+    label24 = new QLabel(tr("石膏旋流器顶流含固量(%)"), widget23);
+    label25 = new QLabel(tr("增压风机温升计算百分比(%)"), widget23);
+    label26 = new QLabel(tr("GGH出口温度(°C)"), widget23);
+    lineedit21 = new QLineEdit(widget23);
+    lineedit22 = new QLineEdit(widget23);
+    lineedit23 = new QLineEdit(widget23);
+    lineedit24 = new QLineEdit(widget23);
+    lineedit25 = new QLineEdit(widget23);
+    lineedit26 = new QLineEdit(widget23);
 
     gridLayout23->addWidget(label20, 0, 0, 1, 6);
     gridLayout23->addWidget(label21, 1, 0, 1, 3);
@@ -312,34 +315,34 @@ void inputParameterWindow::initWidget2()
 
 void inputParameterWindow::initWidget3()
 {
-    tabInWidget3 = new QWidget;
+    tabInWidget3 = new QWidget(this);
     gridLayout3 = new QGridLayout(tabInWidget3);
-    label0 = new QLabel(tr("烟气流程上各设施的大致压降(mbar)"));
-    label1 = new QLabel(tr("入口合流三通:"));
-    label2 = new QLabel(tr("原烟气入口挡板阻力:"));
-    label3 = new QLabel(tr("原烟气入口挡板阻力至增压风机烟道阻力:"));
-    label4 = new QLabel(tr("增压风机至GGH原烟气烟道阻力:"));
-    label5 = new QLabel(tr("GGH原烟气侧阻力:"));
-    label6 = new QLabel(tr("GGH至吸收塔原烟气烟道阻力:"));
-    label7 = new QLabel(tr("吸收塔至GGH净烟气烟道阻力:"));
-    label8 = new QLabel(tr("GGH净烟气阻力:"));
-    label9 = new QLabel(tr("GGH至净烟气出口挡板烟道阻力:"));
-    label10 = new QLabel(tr("净烟气出口挡板阻力:"));
-    label11 = new QLabel(tr("出口阻力:"));
-    label12 = new QLabel(tr("烟囱阻力:"));
+    label0 = new QLabel(tr("烟气流程上各设施的大致压降(mbar)"), tabInWidget3);
+    label1 = new QLabel(tr("入口合流三通:"), tabInWidget3);
+    label2 = new QLabel(tr("原烟气入口挡板阻力:"), tabInWidget3);
+    label3 = new QLabel(tr("原烟气入口挡板阻力至增压风机烟道阻力:"), tabInWidget3);
+    label4 = new QLabel(tr("增压风机至GGH原烟气烟道阻力:"), tabInWidget3);
+    label5 = new QLabel(tr("GGH原烟气侧阻力:"), tabInWidget3);
+    label6 = new QLabel(tr("GGH至吸收塔原烟气烟道阻力:"), tabInWidget3);
+    label7 = new QLabel(tr("吸收塔至GGH净烟气烟道阻力:"), tabInWidget3);
+    label8 = new QLabel(tr("GGH净烟气阻力:"), tabInWidget3);
+    label9 = new QLabel(tr("GGH至净烟气出口挡板烟道阻力:"), tabInWidget3);
+    label10 = new QLabel(tr("净烟气出口挡板阻力:"), tabInWidget3);
+    label11 = new QLabel(tr("出口阻力:"), tabInWidget3);
+    label12 = new QLabel(tr("烟囱阻力:"), tabInWidget3);
 
-    lineedit1 = new QLineEdit;
-    lineedit2 = new QLineEdit;
-    lineedit3 = new QLineEdit;
-    lineedit4 = new QLineEdit;
-    lineedit5 = new QLineEdit;
-    lineedit6 = new QLineEdit;
-    lineedit7 = new QLineEdit;
-    lineedit8 = new QLineEdit;
-    lineedit9 = new QLineEdit;
-    lineedit10 = new QLineEdit;
-    lineedit11 = new QLineEdit;
-    lineedit12 = new QLineEdit;
+    lineedit1 = new QLineEdit(tabInWidget3);
+    lineedit2 = new QLineEdit(tabInWidget3);
+    lineedit3 = new QLineEdit(tabInWidget3);
+    lineedit4 = new QLineEdit(tabInWidget3);
+    lineedit5 = new QLineEdit(tabInWidget3);
+    lineedit6 = new QLineEdit(tabInWidget3);
+    lineedit7 = new QLineEdit(tabInWidget3);
+    lineedit8 = new QLineEdit(tabInWidget3);
+    lineedit9 = new QLineEdit(tabInWidget3);
+    lineedit10 = new QLineEdit(tabInWidget3);
+    lineedit11 = new QLineEdit(tabInWidget3);
+    lineedit12 = new QLineEdit(tabInWidget3);
 
 
     gridLayout3->addWidget(label0, 0, 0, 1, 6);

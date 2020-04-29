@@ -26,7 +26,7 @@ public slots:
     void okSLOT();
 
 protected:
-    QWidget * proWaterTankWidget;
+    QWidget * proWaterTankWidget, *buttonWidget;
     QLabel * sryTankLabel;
     QLabel  *singleFurnaceLabel, * fgdNumLabel, *bufferTimeLabel,  * dLabel, *hLabel, *hdLabel, *veLabel, *vLabel, * vevLabel;
     QLineEdit *singleFurnaceLineedit, *fgdNumLineedit, *bufferTimeLineedit,  * dLineedit, *hLineedit, *hdLineedit, *veLineedit, *vLineedit, * vevLineedit;

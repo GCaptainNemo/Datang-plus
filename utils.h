@@ -11,6 +11,8 @@
 #include <regex>
 #include <QComboBox>
 #include <QHostInfo>
+#include <QHBoxLayout>
+#include <QPushButton>
 
 #include "par_others.h"
 
@@ -24,8 +26,9 @@ namespace utils{
     float YL(const float &DJ);
     void setKdComboBox(QComboBox * kdComboBox, const float &nkshpb);
     float KD(float & power);
-
 }
+
+
 
 
 #endif // DATABASE_UTILS_H

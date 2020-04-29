@@ -13,11 +13,11 @@ about_window::about_window(QWidget * parent):QDialog(parent)
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->setWindowTitle("关于");
 
-    this->softwareLabel = new QLabel("烟气脱硫物料平衡计算软件");
-    this->versionLabel = new QLabel("版本号");
-    this->companyLabel = new QLabel("中国大唐集团科技工程有限公司");
-    this->resLabel = new QLabel(otherPar::version);
-    this->okButton = new QPushButton("确定");
+    this->softwareLabel = new QLabel("烟气脱硫物料平衡计算软件", this);
+    this->versionLabel = new QLabel("版本号", this);
+    this->companyLabel = new QLabel("中国大唐集团科技工程有限公司", this);
+    this->resLabel = new QLabel(otherPar::version, this);
+    this->okButton = new QPushButton("确定", this);
     this->layout = new QGridLayout(this);
     this->layout->addWidget(softwareLabel, 0, 0, 1, 3);
     this->layout->addWidget(versionLabel, 1, 0, 1, 1);

@@ -118,38 +118,40 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-    this->hlayout1 = new QHBoxLayout;
-    this->hlayout2 = new QHBoxLayout;
-    this->hlayout3 = new QHBoxLayout;
-    this->layout = new QVBoxLayout(this);
+//    this->hlayout1 = new QHBoxLayout;
+//    this->hlayout2 = new QHBoxLayout;
+//    this->hlayout3 = new QHBoxLayout;
+//    this->layout = new QVBoxLayout(this);
+    this->layout = new QGridLayout(this);
 
-    this->usrnameLabel = new QLabel(tr("用户名"));
-    this->passwordLabel = new QLabel(tr("密码 "));
-    this->ipAddressLabel = new QLabel(tr("IP地址"));
+    this->usrnameLabel = new QLabel(tr("用户名"), this);
+    this->passwordLabel = new QLabel(tr("密码 "), this);
+    this->ipAddressLabel = new QLabel(tr("IP地址"), this);
 
-    this->usrnameLineedit = new QLineEdit;
-    this->pwordLineedit = new QLineEdit;
+    this->usrnameLineedit = new QLineEdit(this);
+    this->pwordLineedit = new QLineEdit(this);
     this->pwordLineedit->setEchoMode(QLineEdit::Password);
-    this->ipLineedit = new QLineEdit;
+    this->ipLineedit = new QLineEdit(this);
 
-    this->testNetButton = new QPushButton(tr("网络测试"));
-    this->okButton = new QPushButton(tr("确定"));
-    this->clearButton = new QPushButton(tr("清除"));
-    this->exitButton = new QPushButton(tr("退出"));
+    this->testNetButton = new QPushButton(tr("网络测试"), this);
+    this->okButton = new QPushButton(tr("确定"), this);
+    this->clearButton = new QPushButton(tr("清除"), this);
+    this->exitButton = new QPushButton(tr("退出"), this);
+    this->layout->addWidget(this->usrnameLabel, 0, 0, 1, 3);
+    this->layout->addWidget(this->usrnameLineedit, 0, 3, 1, 3);
+    this->layout->addWidget(this->passwordLabel, 0, 6, 1, 3);
+    this->layout->addWidget(this->pwordLineedit, 0, 9, 1, 3);
+    this->layout->addWidget(this->ipAddressLabel, 1, 0, 1, 3);
+    this->layout->addWidget(this->ipLineedit, 1, 3, 1, 6);
+    this->layout->addWidget(this->testNetButton, 1, 9, 1, 3);
 
-    this->hlayout1->addWidget(this->usrnameLabel);
-    this->hlayout1->addWidget(this->usrnameLineedit);
-    this->hlayout1->addWidget(this->passwordLabel);
-    this->hlayout1->addWidget(this->pwordLineedit);
-    this->hlayout2->addWidget(this->ipAddressLabel);
-    this->hlayout2->addWidget(this->ipLineedit);
-    this->hlayout2->addWidget(this->testNetButton);
-    this->hlayout3->addWidget(this->okButton);
-    this->hlayout3->addWidget(this->clearButton);
-    this->hlayout3->addWidget(this->exitButton);
-    this->layout->addLayout(this->hlayout1);
-    this->layout->addLayout(this->hlayout2);
-    this->layout->addLayout(this->hlayout3);
+    buttonWidget = new QWidget(this);
+    layout1 = new QGridLayout(buttonWidget);
+    this->layout1->addWidget(this->okButton, 0, 0, 1, 4);
+    this->layout1->addWidget(this->clearButton, 0, 4, 1, 4);
+    this->layout1->addWidget(this->exitButton, 0, 8, 1, 4);
+    this->layout->addWidget(this->buttonWidget, 2, 0, 1, 12);
+
 
     this->setWindowTitle("登录窗口");
 
@@ -170,8 +172,5 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
     connect(&loginThread, SIGNAL(started()), threadObject, SLOT(start()));
     connect(threadObject, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
-//    connect(this, SIGNAL(startLoginSIGNAL()), threadObject, SLOT(start()));
-//    loginThread.start();
     this->show();
-
 }

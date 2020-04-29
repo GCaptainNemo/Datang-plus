@@ -3,13 +3,14 @@
 
 #include <QWidget>
 #include <QDialog>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
+#include <QGridLayout>
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
 #include <QMessageBox>
 #include "par_equip.h"
+#include "widget_okcancel.h"
+
 
 class wasteH2OrotationalFlow_window : public QDialog
 {
@@ -26,8 +27,10 @@ public slots:
 
     
 private:
-    QHBoxLayout * hlayout1, * hlayout2, * hlayout3;
-    QVBoxLayout * layout;
+    widget_okcancel * buttonWidget;
+    QHBoxLayout * hlayout;
+//    QVBoxLayout * layout;
+    QGridLayout * layout;
     QLabel * qfxLabel, * xzfxLabel;
     QPushButton * okButton, *cancelButton;
     QLineEdit * qfxLineedit, * xzfxLineedit;

@@ -11,9 +11,9 @@ newPjWindow::newPjWindow(QWidget *parent) : QDialog(parent)
     this->setWindowFlags(flags);
 
     newPjWindow::num += 1;
-    this->nameLabel = new QLabel(tr("项目名称"));
-    this->nameLineedit = new QLineEdit;
-    this->okButton = new QPushButton("确定");
+    this->nameLabel = new QLabel(tr("项目名称"), this);
+    this->nameLineedit = new QLineEdit(this);
+    this->okButton = new QPushButton("确定", this);
     this->layout = new QHBoxLayout(this);
     this->layout->addWidget(this->nameLabel);
     this->layout->addWidget(this->nameLineedit);

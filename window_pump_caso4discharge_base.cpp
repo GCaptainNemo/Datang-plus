@@ -16,39 +16,39 @@ caso4DischargePumpWindow::caso4DischargePumpWindow(float & yshpb, float & qshpb,
     this->setWindowTitle("石灰石排出泵");
 
     layout = new QGridLayout(this);
-    this->efficiencyLabel = new QLabel(tr("效率(%):"));
-    this->efficiencyLineedt = new QLineEdit;
+    this->efficiencyLabel = new QLabel(tr("效率(%):"), this);
+    this->efficiencyLineedt = new QLineEdit(this);
     this->efficiencyLineedt->setText(QString("%1").arg(round(yshpb * 100)));
     layout->addWidget(efficiencyLabel, 0, 0, 1, 3);
     layout->addWidget(efficiencyLineedt, 0, 3, 1, 3);
 
 
-    this->flowLabel = new QLabel(tr("流量(m3/h):"));
-    this->flowLineedt = new QLineEdit;
+    this->flowLabel = new QLabel(tr("流量(m3/h):"), this);
+    this->flowLineedt = new QLineEdit(this);
     this->flowLineedt->setText(QString("%1").arg(round(qshpb * 10) / 10.0));
     this->flowLineedt->setReadOnly(true);
     layout->addWidget(flowLabel, 1, 0, 1, 3);
     layout->addWidget(flowLineedt, 1, 3, 1, 3);
 
 
-    this->liftLabel = new QLabel(tr("扬程(m):"));
-    this->liftLineedt = new QLineEdit;
+    this->liftLabel = new QLabel(tr("扬程(m):"), this);
+    this->liftLineedt = new QLineEdit(this);
     this->liftLineedt->setReadOnly(true);
     this->liftLineedt->setText(QString("%1").arg(round(hshpb)));
     layout->addWidget(liftLabel, 2, 0, 1, 3);
     layout->addWidget(liftLineedt, 2, 3, 1, 3);
 
 
-    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"));
-    this->shaftPowerLineedt = new QLineEdit;
+    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"), this);
+    this->shaftPowerLineedt = new QLineEdit(this);
     this->shaftPowerLineedt->setReadOnly(true);
     this->shaftPowerLineedt->setText(QString("%1").arg(round(nfshpb * 10) / 10));
     layout->addWidget(shaftPowerLabel, 3, 0, 1, 3);
     layout->addWidget(shaftPowerLineedt, 3, 3, 1, 3);
 
 
-    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"));
-    this->motorPowerLineedt = new QLineEdit;
+    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"), this);
+    this->motorPowerLineedt = new QLineEdit(this);
     this->motorPowerLineedt->setReadOnly(true);
     qDebug() << "neshpb = " << neshpb;
     this->motorPowerLineedt->setText(QString("%1").arg(round(neshpb * 10) / 10));
@@ -57,8 +57,8 @@ caso4DischargePumpWindow::caso4DischargePumpWindow(float & yshpb, float & qshpb,
 
 
 
-    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"));
-    this->kdComboBox = new QComboBox;
+    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"), this);
+    this->kdComboBox = new QComboBox(this);
     qDebug() << "nkshpb = " << nkshpb;
     utils::setKdComboBox(kdComboBox, neshpb);
 
@@ -66,8 +66,8 @@ caso4DischargePumpWindow::caso4DischargePumpWindow(float & yshpb, float & qshpb,
     layout->addWidget(kdLabel, 5,  0, 1, 3);
     layout->addWidget(kdComboBox, 5, 3, 1, 3);
 
-    this->okButton = new QPushButton(tr("确定"));
-    this->cancelButton = new QPushButton(tr("关闭"));
+    this->okButton = new QPushButton(tr("确定"), this);
+    this->cancelButton = new QPushButton(tr("关闭"), this);
     layout->addWidget(okButton, 6, 0, 1, 3);
     layout->addWidget(cancelButton, 6, 3, 1, 3);
     connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));

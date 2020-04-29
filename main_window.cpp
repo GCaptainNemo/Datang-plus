@@ -1,5 +1,5 @@
 #include "main_window.h"
-#include "central_widget.h"
+#include "widget_central.h"
 
 
 void MainWindow::createAction()

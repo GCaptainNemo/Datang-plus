@@ -13,6 +13,8 @@
 #include "par_gslresult.h"
 #include "par_gasresult.h"
 #include "utils.h"
+#include "widget_okcancel.h"
+
 
 class caso4DischargePumpWindow : public QDialog
 {

@@ -4,10 +4,7 @@
 #include <QWidget>
 #include <QLabel>
 #include <QGridLayout>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QLineEdit>
-#include <QPushButton>
 #include <QDialog>
 
 #include <QComboBox>
@@ -15,7 +12,7 @@
 #include "par_equip.h"
 #include "par_gasresult.h"
 #include "par_gslresult.h"
-
+#include "widget_okcancel.h"
 
 class pressureAirBlowerWindow : public QDialog
 {
@@ -37,8 +34,8 @@ protected:
     *tbFlowLineedit,*tbPressureUpLineedit, *tbShaftPowerLineedit, *motorPowerLineedit;
 
     QComboBox * kdComboBox;
-    QPushButton * okButton, *cancelButton;
     QGridLayout * gridLayout;
+    widget_okcancel * buttonWidget;
 };
 
 #endif // WINDOW_AIRBLOWERPRESSURE_H

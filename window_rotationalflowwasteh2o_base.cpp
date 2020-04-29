@@ -10,36 +10,26 @@ wasteH2OrotationalFlow_window::wasteH2OrotationalFlow_window(float & qfx, float 
     this->setWindowFlags(flags);
 
     wasteH2OrotationalFlow_window::num += 1;
-    this->qfxLabel = new QLabel("处理量(m3/h):");
-    this->qfxLineedit = new QLineEdit;
+    layout = new QGridLayout(this);
+    this->qfxLabel = new QLabel("处理量(m3/h):", this);
+    this->qfxLineedit = new QLineEdit(this);
     this->qfxLineedit->setText(QString("%1").arg(qfx));
 
-    this->hlayout1 = new QHBoxLayout;
-    this->hlayout1->addWidget(this->qfxLabel);
-    this->hlayout1->addWidget(this->qfxLineedit);
+    this->layout->addWidget(this->qfxLabel, 0, 0, 1, 3);
+    this->layout->addWidget(this->qfxLineedit, 0, 3, 1, 3);
     
-    
-    this->xzfxLabel = new QLabel("旋流子个数");
-    this->xzfxLineedit = new QLineEdit;
+    this->xzfxLabel = new QLabel("旋流子个数", this);
+    this->xzfxLineedit = new QLineEdit(this);
     this->xzfxLineedit->setText(QString("%1").arg(xzfx));
 
-    this->hlayout2 = new QHBoxLayout;
-    this->hlayout2->addWidget(this->xzfxLabel);
-    this->hlayout2->addWidget(this->xzfxLineedit);
-    
-    this->okButton = new QPushButton("确定");
-    this->cancelButton = new QPushButton("关闭");
-    this->hlayout3 = new QHBoxLayout;
-    this->hlayout3->addWidget(this->okButton);
-    this->hlayout3->addWidget(this->cancelButton);
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    this->layout->addWidget(this->xzfxLabel, 1, 0, 1, 3);
+    this->layout->addWidget(this->xzfxLineedit, 1, 3, 1, 3);
 
-    this->layout = new QVBoxLayout(this);
-    this->layout->addLayout(this->hlayout1);
-    this->layout->addLayout(this->hlayout2);
-    this->layout->addLayout(this->hlayout3);
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
 
+    this->layout->addWidget(buttonWidget, 2, 0, 1, 6);
     this->setWindowTitle(tr("废水旋流器"));
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->show();

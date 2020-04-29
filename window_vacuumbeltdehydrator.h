@@ -9,6 +9,8 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include "widget_okcancel.h"
+
 
 class vacuumBeltDehydratorWindow : public QDialog
 {
@@ -31,7 +33,6 @@ private:
     
     QLabel * vacuumBeltLabel, *vacuumPumpLabel, *waterTankLabel, *waterPumpLabel;
 
-    QPushButton * okButton, *cancelButton;
     QLabel * maxForceLabel, * filtAreaLabel, * motorPowerLabel; 
     QLineEdit * maxForceLineeidt, * filtAreaLineeidt, * motorPowerLineeidt; 
     
@@ -48,7 +49,12 @@ private:
     QGridLayout * layout1, *layout2, *layout3, *layout4;
     
     QVBoxLayout * vlayout;
-    QHBoxLayout * hlayout;
+    widget_okcancel * buttonWidget;
+    void initVacuumBelt();
+    void initVacuumPump();
+    void initWaterTank();
+    void initWaterPump();
+
 };
 
 #endif // WINDOW_VACUUMBELTDEHYDRATOR_H

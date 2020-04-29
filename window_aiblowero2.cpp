@@ -15,34 +15,32 @@ oxidationAiBlowerWindow::oxidationAiBlowerWindow(QWidget *parent) : QDialog(pare
 
 
     gridLayout = new QGridLayout(this);
-    this->efficiencyLabel = new QLabel(tr("效率(%):"));
-    this->efficiencyLineedit = new QLineEdit;
+    this->efficiencyLabel = new QLabel(tr("效率(%):"), this);
+    this->efficiencyLineedit = new QLineEdit(this);
     this->efficiencyLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::Yyang * 100)));
     gridLayout->addWidget(efficiencyLabel, 0, 0, 1, 3);
     gridLayout->addWidget(efficiencyLineedit, 0, 3, 1, 3);
 
 
 
-
-
-    this->wetFlowLabel = new QLabel(tr("湿基标态流量(m3/h):"));
-    this->wetFlowLineedit = new QLineEdit;
+    this->wetFlowLabel = new QLabel(tr("湿基标态流量(m3/h):"), this);
+    this->wetFlowLineedit = new QLineEdit(this);
     this->wetFlowLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::Qyang)));
     this->wetFlowLineedit->setReadOnly(true);
     gridLayout->addWidget(wetFlowLabel, 1, 0, 1, 3);
     gridLayout->addWidget(wetFlowLineedit, 1, 3, 1, 3);
 
 
-    this->windStyleFlowLabel = new QLabel(tr("风机选型流量(m3/h):"));
-    this->windStyleFlowLineedit = new QLineEdit;
+    this->windStyleFlowLabel = new QLabel(tr("风机选型流量(m3/h):"), this);
+    this->windStyleFlowLineedit = new QLineEdit(this);
     this->windStyleFlowLineedit->setReadOnly(true);
     this->windStyleFlowLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::QXyang)));
     gridLayout->addWidget(windStyleFlowLabel, 2, 0, 1, 3);
     gridLayout->addWidget(windStyleFlowLineedit, 2, 3, 1, 3);
 
 
-    this->pressureUpLabel = new QLabel(tr("压升(mbar):"));
-    this->pressureUpLineedit = new QLineEdit;
+    this->pressureUpLabel = new QLabel(tr("压升(mbar):"), this);
+    this->pressureUpLineedit = new QLineEdit(this);
     this->pressureUpLineedit->setReadOnly(true);
     this->pressureUpLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::Pyang)));
     gridLayout->addWidget(pressureUpLabel, 3, 0, 1, 3);
@@ -50,36 +48,35 @@ oxidationAiBlowerWindow::oxidationAiBlowerWindow(QWidget *parent) : QDialog(pare
 
 
 
-    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"));
-    this->shaftPowerLineedit = new QLineEdit;
+    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"), this);
+    this->shaftPowerLineedit = new QLineEdit(this);
     this->shaftPowerLineedit->setReadOnly(true);
     this->shaftPowerLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::Nfyang * 10) / 10));
     gridLayout->addWidget(shaftPowerLabel, 4, 0, 1, 3);
     gridLayout->addWidget(shaftPowerLineedit, 4, 3, 1, 3);
 
 
-    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"));
-    this->motorPowerLineedit = new QLineEdit;
+    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"), this);
+    this->motorPowerLineedit = new QLineEdit(this);
     this->motorPowerLineedit->setReadOnly(true);
 
     this->motorPowerLineedit->setText(QString("%1").arg(round(so2AbsorbSystem::Neyang * 10) / 10));
     gridLayout->addWidget(motorPowerLabel, 5, 0, 1, 3);
     gridLayout->addWidget(motorPowerLineedit, 5, 3, 1, 3);
 
-    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"));
-    this->kdComboBox = new QComboBox;
+    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"), this);
+    this->kdComboBox = new QComboBox(this);
     utils::setKdComboBox(kdComboBox, so2AbsorbSystem::Neyang);
 
     this->kdComboBox->setEditable(false);
     gridLayout->addWidget(kdLabel, 6,  0, 1, 3);
     gridLayout->addWidget(kdComboBox, 6, 3, 1, 3);
 
-    this->okButton = new QPushButton(tr("确定"));
-    this->cancelButton = new QPushButton(tr("关闭"));
-    gridLayout->addWidget(okButton, 7, 0, 1, 3);
-    gridLayout->addWidget(cancelButton, 7, 3, 1, 3);
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+
+    buttonWidget = new widget_okcancel(this);
+    gridLayout->addWidget(buttonWidget, 7, 0, 1, 6);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
     this->show();
 }
 

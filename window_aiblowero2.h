@@ -15,6 +15,7 @@
 #include "par_equip.h"
 #include "par_gasresult.h"
 #include "par_gslresult.h"
+#include "widget_okcancel.h"
 
 class oxidationAiBlowerWindow : public QDialog
 {
@@ -34,9 +35,9 @@ protected:
     QLineEdit * efficiencyLineedit, *wetFlowLineedit, *windStyleFlowLineedit, *pressureUpLineedit, *shaftPowerLineedit, *motorPowerLineedit;
 
     QComboBox * kdComboBox;
-    QPushButton * okButton, *cancelButton;
     QGridLayout * gridLayout;
-    
+
+    widget_okcancel * buttonWidget;
 };
 
 #endif // WINDOW_OXIDATIONAIBLOWER_H

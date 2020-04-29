@@ -14,21 +14,22 @@ heatExchangeWindow::heatExchangeWindow(QWidget *parent) : QDialog(parent)
     this->setAttribute(Qt::WA_DeleteOnClose);
 
 
-    gasInputTLabel = new QLabel(tr("原烟气进口温度(°C):"));
-    gasOutputTLabel = new QLabel(tr("净烟气进口温度(°C):"));
-    outputTLabel = new QLabel(tr("出口温度(°C)"));
-    gasFlowLabel = new QLabel(tr("烟气通气量(kg/h):"));
-    gasInputTLineedit = new QLineEdit;
-    gasOutputTLineedit = new QLineEdit;
-    outputTLineedit = new QLineEdit;
-    gasFlowLineedit = new QLineEdit;
+    gasInputTLabel = new QLabel(tr("原烟气进口温度(°C):"), this->gridWidget);
+    gasOutputTLabel = new QLabel(tr("净烟气进口温度(°C):"), this->gridWidget);
+    outputTLabel = new QLabel(tr("出口温度(°C)"), this->gridWidget);
+    gasFlowLabel = new QLabel(tr("烟气通气量(kg/h):"), this->gridWidget);
+    gasInputTLineedit = new QLineEdit(this->gridWidget);
+    gasOutputTLineedit = new QLineEdit(this->gridWidget);
+    outputTLineedit = new QLineEdit(this->gridWidget);
+    gasFlowLineedit = new QLineEdit(this->gridWidget);
     
     gasInputTLineedit ->setText(QString("%1").arg(gasResultPar::Gas[0][1][22]));
     gasOutputTLineedit->setText(QString("%1").arg(gasResultPar::Gas[0][3][22]));
     outputTLineedit->setText(tr("80"));
     gasFlowLineedit->setText(QString("%1").arg(gasResultPar::Gas[0][1][4]));
 
-    gridLayout = new QGridLayout;
+    gridWidget = new QWidget(this);
+    gridLayout = new QGridLayout(gridWidget);
     gridLayout->addWidget(gasInputTLabel, 0, 0, 1, 3);
     gridLayout->addWidget(gasInputTLineedit, 0, 3, 1, 3);
     gridLayout->addWidget(gasOutputTLabel, 1, 0, 1, 3);
@@ -39,18 +40,13 @@ heatExchangeWindow::heatExchangeWindow(QWidget *parent) : QDialog(parent)
     gridLayout->addWidget(gasFlowLineedit, 3, 3, 1, 3);
 
 
-    hlayout = new QHBoxLayout;
-    okButton = new QPushButton(tr("确定"));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
-    cancelButton = new QPushButton(tr("关闭"));
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    hlayout->addWidget(okButton);
-    hlayout->addWidget(cancelButton);
-
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
 
     layout = new QVBoxLayout(this);
-    layout->addLayout(gridLayout);
-    layout->addLayout(hlayout);
+    layout->addWidget(gridWidget);
+    layout->addWidget(buttonWidget);
     this->show();
 }
 

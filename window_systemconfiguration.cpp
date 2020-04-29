@@ -19,13 +19,13 @@ systemConfigurationWindow::systemConfigurationWindow(QWidget *parent) : QDialog(
 
     // widget1
 
-    widget1 = new QWidget;
-    group1 = new QButtonGroup(this);
-    gghSystemCheckbox = new QCheckBox(tr("GGH系统"));
-    pAirBlowerCheckbox = new QCheckBox(tr("增压风机"));
-    vacuumCheckbox = new QCheckBox(tr("真空皮带脱水机"));
-    wasteH2Ocheckbox = new QCheckBox(tr("废水旋流机"));
-    waterPumpCheckbox = new QCheckBox(tr("单独设置除雾器冲洗水泵"));
+    widget1 = new QWidget(this);
+    group1 = new QButtonGroup(widget1);
+    gghSystemCheckbox = new QCheckBox(tr("GGH系统"), widget1);
+    pAirBlowerCheckbox = new QCheckBox(tr("增压风机"), widget1);
+    vacuumCheckbox = new QCheckBox(tr("真空皮带脱水机"), widget1);
+    wasteH2Ocheckbox = new QCheckBox(tr("废水旋流机"), widget1);
+    waterPumpCheckbox = new QCheckBox(tr("单独设置除雾器冲洗水泵"), widget1);
     group1->addButton(gghSystemCheckbox, 0);
     group1->addButton(pAirBlowerCheckbox, 1);
     group1->addButton(vacuumCheckbox, 2);
@@ -42,11 +42,11 @@ systemConfigurationWindow::systemConfigurationWindow(QWidget *parent) : QDialog(
 
     // widget2
 
-    widget2 = new QWidget;
-    styleLabel = new QLabel(tr("吸收剂制备方式 :"));
-    group2 = new QButtonGroup(this);
-    wetCaco3Radiobutton = new QRadioButton(tr("石灰石湿磨制浆"));
-    caco3Radiobutton = new QRadioButton(tr("石灰石粉制浆"));
+    widget2 = new QWidget(this);
+    styleLabel = new QLabel(tr("吸收剂制备方式 :"), widget2);
+    group2 = new QButtonGroup(widget2);
+    wetCaco3Radiobutton = new QRadioButton(tr("石灰石湿磨制浆"), widget2);
+    caco3Radiobutton = new QRadioButton(tr("石灰石粉制浆"), widget2);
     group2->addButton(wetCaco3Radiobutton, 0);
     group2->addButton(caco3Radiobutton, 1);
     connect(group2, SIGNAL(buttonClicked(int)), this, SLOT(group2SLOT(int)));
@@ -57,10 +57,10 @@ systemConfigurationWindow::systemConfigurationWindow(QWidget *parent) : QDialog(
 
     // widget3
 
-    widget3 = new QWidget;
-    this->proH2Ocheckbox = new QCheckBox(tr("采用工艺水制浆"));
-    this->addLabel = new QLabel(tr("滤液制浆时，若55路滤液不足，添加"));
-    this->addCombobox = new QComboBox;
+    widget3 = new QWidget(this);
+    this->proH2Ocheckbox = new QCheckBox(tr("采用工艺水制浆"), widget3);
+    this->addLabel = new QLabel(tr("滤液制浆时，若55路滤液不足，添加"), widget3);
+    this->addCombobox = new QComboBox(widget3);
     gridLayout3 = new QGridLayout(widget3);
     gridLayout3->addWidget(this->proH2Ocheckbox, 0, 0, 1, 6);
     gridLayout3->addWidget(this->addLabel, 1, 0, 1, 3);
@@ -69,9 +69,9 @@ systemConfigurationWindow::systemConfigurationWindow(QWidget *parent) : QDialog(
 
     // widget4
 
-    widget4 = new QWidget;
-    this->okButton = new QPushButton("确定");
-    this->cancelButton = new QPushButton("关闭");
+    widget4 = new QWidget(this);
+    this->okButton = new QPushButton("确定", widget4);
+    this->cancelButton = new QPushButton("关闭", widget4);
     connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
     connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
     gridLayout4 = new QGridLayout(widget4);

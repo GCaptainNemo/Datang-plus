@@ -17,32 +17,32 @@ proH2OtankWindow::proH2OtankWindow(float & Qgy, int & FGDnum, float & Tgy, float
 
     // 工艺水箱
 
-    this->proWaterTankWidget = new QWidget;
+    this->proWaterTankWidget = new QWidget(this);
     this->layout1 = new QGridLayout(this->proWaterTankWidget);
-    sryTankLabel = new QLabel(tr("工艺水箱"));
+    sryTankLabel = new QLabel(tr("工艺水箱"), proWaterTankWidget);
 
 
-    singleFurnaceLabel = new QLabel(tr("单台炉耗量(m3/h):"));
-    fgdNumLabel = new QLabel(tr("FGD数量:"));
-    bufferTimeLabel = new QLabel(tr("要求的缓冲时间(h):"));
-    dLabel = new QLabel(tr("直径(m):"));
-    hLabel = new QLabel(tr("高度(m):"));
-    hdLabel = new QLabel(tr("高径比"));
-    veLabel = new QLabel(tr("有效容积(m3):"));
-    vLabel = new QLabel(tr("总容积(m3)"));
-    vevLabel = new QLabel(tr("有效/总容积(%)"));
-    singleFurnaceLineedit = new QLineEdit;
-    fgdNumLineedit= new QLineEdit;
-    bufferTimeLineedit = new QLineEdit;
-    dLineedit= new QLineEdit;
-    hLineedit= new QLineEdit;
-    hdLineedit = new QLineEdit;
+    singleFurnaceLabel = new QLabel(tr("单台炉耗量(m3/h):"), proWaterTankWidget);
+    fgdNumLabel = new QLabel(tr("FGD数量:"), proWaterTankWidget);
+    bufferTimeLabel = new QLabel(tr("要求的缓冲时间(h):"), proWaterTankWidget);
+    dLabel = new QLabel(tr("直径(m):"), proWaterTankWidget);
+    hLabel = new QLabel(tr("高度(m):"), proWaterTankWidget);
+    hdLabel = new QLabel(tr("高径比"), proWaterTankWidget);
+    veLabel = new QLabel(tr("有效容积(m3):"), proWaterTankWidget);
+    vLabel = new QLabel(tr("总容积(m3)"), proWaterTankWidget);
+    vevLabel = new QLabel(tr("有效/总容积(%)"), proWaterTankWidget);
+    singleFurnaceLineedit = new QLineEdit(proWaterTankWidget);
+    fgdNumLineedit= new QLineEdit(proWaterTankWidget);
+    bufferTimeLineedit = new QLineEdit(proWaterTankWidget);
+    dLineedit= new QLineEdit(proWaterTankWidget);
+    hLineedit= new QLineEdit(proWaterTankWidget);
+    hdLineedit = new QLineEdit(proWaterTankWidget);
     hdLineedit->setReadOnly(true);
-    veLineedit = new QLineEdit;
+    veLineedit = new QLineEdit(proWaterTankWidget);
     veLineedit->setReadOnly(true);
-    vLineedit = new QLineEdit;
+    vLineedit = new QLineEdit(proWaterTankWidget);
     vLineedit->setReadOnly(true);
-    vevLineedit = new QLineEdit;
+    vevLineedit = new QLineEdit(proWaterTankWidget);
     this->singleFurnaceLineedit->setText(QString("%1").arg(round(this->Qgy* 10) / 10));
     this->fgdNumLineedit->setText(QString("%1").arg(round(this->FGDnum)));
     this->bufferTimeLineedit->setText(QString("%1").arg(round(this->Tgy* 10) / 10));
@@ -73,17 +73,20 @@ proH2OtankWindow::proH2OtankWindow(float & Qgy, int & FGDnum, float & Tgy, float
     this->layout1->addWidget(this->vLineedit, 8, 3, 1, 3);
     this->layout1->addWidget(this->vevLabel, 9, 0, 1, 3);
     this->layout1->addWidget(this->vevLineedit, 9, 3, 1, 3);
-    hlayout = new QHBoxLayout;
-    okButton = new QPushButton("确定");
-    cancelButton = new QPushButton("关闭");
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));            
-    calButton = new QPushButton("计算");
+
+    buttonWidget = new QWidget(this);
+    hlayout = new QHBoxLayout(buttonWidget);
+    okButton = new QPushButton("确定", buttonWidget);
+    cancelButton = new QPushButton("关闭", buttonWidget);
+    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    calButton = new QPushButton("计算", buttonWidget);
     hlayout->addWidget(calButton);
     hlayout->addWidget(okButton);
     hlayout->addWidget(cancelButton);
     layout = new QVBoxLayout(this);
     layout->addWidget(proWaterTankWidget);
-    layout->addLayout(hlayout);
+    layout->addWidget(buttonWidget);
     this->show();
 }
 

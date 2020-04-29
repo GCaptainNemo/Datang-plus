@@ -17,24 +17,24 @@ emergencySryTankAndAgitatorWindow::emergencySryTankAndAgitatorWindow(float & Dsh
 
     // 事故浆液箱
 
-    this->emeSryTankWidget = new QWidget;
+    this->emeSryTankWidget = new QWidget(this);
     this->layout1 = new QGridLayout(this->emeSryTankWidget);
-    emeSryTankLabel = new QLabel(tr("事故浆液箱"));
-    dLabel = new QLabel(tr("直径(m):"));
-    hLabel = new QLabel(tr("高度(m):"));
-    hdLabel = new QLabel(tr("高径比"));
-    veLabel = new QLabel(tr("有效容积(m3):"));
-    vLabel = new QLabel(tr("总容积(m3)"));
-    vevLabel = new QLabel(tr("有效/总容积(%)"));
-    dLineedit= new QLineEdit;
-    hLineedit= new QLineEdit;
-    hdLineedit = new QLineEdit;
+    emeSryTankLabel = new QLabel(tr("事故浆液箱"), emeSryTankWidget);
+    dLabel = new QLabel(tr("直径(m):"), emeSryTankWidget);
+    hLabel = new QLabel(tr("高度(m):"), emeSryTankWidget);
+    hdLabel = new QLabel(tr("高径比"), emeSryTankWidget);
+    veLabel = new QLabel(tr("有效容积(m3):"), emeSryTankWidget);
+    vLabel = new QLabel(tr("总容积(m3)"), emeSryTankWidget);
+    vevLabel = new QLabel(tr("有效/总容积(%)"), emeSryTankWidget);
+    dLineedit= new QLineEdit(emeSryTankWidget);
+    hLineedit= new QLineEdit(emeSryTankWidget);
+    hdLineedit = new QLineEdit(emeSryTankWidget);
     hdLineedit->setReadOnly(true);
-    veLineedit = new QLineEdit;
+    veLineedit = new QLineEdit(emeSryTankWidget);
     veLineedit->setReadOnly(true);
-    vLineedit = new QLineEdit;
+    vLineedit = new QLineEdit(emeSryTankWidget);
     vLineedit->setReadOnly(true);
-    vevLineedit = new QLineEdit;
+    vevLineedit = new QLineEdit(emeSryTankWidget);
     this->dLineedit->setText(QString("%1").arg(round(this->Dshg * 10) / 10));
     this->hLineedit->setText(QString("%1").arg(round(this->Hshg * 10) / 10));
     this->hdLineedit->setText(QString("%1").arg(round(this->HDshg * 10) / 10));
@@ -59,19 +59,19 @@ emergencySryTankAndAgitatorWindow::emergencySryTankAndAgitatorWindow(float & Dsh
 
     // 事故浆液箱搅拌器
 
-    this->emeAgitatorWidget = new QWidget;
-    this->emeAgitatorLabel = new QLabel(tr("事故浆液箱搅拌器"));
-    this->rPowerLabel = new QLabel(tr("比功率(kW):"));
-    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"));
-    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"));
-    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"));
-    this->rPowerLineedit = new QLineEdit;
+    this->emeAgitatorWidget = new QWidget(this);
+    this->emeAgitatorLabel = new QLabel(tr("事故浆液箱搅拌器"), emeAgitatorWidget);
+    this->rPowerLabel = new QLabel(tr("比功率(kW):"), emeAgitatorWidget);
+    this->shaftPowerLabel = new QLabel(tr("轴功率(kW):"), emeAgitatorWidget);
+    this->motorPowerLabel = new QLabel(tr("电机功率(kW):"), emeAgitatorWidget);
+    this->kdLabel = new QLabel(tr("电机功率靠档(kW):"), emeAgitatorWidget);
+    this->rPowerLineedit = new QLineEdit(emeAgitatorWidget);
     this->rPowerLineedit->setReadOnly(true);
-    this->shaftPowerLineedit= new QLineEdit;
+    this->shaftPowerLineedit= new QLineEdit(emeAgitatorWidget);
     this->shaftPowerLineedit->setReadOnly(true);
-    this->motorPowerLineedit= new QLineEdit;
+    this->motorPowerLineedit= new QLineEdit(emeAgitatorWidget);
     this->motorPowerLineedit->setReadOnly(true);
-    this->kdComBox = new QComboBox;
+    this->kdComBox = new QComboBox(emeAgitatorWidget);
     this->kdComBox->setEditable(false);
     utils::setKdComboBox(kdComBox, Nkshg);
     this->rPowerLineedit->setText(QString("%1").arg(round(this->Nbshg * 1000) / 1000));
@@ -90,17 +90,17 @@ emergencySryTankAndAgitatorWindow::emergencySryTankAndAgitatorWindow(float & Dsh
     this->layout2->addWidget(this->kdComBox, 4, 3, 1, 3);
 
 
-    this->okButton = new QPushButton(tr("确定"));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
-    this->cancelButton = new QPushButton(tr("关闭"));
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    this->hlayout = new QHBoxLayout;
-    this->hlayout->addWidget(this->okButton);
-    this->hlayout->addWidget(this->cancelButton);
+
+    buttonWidget = new widget_okcancel(this);
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+
+
+
     this->layout = new QVBoxLayout(this);
     this->layout->addWidget(this->emeSryTankWidget);
     this->layout->addWidget(this->emeAgitatorWidget);
-    this->layout->addLayout(this->hlayout);
+    this->layout->addWidget(this->buttonWidget);
     this->show();
 }
 

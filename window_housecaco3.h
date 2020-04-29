@@ -33,7 +33,7 @@ public slots:
     void group2SLOT(int p, bool status);
 
 protected:
-    QWidget * widget1, *widget2, *widget3, *widget4;
+    QWidget * widget1, *widget2, *widget3, *widget4, *widget5;
     QGridLayout *layout1, *layout2, *layout3, *layout4;
 
     QLabel * sryTankLabel;
@@ -47,6 +47,12 @@ protected:
 
     QButtonGroup * group1, *group2;
     QRadioButton * cirHouseRadiobutton, *sqrHouseRadiobutton, * cirCoreRadiobutton, *sqrCoreRadiobutton;
+
+private:
+    void initWidget1();
+    void initWidget2();
+    void initWidget3();
+    void initWidget4();
 
 };
 

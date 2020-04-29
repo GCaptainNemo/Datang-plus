@@ -7,11 +7,10 @@
 #include <QLineEdit>
 #include <QGridLayout>
 #include <QVBoxLayout>
-#include <QVBoxLayout>
 #include <QDebug>
 #include <QDialog>
 #include "par_gasresult.h"
-
+#include "widget_okcancel.h"
 
 class heatExchangeWindow : public QDialog
 {
@@ -27,11 +26,10 @@ public slots:
 protected:
     QLabel * gasInputTLabel, * gasOutputTLabel, * outputTLabel, *gasFlowLabel;
     QLineEdit* gasInputTLineedit, * gasOutputTLineedit, * outputTLineedit, *gasFlowLineedit;
-    QPushButton * okButton, *cancelButton;
     QGridLayout * gridLayout;
-    QHBoxLayout * hlayout;
     QVBoxLayout * layout;
-
+    QWidget * gridWidget;
+    widget_okcancel * buttonWidget;
 
 };
 

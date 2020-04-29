@@ -4,6 +4,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
@@ -13,7 +14,9 @@
 #include <QDialog>
 #include <QString>
 #include <QStringList>
+#include "widget_okcancel.h"
 #include "utils.h"
+
 
 
 class absorberSryCirPumpWindow : public QDialog
@@ -31,8 +34,7 @@ public slots:
 private:
     QLabel * efficiencyLabel, *numLabel, * flowLabel;
     QLineEdit * efficiencyLineedit, *numLineedit, * flowLineedit;
-    QHBoxLayout * hlayout1, *hlayout2;
-    QVBoxLayout * layout;
+    QGridLayout * layout, *buttonLayout;
     QTableWidget * tableWidget;
     void initTableWidget();
     float & yjxb;
@@ -43,7 +45,7 @@ private:
     float * nkjxb;
     int  & xg;
     QStringList headers;
-    QPushButton * okButton, *cancelButton;
+    widget_okcancel *buttonWidget;
 
 };
 
