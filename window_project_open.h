@@ -77,7 +77,6 @@ private:
     QSqlDatabase db;
     QSqlQueryModel * pjModel;
     QWidget * widget;
-//    setParObject * setparTHREAD;
     QThread * myThread;
 
     QSqlQuery * query;

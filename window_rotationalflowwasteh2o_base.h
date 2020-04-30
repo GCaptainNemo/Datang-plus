@@ -28,8 +28,6 @@ public slots:
     
 private:
     widget_okcancel * buttonWidget;
-    QHBoxLayout * hlayout;
-//    QVBoxLayout * layout;
     QGridLayout * layout;
     QLabel * qfxLabel, * xzfxLabel;
     QPushButton * okButton, *cancelButton;

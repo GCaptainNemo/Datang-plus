@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
     MainWindow *mainWindow = new MainWindow();
     a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
     Login_window * loginWindow = new Login_window;
+    loginWindow->connect(loginWindow, SIGNAL(setLimitSIGNAL(QString)), mainWindow, SLOT(setLimitSLOT(QString)));
     if (loginWindow->exec() == QDialog::Accepted)
     {
         delete loginWindow;

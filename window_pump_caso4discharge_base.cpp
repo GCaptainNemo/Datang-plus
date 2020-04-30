@@ -66,12 +66,11 @@ caso4DischargePumpWindow::caso4DischargePumpWindow(float & yshpb, float & qshpb,
     layout->addWidget(kdLabel, 5,  0, 1, 3);
     layout->addWidget(kdComboBox, 5, 3, 1, 3);
 
-    this->okButton = new QPushButton(tr("确定"), this);
-    this->cancelButton = new QPushButton(tr("关闭"), this);
-    layout->addWidget(okButton, 6, 0, 1, 3);
-    layout->addWidget(cancelButton, 6, 3, 1, 3);
-    connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-    connect(okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
+
+    buttonWidget = new widget_okcancel(this);
+    layout->addWidget(buttonWidget, 6, 0, 1, 6);
+    connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
+    connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
     this->show();
 }
 

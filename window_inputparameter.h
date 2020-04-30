@@ -17,6 +17,8 @@
 #include "par_gasresult.h"
 #include "par_pinf.h"
 #include <math.h>
+#include "widget_okcancel.h"
+
 
 class inputParameterWindow : public QDialog
 {
@@ -36,8 +38,7 @@ public slots:
 protected:
     QGridLayout * zongLayout;
     QTabWidget *tabwidget;
-    QPushButton *okButton, *cancelButton;
-
+    widget_okcancel * buttonWidget;
     QWidget *tabInWidget1, *tabInWidget2, *tabInWidget3;
     QVBoxLayout * layout1, *layout2;
     QGridLayout *gridLayout3;
@@ -74,11 +75,6 @@ protected:
 
     QLabel * label20, *label21, *label22, *label23, *label24, *label25, *label26;
     QLineEdit  *lineedit21, *lineedit22, *lineedit23, *lineedit24, *lineedit25, *lineedit26;
-
-
-
-
-
 
 
 

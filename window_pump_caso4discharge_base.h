@@ -39,7 +39,7 @@ protected:
     float & neshpb; // 电机功率
     float & nkshpb; // 电机功率靠档
     QLabel * efficiencyLabel, *flowLabel, *liftLabel, *shaftPowerLabel, * motorPowerLabel, *kdLabel;
-    QPushButton * okButton, *cancelButton;
+    widget_okcancel * buttonWidget;
     QLineEdit * efficiencyLineedt, *flowLineedt, *liftLineedt, *shaftPowerLineedt, * motorPowerLineedt;
     QGridLayout * layout;
     QComboBox * kdComboBox;

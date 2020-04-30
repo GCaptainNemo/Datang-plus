@@ -67,7 +67,9 @@ SOURCES += \
     par_others.cpp \
     window_project_save.cpp \
     widget_central.cpp \
-    widget_okcancel.cpp
+    widget_okcancel.cpp \
+    window_manage_project.cpp \
+    window_manage_user.cpp
 
 HEADERS += \
     main_window.h \
@@ -111,7 +113,9 @@ HEADERS += \
     par_others.h \
     window_project_save.h \
     widget_central.h \
-    widget_okcancel.h
+    widget_okcancel.h \
+    window_manage_project.h \
+    window_manage_user.h
 
 DISTFILES += \
     icon/new.ico \

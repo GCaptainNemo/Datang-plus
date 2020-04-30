@@ -13,6 +13,7 @@ public:
     static QString ip;
     static QString version;
     static QString prid;
+    static QString userLimit;
     static void setGloabalvar(QString name, QString p, QString ip){
         otherPar::name = name;
         otherPar::password = p;
@@ -23,6 +24,11 @@ public:
     {
         otherPar::version = vs;
     }
+    static void setUsrLimit(QString usrlimit){
+        otherPar::userLimit = usrlimit;
+        qDebug() << "usrlimit = " << otherPar::userLimit;
+    }
+
 
 };
 

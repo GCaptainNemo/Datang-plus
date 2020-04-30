@@ -23,7 +23,7 @@ void MainWindow::createAction()
     this->checkingProjectAction = new QAction(tr("校核项目"), this);
     connect(checkingProjectAction, SIGNAL(triggered()), this, SLOT(checkSLOT()));
 
-    this->reviewProjectAction = new QAction(tr("审核项目"), this);
+    this->verifyProjectAction = new QAction(tr("审核项目"), this);
     this->checkOpinionAction = new QAction(tr("校核意见"), this);
 
     this->closeAction = new QAction(tr("关闭"), this);
@@ -124,8 +124,13 @@ void MainWindow::createAction()
     //    System arrangement menu
 
     this->changePasswordAction = new QAction(tr("修改密码"));
-    this->usrArrangeAction = new QAction(tr("用户管理"));
-    this->projectArrangeAction = new QAction(tr("项目管理"));
+    this->usrManageAction = new QAction(tr("用户管理"));
+    connect(usrManageAction, SIGNAL(triggered(bool)), this, SLOT(userManageSLOT()));
+
+    this->projectManageAction = new QAction(tr("项目管理"));
+    connect(projectManageAction, SIGNAL(triggered(bool)), this, SLOT(projectManageSLOT()));
+
+
     this->usageRecordAction = new QAction(tr("使用记录"));
     this->experParAction = new QAction(tr("经验参数"));
 
@@ -134,6 +139,7 @@ void MainWindow::createAction()
     this->helpAction = new QAction(tr("帮助"));
     this->aboutAction = new QAction(tr("关于"));
     connect(aboutAction, SIGNAL(triggered(bool)), this, SLOT(aboutSLOT()));
+
 
 }
 
@@ -149,7 +155,7 @@ void MainWindow::createMenus()
     this->filemenu->addSeparator();
     this->filemenu->addAction(this->submitCheckingAction);
     this->filemenu->addAction(this->checkingProjectAction);
-    this->filemenu->addAction(this->reviewProjectAction);
+    this->filemenu->addAction(this->verifyProjectAction);
     this->filemenu->addAction(this->checkOpinionAction);
     this->filemenu->addSeparator();
     this->filemenu->addAction(this->closeAction);
@@ -234,8 +240,8 @@ void MainWindow::createMenus()
 
     this->systemArrangeMenu = menuBar()->addMenu(tr("系统管理"));
     this->systemArrangeMenu->addAction(this->changePasswordAction);
-    this->systemArrangeMenu->addAction(this->usrArrangeAction);
-    this->systemArrangeMenu->addAction(this->projectArrangeAction);
+    this->systemArrangeMenu->addAction(this->usrManageAction);
+    this->systemArrangeMenu->addAction(this->projectManageAction);
     this->systemArrangeMenu->addAction(this->usageRecordAction);
     this->systemArrangeMenu->addAction(this->experParAction);
 
@@ -262,6 +268,8 @@ void MainWindow::createToolBars()
     this->outputTool->addAction(this->balanceAction);
     this->outputTool->addAction(this->curveAction);
 }
+
+
 
 void MainWindow::createPdfSLOT()
 {
@@ -298,6 +306,107 @@ void MainWindow::configureSystemSLOT()
         this->sysConfigWindow->showNormal();
     }
 }
+
+void MainWindow::userManageSLOT()
+{
+    if (window_manage_user::num == 0){
+        this->manageUsrWindow = new window_manage_user(this);
+    }
+    else{
+        this->manageUsrWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->manageUsrWindow->showNormal();
+    }
+}
+
+
+void MainWindow::projectManageSLOT()
+{
+    if (manageProjectWindow::num == 0){
+        this->managePjWindow = new manageProjectWindow(this);
+    }
+    else{
+        this->managePjWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->managePjWindow->showNormal();
+    }
+}
+
+
+
+void MainWindow::setLimitSLOT(QString usrlimit)
+{
+    qDebug() << "in设计";
+    qDebug() << "otherPar::userLimit";
+    if (usrlimit == "设计")
+    {
+        qDebug() << "in设计";
+        newAction->setEnabled(true);
+        openAction->setEnabled(true);
+        saveAction->setEnabled(true);
+        submitCheckingAction->setEnabled(true);
+        closeAction->setEnabled(true);
+        checkOpinionAction->setEnabled(false);
+        checkingProjectAction->setEnabled(false);
+        verifyProjectAction->setEnabled(false);
+
+        changePasswordAction->setEnabled(false);
+        usrManageAction->setEnabled(false);
+        projectManageAction->setEnabled(false);
+        usageRecordAction->setEnabled(false);
+        experParAction->setEnabled(true);
+    }
+    else if(usrlimit == "校核"){
+        newAction->setEnabled(true);
+        openAction->setEnabled(true);
+        saveAction->setEnabled(true);
+        submitCheckingAction->setEnabled(true);
+        closeAction->setEnabled(true);
+        checkOpinionAction->setEnabled(true);
+        checkingProjectAction->setEnabled(true);
+
+        verifyProjectAction->setEnabled(false);
+
+        changePasswordAction->setEnabled(false);
+        usrManageAction->setEnabled(false);
+        projectManageAction->setEnabled(false);
+        usageRecordAction->setEnabled(false);
+        experParAction->setEnabled(true);
+    }
+    else if(usrlimit == "审核"){
+        newAction->setEnabled(true);
+        openAction->setEnabled(true);
+        saveAction->setEnabled(true);
+        submitCheckingAction->setEnabled(true);
+        closeAction->setEnabled(true);
+        checkOpinionAction->setEnabled(true);
+        checkingProjectAction->setEnabled(true);
+        verifyProjectAction->setEnabled(true);
+
+        changePasswordAction->setEnabled(false);
+        usrManageAction->setEnabled(false);
+        projectManageAction->setEnabled(false);
+        usageRecordAction->setEnabled(false);
+        experParAction->setEnabled(true);
+
+    }
+    else if(usrlimit == "用户管理员"){
+        newAction->setEnabled(true);
+        openAction->setEnabled(true);
+        saveAction->setEnabled(true);
+        submitCheckingAction->setEnabled(true);
+        closeAction->setEnabled(true);
+        checkOpinionAction->setEnabled(true);
+        checkingProjectAction->setEnabled(true);
+        verifyProjectAction->setEnabled(true);
+
+        changePasswordAction->setEnabled(true);
+        usrManageAction->setEnabled(true);
+        projectManageAction->setEnabled(true);
+        usageRecordAction->setEnabled(true);
+        experParAction->setEnabled(true);
+    }
+}
+
+
 
 
 void MainWindow::inputParSLOT()

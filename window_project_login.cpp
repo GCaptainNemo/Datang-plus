@@ -23,6 +23,11 @@ void loginThreadObject::start()
 
         query.exec(sqlVerify);
         if (query.next()){
+
+            //            验证通过
+
+            otherPar::setUsrLimit(query.value(3).toString());
+
             QString ipv4 = utils::getIPV4address();
             QDateTime curDateTime = QDateTime::currentDateTime();
             QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
@@ -65,6 +70,7 @@ void Login_window::showMsgboxSLOT(int res)
     case 0:{
         QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
         this->loginThread.quit();
+        emit setLimitSIGNAL(otherPar::userLimit);
         accept();
         this->close();
         break;
@@ -118,10 +124,6 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-//    this->hlayout1 = new QHBoxLayout;
-//    this->hlayout2 = new QHBoxLayout;
-//    this->hlayout3 = new QHBoxLayout;
-//    this->layout = new QVBoxLayout(this);
     this->layout = new QGridLayout(this);
 
     this->usrnameLabel = new QLabel(tr("用户名"), this);
@@ -172,5 +174,6 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
     connect(&loginThread, SIGNAL(started()), threadObject, SLOT(start()));
     connect(threadObject, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
+
     this->show();
 }

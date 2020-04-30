@@ -56,7 +56,8 @@
 #include "window_inputparameter.h"
 #include "window_project_save.h"
 #include <QDesktopServices>
-
+#include "window_manage_project.h"
+#include "window_manage_user.h"
 
 
 class MainWindow : public QMainWindow
@@ -76,6 +77,11 @@ signals:
 
 
 private slots:
+    void setLimitSLOT(QString usrlimit);
+
+    void projectManageSLOT();
+    void userManageSLOT();
+
     void newSLOT();
     void openSLOT();
     void saveSLOT();
@@ -111,6 +117,7 @@ private slots:
     void inputParSLOT();
 
     void messageboxShowSLOT(int num);
+
 
 private:
     saveObject * saveObj;
@@ -148,7 +155,8 @@ private:
     pressureAirBlowerWindow * pAirBlowerWindow;
     systemConfigurationWindow * sysConfigWindow;
     inputParameterWindow * inputParWindow;
-
+    manageProjectWindow * managePjWindow;
+    window_manage_user * manageUsrWindow;
 
     //    工具栏
 
@@ -166,7 +174,7 @@ private:
     QAction *saveAction;
     QAction *submitCheckingAction;
     QAction *checkingProjectAction;
-    QAction *reviewProjectAction;
+    QAction *verifyProjectAction;
     QAction *checkOpinionAction;
     QAction *closeAction;
 
@@ -242,8 +250,8 @@ private:
 
     QMenu * systemArrangeMenu;
     QAction * changePasswordAction;
-    QAction * usrArrangeAction;
-    QAction * projectArrangeAction;
+    QAction * usrManageAction;
+    QAction * projectManageAction;
     QAction * usageRecordAction;
     QAction * experParAction;
 

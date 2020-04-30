@@ -41,6 +41,7 @@ public:
 
 signals:
     void startLoginSIGNAL();
+    void setLimitSIGNAL(QString usrlimit);
 
 public slots:
     void clearSLOT();
