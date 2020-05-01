@@ -1,9 +1,7 @@
 #include "window_project_login.h"
 
-loginThreadObject::loginThreadObject(QString nm, QString pw, QString ip):
-    name(nm), password(pw), ip(ip){}
 
-void loginThreadObject::start()
+void Login_window::start()
 {
     qDebug() << "I'm working in thread:" << QThread::currentThreadId();
 
@@ -14,7 +12,7 @@ void loginThreadObject::start()
 
     if(!db.open())                                      //打开数据库
     {
-        emit msgboxShowSIGNAL(1);
+        QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));
     }
     else
     {
@@ -47,11 +45,14 @@ void loginThreadObject::start()
                 QString version = query.value(0).toString();
                 otherPar::setVersion(version);
             }
-            emit msgboxShowSIGNAL(0);
+            QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
+            emit setLimitSIGNAL(otherPar::userLimit);
+            accept();
+            this->close();
         }
         else{
-            emit msgboxShowSIGNAL(-1);
-       }
+            QMessageBox::information(this, tr("连接结果"), tr("用户名或密码错误"));
+        }
     }
     db.close();
 }
@@ -64,27 +65,6 @@ void Login_window::clearSLOT()
     this->ipLineedit->clear();
 }
 
-void Login_window::showMsgboxSLOT(const int &res)
-{
-    switch (res){
-    case 0:{
-        QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
-        this->loginThread.quit();
-        emit setLimitSIGNAL(otherPar::userLimit);
-        accept();
-        this->close();
-        break;
-    }
-    case 1:
-        QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));
-        break;
-    case -1:
-        QMessageBox::information(this, tr("连接结果"), tr("用户名或密码错误"));
-    default:
-        break;
-    }
-}
-
 
 void Login_window::okSLOT()
 {
@@ -93,7 +73,15 @@ void Login_window::okSLOT()
 
     if (utils::ping(otherPar::ip)==0)
     {
-        this->loginThread.start();
+        if (QSqlDatabase::contains("SQLserver"))
+            this->db = QSqlDatabase::database("SQLserver");
+        else{
+            this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+                    "UID=sa;PWD=123456;";
+            db.setDatabaseName(dsn);
+        }
+        this->start();
      }
     else
         QMessageBox::information(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
@@ -165,15 +153,5 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     this->ipLineedit->setText("10.168.1.147");
     this->usrnameLineedit->setText("admin");
     this->pwordLineedit->setText("admin");
-
-
-    this->threadObject = new
-            loginThreadObject(otherPar::userid, otherPar::usercode, otherPar::ip);
-    this->threadObject->moveToThread(&loginThread);
-    connect(&loginThread, SIGNAL(finished()), threadObject, SLOT(deleteLater()));
-    connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
-    connect(&loginThread, SIGNAL(started()), threadObject, SLOT(start()));
-    connect(threadObject, SIGNAL(msgboxShowSIGNAL(const int&)), this, SLOT(showMsgboxSLOT(const int &)));
-
     this->show();
 }
