@@ -9,7 +9,7 @@ window_manage_password::window_manage_password(QWidget *parent) : QDialog(parent
     flags |=Qt::WindowMinimizeButtonHint ;
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
-
+    this->setAttribute(Qt::WA_DeleteOnClose);
 
     window_manage_password::num += 1;
     this->setWindowTitle(tr("修改密码"));

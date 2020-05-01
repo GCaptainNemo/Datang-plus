@@ -10,7 +10,7 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-
+    this->setAttribute(Qt::WA_DeleteOnClose);
     manageaRecordsWindow::num += 1;
     this->setWindowTitle(tr("使用记录管理"));
 
@@ -34,24 +34,35 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
     connect(firstPageButton, SIGNAL(clicked(bool)), this, SLOT(firstPageSLOT()));
     this->lastPageButton = new QPushButton("最后一页", this->widget);
     connect(lastPageButton, SIGNAL(clicked(bool)), this, SLOT(lastPageSLOT()));
-    this->currentPageLabel = new QLabel(tr(""), this);
+
+    this->calenderButton1 = new QPushButton(tr("日历"), this->widget);
+    this->calenderButton2 = new QPushButton(tr("日历"), this->widget);
+    buttonGroup = new QButtonGroup(this->widget);
+    buttonGroup->addButton(calenderButton1, 1);
+    buttonGroup->addButton(calenderButton2, 2);
+
+    connect(buttonGroup, SIGNAL(buttonClicked(int)), this, SLOT(calenderShowSLOT(const int &)));
+
+    this->currentPageLabel = new QLabel(tr(""), this->widget);
     currentPageLabel->setAlignment(Qt::AlignCenter);
-    this->totalPageLabel = new QLabel(tr(""), this);
+    this->totalPageLabel = new QLabel(tr(""), this->widget);
     totalPageLabel->setAlignment(Qt::AlignCenter);
-    this->totalRecordsLabel = new QLabel(tr(""), this);
+    this->totalRecordsLabel = new QLabel(tr(""), this->widget);
     totalRecordsLabel->setAlignment(Qt::AlignCenter);
-    this->eachPageRecordsLabel = new QLabel(tr("每页100条"), this);
+    this->eachPageRecordsLabel = new QLabel(tr("每页100条"), this->widget);
     eachPageRecordsLabel->setAlignment(Qt::AlignCenter);
 
-//    connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteProjectSLOT()));
+    connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteSLOT()));
 
     this->tableWidget = new QTableWidget(this);
     this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     this->gridLayout = new QGridLayout(this->widget);
     this->gridLayout->addWidget(this->dateLabel, 0, 0, 1, 6);
-    this->gridLayout->addWidget(this->initDateLineedit, 1, 0, 1, 6);
-    this->gridLayout->addWidget(this->lastDateLineedit, 2, 0, 1, 6);
+    this->gridLayout->addWidget(this->initDateLineedit, 1, 0, 1, 4);
+    this->gridLayout->addWidget(this->calenderButton1, 1, 4, 1, 2);
+    this->gridLayout->addWidget(this->lastDateLineedit, 2, 0, 1, 4);
+    this->gridLayout->addWidget(this->calenderButton2, 2, 4, 1, 2);
     this->gridLayout->addWidget(this->passwordLabel, 3, 0, 1, 3);
     this->gridLayout->addWidget(this->passwordLineedit, 3, 3, 1, 3);
 
@@ -74,9 +85,7 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
     this->layout->addWidget(this->tableWidget);
     this->layout->addWidget(this->widget);
     this->setRecordsModel();
-//    connect(tableWidget, SIGNAL(cellClicked(int, int)), this, SLOT(setLineeditTextSLOT(int)));
 
-    this->setAttribute(Qt::WA_DeleteOnClose);
     this->showMaximized();
 
 }
@@ -84,8 +93,64 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
 manageaRecordsWindow::~manageaRecordsWindow()
 {
     delete query;
-    delete query;
     manageaRecordsWindow::num -= 1;
+}
+
+void manageaRecordsWindow::calenderShowSLOT(const int & id)
+{
+    calenderWidget = new QCalendarWidget;
+    calenderWidget->setWindowTitle(tr("日历"));
+    calenderWidget->showNormal();
+    calenderWidget->setAttribute(Qt::WA_DeleteOnClose);
+    if(id == 1)
+        connect(calenderWidget, SIGNAL(clicked(QDate)), this, SLOT(initDateLineeditSLOT(QDate)));
+    else{
+        connect(calenderWidget, SIGNAL(clicked(QDate)), this, SLOT(lastDateLineeditSLOT(QDate)));
+
+    }
+}
+
+void manageaRecordsWindow::deleteSLOT()
+{
+    QString password = this->passwordLineedit->text();
+    QString initdate = this->initDateLineedit->text();
+    QString lastdate = this->lastDateLineedit->text();
+    if(password == otherPar::usercode)
+    {
+        if (db.open())
+        {
+            switch (QMessageBox::question(this, tr("删除提示信息"), QString("你确定要删除%1 0:0:0 - %2 23:59:59 的记录吗？").arg(initdate).arg(lastdate),
+                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
+            {
+            case QMessageBox::Ok:{
+                QString sqldelete = QString("DELETE records WHERE rectime between '%1' AND '%2 23:59:59'").arg(initdate).arg(lastdate);
+                this->query->exec(sqldelete);
+                delete query;
+                this->setRecordsModel();
+                break;
+                }
+
+            default:
+                break;
+            }
+        }
+    }
+    else{
+        QMessageBox::warning(this, tr("输入结果"), tr("密码出错!"));
+    }
+}
+
+
+
+void manageaRecordsWindow::initDateLineeditSLOT(const QDate & initDate){
+    this->initDateLineedit->setText(QString("%1-%2-%3").arg(initDate.year()).arg(initDate.month()).arg(initDate.day()));
+}
+
+
+
+void manageaRecordsWindow::lastDateLineeditSLOT(const QDate & lastDate){
+    this->lastDateLineedit->setText(QString("%1-%2-%3").arg(lastDate.year()).arg(lastDate.month()).arg(lastDate.day()));
+
 }
 
 

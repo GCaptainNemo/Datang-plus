@@ -10,7 +10,7 @@ window_manage_user::window_manage_user(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-
+    this->setAttribute(Qt::WA_DeleteOnClose);
     window_manage_user::num += 1;
     this->setWindowTitle(tr("用户管理"));
 
@@ -87,7 +87,6 @@ window_manage_user::window_manage_user(QWidget *parent) : QDialog(parent)
     this->setUserModel();
     connect(tableWidget, SIGNAL(cellClicked(int, int)), this, SLOT(setLineeditTextSLOT(int)));
 
-    this->setAttribute(Qt::WA_DeleteOnClose);
     this->resize(800, 1000);
     this->showNormal();
 

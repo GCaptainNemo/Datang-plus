@@ -136,6 +136,8 @@ void MainWindow::createAction()
     connect(usageRecordAction, SIGNAL(triggered(bool)), this, SLOT(recordsManageSLOT()));
 
     this->experParAction = new QAction(tr("经验参数"));
+    connect(experParAction, SIGNAL(triggered(bool)), this, SLOT(experienceParManageSLOT()));
+
 
     //    System arrangement menu
 
@@ -310,6 +312,18 @@ void MainWindow::configureSystemSLOT()
     }
 }
 
+void MainWindow::experienceParManageSLOT()
+{
+    if (window_manage_experience_par::num == 0){
+        this->manageExpParWindow = new window_manage_experience_par(this);
+    }
+    else{
+        this->manageExpParWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->manageExpParWindow->showNormal();
+    }
+
+}
+
 void MainWindow::userManageSLOT()
 {
     if (window_manage_user::num == 0){
@@ -377,7 +391,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);
-        experParAction->setEnabled(true);
+        experParAction->setEnabled(false);
     }
     else if(usrlimit == "校核"){
         newAction->setEnabled(true);
@@ -394,7 +408,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);
-        experParAction->setEnabled(true);
+        experParAction->setEnabled(false);
     }
     else if(usrlimit == "审核"){
         newAction->setEnabled(true);
@@ -410,7 +424,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);
-        experParAction->setEnabled(true);
+        experParAction->setEnabled(false);
 
     }
     else if(usrlimit == "用户管理员"){

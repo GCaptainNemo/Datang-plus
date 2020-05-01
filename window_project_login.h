@@ -33,8 +33,7 @@ public:
     Login_window(QWidget *parent = nullptr);
 
     ~Login_window(){
-        loginThread.quit();
-        loginThread.exit();
+
     }
 
 
@@ -48,12 +47,13 @@ public slots:
     void exitSLOT();
     void testNetSLOT();
 
+
 private:
     QLabel *usrnameLabel, *passwordLabel, *ipAddressLabel;
     QLineEdit *usrnameLineedit, *pwordLineedit, *ipLineedit;
     QPushButton *testNetButton, *okButton, *clearButton, *exitButton;
     QGridLayout * layout, *layout1;
-    QThread loginThread;
+
     QWidget * buttonWidget;
     QSqlDatabase db;
 

@@ -7,7 +7,7 @@
 class experiencePar
 {
 public:
-    experiencePar(QSqlQuery * query);
+    explicit experiencePar(QSqlQuery * query);
     static float GGHx ; //回转换热器泄露率
     static float so3x ; //GGH中SO3x脱除率
     static float hfx ; //GGH中HF脱除率

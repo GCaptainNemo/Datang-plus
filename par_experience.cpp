@@ -23,7 +23,7 @@ experiencePar::experiencePar(QSqlQuery * query)
     experiencePar::so3x= query->value(2).toFloat();
     experiencePar::hfx = query->value(3).toFloat();
     experiencePar::ashx = query->value(4).toFloat();
-    experiencePar::so3x = query->value(5).toFloat();
+    experiencePar::so3y = query->value(5).toFloat();
     experiencePar::hcly = query->value(6).toFloat();
     experiencePar::hfy = query->value(7).toFloat();
     experiencePar::ashy = query->value(8).toFloat();

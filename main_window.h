@@ -60,6 +60,7 @@
 #include "window_manage_user.h"
 #include "window_manage_password.h"
 #include "window_manage_userecords.h"
+#include "window_manage_experience_par.h"
 
 
 class MainWindow : public QMainWindow
@@ -85,6 +86,8 @@ private slots:
     void userManageSLOT();
     void passwordManageSLOT();
     void recordsManageSLOT();
+    void experienceParManageSLOT();
+
 
     void newSLOT();
     void openSLOT();
@@ -163,6 +166,7 @@ private:
     window_manage_user * manageUsrWindow;
     window_manage_password * managePwWindow;
     manageaRecordsWindow * manageRecWindow;
+    window_manage_experience_par * manageExpParWindow;
 
     //    工具栏
 

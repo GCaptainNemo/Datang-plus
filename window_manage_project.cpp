@@ -9,7 +9,7 @@ manageProjectWindow::manageProjectWindow(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-
+    this->setAttribute(Qt::WA_DeleteOnClose);
     manageProjectWindow::num += 1;
     this->setWindowTitle(tr("项目管理"));
 
@@ -43,7 +43,6 @@ manageProjectWindow::manageProjectWindow(QWidget *parent) : QDialog(parent)
     this->setPjModel();
     connect(tableWidget, SIGNAL(cellClicked(int, int)), this, SLOT(setLineeditTextSLOT(int)));
 
-    this->setAttribute(Qt::WA_DeleteOnClose);
     this->showMaximized();
 
 }

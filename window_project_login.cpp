@@ -142,7 +142,6 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     this->layout1->addWidget(this->exitButton, 0, 8, 1, 4);
     this->layout->addWidget(this->buttonWidget, 2, 0, 1, 12);
 
-
     this->setWindowTitle("登录窗口");
 
     connect(clearButton, SIGNAL(clicked()), this, SLOT(clearSLOT()));

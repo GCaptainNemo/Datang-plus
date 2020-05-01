@@ -15,6 +15,10 @@
 #include <QDateTime>
 #include <QStringList>
 #include <math.h>
+#include <QCalendarWidget>
+#include <QButtonGroup>
+#include <QDate>
+
 
 #include "utils.h"
 #include "par_others.h"
@@ -33,16 +37,23 @@ signals:
 public slots:
 //    void deleteProjectSLOT();
 //    void setLineeditTextSLOT(int row);
+    void deleteSLOT();
     void nextPageSLOT();
     void previousPageSLOT();
     void firstPageSLOT();
     void lastPageSLOT();
+    void calenderShowSLOT(const int & id);
+    void initDateLineeditSLOT(const QDate &initDate);
+    void lastDateLineeditSLOT(const QDate &lastDate);
+
 
 protected:
     QLabel * passwordLabel, *dateLabel, *currentPageLabel, *totalPageLabel, *eachPageRecordsLabel, *totalRecordsLabel;
-
+    QCalendarWidget * calenderWidget;
     QLineEdit * passwordLineedit, *initDateLineedit, *lastDateLineedit;
     QPushButton * deleteButton, *exportButton, *previousPageButton, *nextPageButton, *firstPageButton, *lastPageButton;
+    QPushButton * calenderButton1, *calenderButton2;
+    QButtonGroup * buttonGroup;
     QHBoxLayout * layout;
     QGridLayout * gridLayout;
     QTableWidget * tableWidget;
