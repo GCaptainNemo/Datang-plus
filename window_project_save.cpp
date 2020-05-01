@@ -620,7 +620,7 @@ void saveObject::commandSave()
     query->next();
     int recid = query->value(0).toInt() + 1;
     sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '保存项目%5')").arg(recid).
-            arg(otherPar::name).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
     query->exec(sqlInsertRecord);
 
     emit messageboxShowSIGNAL(4);

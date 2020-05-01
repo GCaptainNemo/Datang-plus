@@ -124,6 +124,7 @@ void MainWindow::createAction()
     //    System arrangement menu
 
     this->changePasswordAction = new QAction(tr("修改密码"));
+    connect(changePasswordAction, SIGNAL(triggered(bool)), this, SLOT(passwordManageSLOT()));
     this->usrManageAction = new QAction(tr("用户管理"));
     connect(usrManageAction, SIGNAL(triggered(bool)), this, SLOT(userManageSLOT()));
 
@@ -132,6 +133,8 @@ void MainWindow::createAction()
 
 
     this->usageRecordAction = new QAction(tr("使用记录"));
+    connect(usageRecordAction, SIGNAL(triggered(bool)), this, SLOT(recordsManageSLOT()));
+
     this->experParAction = new QAction(tr("经验参数"));
 
     //    System arrangement menu
@@ -318,6 +321,28 @@ void MainWindow::userManageSLOT()
     }
 }
 
+void MainWindow::recordsManageSLOT()
+{
+    if (manageaRecordsWindow::num == 0){
+        this->manageRecWindow = new manageaRecordsWindow(this);
+    }
+    else{
+        this->manageRecWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->manageRecWindow->showNormal();
+    }
+}
+
+void MainWindow::passwordManageSLOT()
+{
+    qDebug() << "window_manage_password::num = " << window_manage_password::num;
+    if (window_manage_password::num == 0){
+        this->managePwWindow = new window_manage_password(this);
+    }
+    else{
+        this->managePwWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->managePwWindow->showNormal();
+    }
+}
 
 void MainWindow::projectManageSLOT()
 {
@@ -348,7 +373,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
         checkingProjectAction->setEnabled(false);
         verifyProjectAction->setEnabled(false);
 
-        changePasswordAction->setEnabled(false);
+        changePasswordAction->setEnabled(true);
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);
@@ -365,7 +390,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
 
         verifyProjectAction->setEnabled(false);
 
-        changePasswordAction->setEnabled(false);
+        changePasswordAction->setEnabled(true);
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);
@@ -381,7 +406,7 @@ void MainWindow::setLimitSLOT(QString usrlimit)
         checkingProjectAction->setEnabled(true);
         verifyProjectAction->setEnabled(true);
 
-        changePasswordAction->setEnabled(false);
+        changePasswordAction->setEnabled(true);
         usrManageAction->setEnabled(false);
         projectManageAction->setEnabled(false);
         usageRecordAction->setEnabled(false);

@@ -8,17 +8,18 @@
 class otherPar
 {
 public:
-    static QString name;
-    static QString password;
+    static QString userid;
+    static QString usercode;
+    static QString username;
     static QString ip;
     static QString version;
     static QString prid;
     static QString userLimit;
     static void setGloabalvar(QString name, QString p, QString ip){
-        otherPar::name = name;
-        otherPar::password = p;
+        otherPar::userid = name;
+        otherPar::usercode = p;
         otherPar::ip = ip;
-        qDebug() << "name = "<<name << "password = "<<password << ip;
+        qDebug() << "name = "<<name << "password = "<<usercode << ip;
     }
     static void setVersion(QString vs)
     {

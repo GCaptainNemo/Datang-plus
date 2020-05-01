@@ -19,7 +19,7 @@ void loginThreadObject::start()
     else
     {
         QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(otherPar::name, otherPar::password);
+        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(otherPar::userid, otherPar::usercode);
 
         query.exec(sqlVerify);
         if (query.next()){
@@ -27,7 +27,7 @@ void loginThreadObject::start()
             //            验证通过
 
             otherPar::setUsrLimit(query.value(3).toString());
-
+            otherPar::username = query.value(2).toString();
             QString ipv4 = utils::getIPV4address();
             QDateTime curDateTime = QDateTime::currentDateTime();
             QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
@@ -37,7 +37,7 @@ void loginThreadObject::start()
 
             int recid = query.value(0).toInt() + 1;
             QString sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '登录成功')").arg(recid).
-                    arg(otherPar::name).arg(ipv4).arg(date);
+                    arg(otherPar::userid).arg(ipv4).arg(date);
             query.exec(sqlInsertRecord);
 
             QString sqlVersion = "SELECT * FROM version";
@@ -64,7 +64,7 @@ void Login_window::clearSLOT()
     this->ipLineedit->clear();
 }
 
-void Login_window::showMsgboxSLOT(int res)
+void Login_window::showMsgboxSLOT(const int &res)
 {
     switch (res){
     case 0:{
@@ -168,12 +168,12 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
 
 
     this->threadObject = new
-            loginThreadObject(otherPar::name, otherPar::password, otherPar::ip);
+            loginThreadObject(otherPar::userid, otherPar::usercode, otherPar::ip);
     this->threadObject->moveToThread(&loginThread);
     connect(&loginThread, SIGNAL(finished()), threadObject, SLOT(deleteLater()));
     connect(&loginThread, SIGNAL(finished()), &loginThread, SLOT(deleteLater()));
     connect(&loginThread, SIGNAL(started()), threadObject, SLOT(start()));
-    connect(threadObject, SIGNAL(msgboxShowSIGNAL(int)), this, SLOT(showMsgboxSLOT(int)));
+    connect(threadObject, SIGNAL(msgboxShowSIGNAL(const int&)), this, SLOT(showMsgboxSLOT(const int &)));
 
     this->show();
 }

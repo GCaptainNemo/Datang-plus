@@ -48,7 +48,7 @@ public slots:
     void okSLOT();
     void exitSLOT();
     void testNetSLOT();
-    void showMsgboxSLOT(int);
+    void showMsgboxSLOT(const int &);
 
 private:
     QLabel *usrnameLabel, *passwordLabel, *ipAddressLabel;

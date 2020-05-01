@@ -26,6 +26,8 @@ manageProjectWindow::manageProjectWindow(QWidget *parent) : QDialog(parent)
     connect(cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
     connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteProjectSLOT()));
     this->tableWidget = new QTableWidget(this);
+    this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     this->hlayout = new QHBoxLayout(this->widget);
     this->hlayout->addWidget(this->passwordLabel);
@@ -98,8 +100,6 @@ void manageProjectWindow::loadModel()
         }
 
     }
-    this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QStringList headerText;
     headerText<<"编号"<<"项目名称"<<"状态"<<"版次"<<"设计人编号"<<"校核人编号"<<"审核人编号";  //表头标题用QStringList来表示
     this->tableWidget->setHorizontalHeaderLabels(headerText);
@@ -120,7 +120,7 @@ void manageProjectWindow::deleteProjectSLOT()
 {
     QString name = this->passwordLineedit->text();
     QString prid = this->pridLineedit->text();
-    if(name == otherPar::password)
+    if(name == otherPar::usercode)
     {
         this->initSqlStatement(prid);
         if (db.open())
@@ -146,7 +146,7 @@ void manageProjectWindow::deleteProjectSLOT()
                     this->query->next();
                     int recid = this->query->value(0).toInt() + 1;
                     QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '删除项目").arg(recid).
-                            arg(otherPar::name).arg(ipv4).arg(date) + prid + "')";
+                            arg(otherPar::userid).arg(ipv4).arg(date) + prid + "')";
                     this->query->exec(sqlInsertRecord);
                     this->loadModel();
                 }

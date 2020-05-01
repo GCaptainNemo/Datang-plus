@@ -36,7 +36,7 @@ public slots:
     void deleteSLOT();
     void addSLOT();
     void saveSLOT();
-    void correctSLOT();
+    void updateSLOT();
     void setLineeditTextSLOT(int row);
 
 protected:

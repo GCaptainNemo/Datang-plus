@@ -58,6 +58,8 @@
 #include <QDesktopServices>
 #include "window_manage_project.h"
 #include "window_manage_user.h"
+#include "window_manage_password.h"
+#include "window_manage_userecords.h"
 
 
 class MainWindow : public QMainWindow
@@ -81,6 +83,8 @@ private slots:
 
     void projectManageSLOT();
     void userManageSLOT();
+    void passwordManageSLOT();
+    void recordsManageSLOT();
 
     void newSLOT();
     void openSLOT();
@@ -157,6 +161,8 @@ private:
     inputParameterWindow * inputParWindow;
     manageProjectWindow * managePjWindow;
     window_manage_user * manageUsrWindow;
+    window_manage_password * managePwWindow;
+    manageaRecordsWindow * manageRecWindow;
 
     //    工具栏
 

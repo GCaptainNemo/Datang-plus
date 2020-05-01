@@ -97,8 +97,8 @@ void caco3HouseWindow::initWidget2()
     group2 = new QButtonGroup(this->widget2);
     group2->addButton(cirCoreRadiobutton, 0);
     group2->addButton(sqrCoreRadiobutton, 1);
-    connect(group1, SIGNAL(buttonToggled(int,bool)), this, SLOT(group1SLOT(int, bool)));
-    connect(group1, SIGNAL(buttonToggled(int,bool)), this, SLOT(group2SLOT(int, bool)));
+    connect(group1, SIGNAL(buttonToggled(int,bool)), this, SLOT(group1SLOT(int)));
+    connect(group1, SIGNAL(buttonToggled(int,bool)), this, SLOT(group2SLOT(int)));
 
 }
 
@@ -180,11 +180,11 @@ void caco3HouseWindow::okSLOT()
 
 }
 
-void caco3HouseWindow::group1SLOT(int p, bool status)
+void caco3HouseWindow::group1SLOT(int p)
 {
     qDebug() << QString("you choose %1 buton").arg(p);
 }
-void caco3HouseWindow::group2SLOT(int p, bool status)
+void caco3HouseWindow::group2SLOT(int p)
 {
     qDebug() << QString("you choose %1 buton").arg(p);
 

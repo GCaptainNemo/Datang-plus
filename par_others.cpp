@@ -2,12 +2,13 @@
 
 
 
-QString otherPar::name = "";
-QString otherPar::password = "";
+QString otherPar::userid = "";
+QString otherPar::usercode = "";
 QString otherPar::ip = "";
 QString otherPar::version = "";
 QString otherPar::prid = "";
 QString otherPar::userLimit = "";
+QString otherPar::username = "";
 
 
 

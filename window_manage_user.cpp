@@ -15,6 +15,9 @@ window_manage_user::window_manage_user(QWidget *parent) : QDialog(parent)
     this->setWindowTitle(tr("用户管理"));
 
     this->tableWidget = new QTableWidget(this);
+    this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     this->layout = new QVBoxLayout(this);
 
 
@@ -47,7 +50,7 @@ window_manage_user::window_manage_user(QWidget *parent) : QDialog(parent)
     connect(addButton, SIGNAL(clicked(bool)), this, SLOT(addSLOT()));
     connect(deleteButton, SIGNAL(clicked(bool)), this, SLOT(deleteSLOT()));
     connect(saveButton, SIGNAL(clicked(bool)), this, SLOT(saveSLOT()));
-    connect(correctButton, SIGNAL(clicked(bool)), this, SLOT(correctSLOT()));
+    connect(correctButton, SIGNAL(clicked(bool)), this, SLOT(updateSLOT()));
 
 
 
@@ -107,7 +110,7 @@ void window_manage_user::saveSLOT()
     QString usrname = this->usrnameLineedit->text();
     QString usrlimit = this->usrlimitCombobox->currentText();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::password)
+    if(pw == otherPar::usercode)
     {
         if (db.open())
         {
@@ -132,7 +135,7 @@ void window_manage_user::saveSLOT()
                         this->query->next();
                         int recid = this->query->value(0).toInt() + 1;
                         QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '添加用户").arg(recid).
-                                arg(otherPar::name).arg(ipv4).arg(date) + usrid + "')";
+                                arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
                         this->query->exec(sqlInsertRecord);
                         this->loadModel();
                         break;
@@ -168,48 +171,67 @@ void window_manage_user::addSLOT()
     this->usridLineedit->setReadOnly(false);
 }
 
-void window_manage_user::correctSLOT()
+void window_manage_user::updateSLOT()
 {
     QString pw = this->managerPasswordLineedit->text();
+    QString pw1 = this->initPasswordLineedit->text();
+    QString pw2 = this->okPasswordLineedit->text();
+
     QString usrid = this->usridLineedit->text();
     QString usrname = this->usrnameLineedit->text();
     QString usrlimit = this->usrlimitCombobox->currentText();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::password)
+    if(pw == otherPar::usercode)
     {
         if (db.open())
         {
-            switch (QMessageBox::question(this, tr("删除提示信息"), "你确定要删除" + usrid + "用户吗？",
-                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
-            {
-            case QMessageBox::Ok:{
-                this->query->exec("SELECT * FROM users WHERE userid='" + usrid + "'");
-                if (query->next()){
-                    this->query->exec("DELETE FROM users WHERE userid='" + usrid + "'");
+            if(pw1 == pw2 && pw1!=""){
+                if(usrlimit!=""){
 
-                    this->usridLineedit->clear();
-                    this->usrnameLineedit->clear();
-                    this->initPasswordLineedit->clear();
-                    this->okPasswordLineedit->clear();
-                    QString ipv4 = utils::getIPV4address();
-                    QDateTime curDateTime = QDateTime::currentDateTime();
-                    QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
+                    switch (QMessageBox::question(this, tr("更改提示信息"), "你确定要更改" + usrid + "用户吗？",
+                                          QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
+                    {
+                    case QMessageBox::Ok:
+                        {
+                        this->query->exec("SELECT * FROM users WHERE userid='" + usrid + "'");
+                        if (query->next()){
+                            this->query->exec(QString("UPDATE users SET userid='%1', usercode='%2', "
+                                              "username='%3', userlimit='%4' WHERE userid='%5'").arg(usrid).arg(pw1).arg(usrname).arg(usrlimit).arg(usrid));
 
-                    this->query->exec("SELECT MAX(recid) FROM records");
-                    this->query->next();
-                    int recid = this->query->value(0).toInt() + 1;
-                    QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '删除用户").arg(recid).
-                            arg(otherPar::name).arg(ipv4).arg(date) + usrid + "')";
-                    this->query->exec(sqlInsertRecord);
-                    this->loadModel();
+                            this->usridLineedit->clear();
+                            this->usrnameLineedit->clear();
+                            this->initPasswordLineedit->clear();
+                            this->okPasswordLineedit->clear();
+                            QString ipv4 = utils::getIPV4address();
+                            QDateTime curDateTime = QDateTime::currentDateTime();
+                            QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
+
+                            this->query->exec("SELECT MAX(recid) FROM records");
+                            this->query->next();
+                            int recid = this->query->value(0).toInt() + 1;
+                            QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '更改用户").arg(recid).
+                                    arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
+                            this->query->exec(sqlInsertRecord);
+                            this->loadModel();
+                        }
+                        else{
+                            QMessageBox::warning(this, tr("更改结果"), tr("没有该用户！"));
+                            }
+                        break;
+                    }
+                    default:
+                        break;
+                    }
+              }
+              else
+                {
+                    QMessageBox::warning(this, tr("更改结果"), tr("请填入用户权限！"));
                 }
-                else{
-                    QMessageBox::warning(this, tr("删除结果"), tr("没有该用户！"));
-                }
-                break;
-            }
-            default:
-                break;
+           }
+           else{
+                QMessageBox::warning(this, tr("更改结果"), tr("两次密码输入错误！"));
+                this->initPasswordLineedit->clear();
+                this->okPasswordLineedit->clear();
             }
         }
     }
@@ -225,7 +247,7 @@ void window_manage_user::deleteSLOT()
     QString pw = this->managerPasswordLineedit->text();
     QString usrid = this->usridLineedit->text();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::password)
+    if(pw == otherPar::usercode)
     {
         if (db.open())
         {
@@ -249,7 +271,7 @@ void window_manage_user::deleteSLOT()
                     this->query->next();
                     int recid = this->query->value(0).toInt() + 1;
                     QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '删除用户").arg(recid).
-                            arg(otherPar::name).arg(ipv4).arg(date) + usrid + "')";
+                            arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
                     this->query->exec(sqlInsertRecord);
                     this->loadModel();
                 }
@@ -315,8 +337,6 @@ void window_manage_user::loadModel()
         }
     }
     this->tableWidget->setColumnHidden(1, true);
-    this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
-    this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
     QStringList headerText;
     headerText<<"用户名"<<"密码"<<"备注"<<"权限";  //表头标题用QStringList来表示
     this->tableWidget->setHorizontalHeaderLabels(headerText);

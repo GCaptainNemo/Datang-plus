@@ -37,8 +37,8 @@ protected:
     QVBoxLayout * layout;
     QHBoxLayout * hlayout;
     QTableWidget * tableWidget;
-    QSqlDatabase db;
     QWidget * widget;
+    QSqlDatabase db;
     QSqlQuery * query;
     void initSqlStatement(QString prid);
     void setPjModel();

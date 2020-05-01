@@ -29,8 +29,8 @@ signals:
 
 public slots:
     void okSLOT();
-    void group1SLOT(int p, bool status);
-    void group2SLOT(int p, bool status);
+    void group1SLOT(int p);
+    void group2SLOT(int p);
 
 protected:
     QWidget * widget1, *widget2, *widget3, *widget4, *widget5;
