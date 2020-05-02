@@ -18,7 +18,9 @@
 #include <QCalendarWidget>
 #include <QButtonGroup>
 #include <QDate>
-
+#include <QAxobject>
+#include <QMap>
+#include <string>
 
 #include "utils.h"
 #include "par_others.h"
@@ -30,13 +32,13 @@ class manageaRecordsWindow : public QDialog
 public:
     explicit manageaRecordsWindow(QWidget *parent = nullptr);
     static int num;
+
     ~manageaRecordsWindow();
 
 signals:
 
 public slots:
-//    void deleteProjectSLOT();
-//    void setLineeditTextSLOT(int row);
+
     void deleteSLOT();
     void nextPageSLOT();
     void previousPageSLOT();
@@ -45,11 +47,11 @@ public slots:
     void calenderShowSLOT(const int & id);
     void initDateLineeditSLOT(const QDate &initDate);
     void lastDateLineeditSLOT(const QDate &lastDate);
-
+    void exportExcelSLOT();
 
 protected:
     QLabel * passwordLabel, *dateLabel, *currentPageLabel, *totalPageLabel, *eachPageRecordsLabel, *totalRecordsLabel;
-    QCalendarWidget * calenderWidget;
+    myCalender * calenderWidget;
     QLineEdit * passwordLineedit, *initDateLineedit, *lastDateLineedit;
     QPushButton * deleteButton, *exportButton, *previousPageButton, *nextPageButton, *firstPageButton, *lastPageButton;
     QPushButton * calenderButton1, *calenderButton2;
@@ -60,13 +62,35 @@ protected:
     QWidget * widget;
     QSqlDatabase db;
     QSqlQuery * query;
+
+
+    QAxObject * myexcel;
+    QAxObject * mywork;
+    QAxObject * workbook;
+    QAxObject * mysheets;
     int totalRecordsNum;
     void initSqlStatement(QString prid);
     void setRecordsModel();
     void start(QString prid);
 private:
     QString sqlPinf, sqlEquip, sqlGas, sqlGSL, sqlCoal, sqlProject;
+    QMap <int, QString> excelMap = {
+        {0, "A"}, {1, "B"}, {2, "C"}, {3, "D"}, {4, "E"}
+    };
+
     void loadModel();
+
+
 };
+
+
+
+
+
+
+
+
+
+
 
 #endif // WINDOW_MANAGE_USERECORES_H

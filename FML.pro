@@ -132,3 +132,4 @@ DISTFILES += \
     icon/统计.ico \
     icon/退出.ico \
     icon/项目.ico
+QT += axcontainer

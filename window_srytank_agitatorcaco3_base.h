@@ -30,6 +30,9 @@ public slots:
     void okSLOT();
 
 protected:
+    float & Qsj;
+    int &FGDnum;
+    float & Tsj, & Dsj, & Hsj, & HDsj, & Vjsj, & VTjsj, & Ysj, & Nbsj, & Nfsj,  & Nesj,  & Nksj;
     QWidget * sryTankWidget, * agitatorWidget;
     QLabel * sryTankLabel, * agitatorLabel;
 
@@ -53,9 +56,7 @@ protected:
     void initAgitator();
     float YL(const float &p);
 
-    float & Qsj;
-    int &FGDnum;
-    float & Tsj, & Dsj, & Hsj, & HDsj, & Vjsj, & VTjsj, & Ysj, & Nbsj, & Nfsj,  & Nesj,  & Nksj;
+
 };
 
 #endif // WINDOW_SRYTANKANDAGITATORCACO3_H

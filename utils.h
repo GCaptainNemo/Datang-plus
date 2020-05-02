@@ -13,8 +13,44 @@
 #include <QHostInfo>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QCalendarWidget>
+#include <QAxObject>
+#include <QFile>
+#include <QDir>
 
 #include "par_others.h"
+
+
+class myCalender :public QCalendarWidget
+{
+public:
+    static int calenderNum;
+    explicit myCalender(QWidget * parent=nullptr);
+    ~myCalender();
+
+};
+
+class ExcelExport
+{
+public:
+    ExcelExport();
+    ~ExcelExport();
+
+    void newExcel(const QString &fileName);
+    void setCellValue(int row, int column, const QString &value);
+    void setCellValue(int row, int column, const int &value);
+
+    void saveExcel(const QString &fileName);
+
+
+    QAxObject *pApplication;
+    QAxObject *pWorkBooks;
+    QAxObject *pWorkBook;
+    QAxObject *pSheets;
+    QAxObject *pSheet;
+
+};
+
 
 
 namespace utils{

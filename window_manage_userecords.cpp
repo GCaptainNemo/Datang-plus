@@ -1,6 +1,7 @@
 #include "window_manage_userecords.h"
 
 
+
 int manageaRecordsWindow::num = 0;
 
 manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
@@ -26,6 +27,7 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
 
     this->deleteButton = new QPushButton("删除记录", this->widget);
     this->exportButton = new QPushButton("导出Excel文件", this->widget);
+    connect(exportButton, SIGNAL(clicked(bool)), this, SLOT(exportExcelSLOT()));
     this->previousPageButton = new QPushButton("上一页", this->widget);
     connect(previousPageButton, SIGNAL(clicked(bool)), this, SLOT(previousPageSLOT()));
     this->nextPageButton = new QPushButton("下一页", this->widget);
@@ -85,7 +87,6 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
     this->layout->addWidget(this->tableWidget);
     this->layout->addWidget(this->widget);
     this->setRecordsModel();
-
     this->showMaximized();
 
 }
@@ -93,21 +94,107 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
 manageaRecordsWindow::~manageaRecordsWindow()
 {
     delete query;
+    if (myCalender::calenderNum == 1)
+        calenderWidget->close();
+
     manageaRecordsWindow::num -= 1;
 }
 
 void manageaRecordsWindow::calenderShowSLOT(const int & id)
 {
-    calenderWidget = new QCalendarWidget;
-    calenderWidget->setWindowTitle(tr("日历"));
-    calenderWidget->showNormal();
-    calenderWidget->setAttribute(Qt::WA_DeleteOnClose);
+    if (myCalender::calenderNum >= 1)
+    {
+        calenderWidget->close();
+    }
+
+    calenderWidget = new myCalender;
     if(id == 1)
         connect(calenderWidget, SIGNAL(clicked(QDate)), this, SLOT(initDateLineeditSLOT(QDate)));
     else{
         connect(calenderWidget, SIGNAL(clicked(QDate)), this, SLOT(lastDateLineeditSLOT(QDate)));
 
     }
+}
+
+void manageaRecordsWindow::exportExcelSLOT()
+{
+
+    //    construct function
+
+    QString password = this->passwordLineedit->text();
+    QString initdate = this->initDateLineedit->text();
+    QString lastdate = this->lastDateLineedit->text();
+    if(password == otherPar::usercode)
+    {
+        if (db.open())
+        {
+            switch (QMessageBox::question(this, tr("导出提示信息"), QString("你确定要导出%1 0:0:0 - %2 23:59:59 的记录吗？").arg(initdate).arg(lastdate),
+                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
+            {
+            case QMessageBox::Ok:{
+                QString sqlExportStatement = QString("SELECT * FROM records WHERE rectime between '%1' AND '%2 23:59:59' "
+                                                     "ORDER BY recid DESC").arg(initdate).arg(lastdate);
+                this->query->exec(sqlExportStatement);
+                myexcel = new QAxObject("Excel.Application");
+                //false显示窗体（看具体过程）
+                myexcel->dynamicCall("SetVisible(bool)", true);
+                //显示警告信息
+                myexcel->setProperty("DisplayAlerts", true);
+
+                mywork = myexcel->querySubObject("WorkBooks");
+                mywork->dynamicCall("Add");
+                workbook = myexcel->querySubObject("ActiveWorkBook");
+                mysheets = workbook->querySubObject("Sheets");
+
+
+                mysheets->dynamicCall("Add");
+                QAxObject *sheet = workbook->querySubObject("ActiveSheet");
+                sheet->setProperty("Name", "使用记录");
+
+                QAxObject *cell;
+                cell = sheet->querySubObject("Range(QVariant, QVariant)", "A1");
+                cell->dynamicCall("SetValue(const QVariant&)", QVariant("编号"));
+                cell = sheet->querySubObject("Range(QVariant, QVariant)", "B1");
+                cell->dynamicCall("SetValue(const QVariant&)", QVariant("用户名"));
+                cell = sheet->querySubObject("Range(QVariant, QVariant)", "C1");
+                cell->dynamicCall("SetValue(const QVariant&)", QVariant("用户IP"));
+                cell = sheet->querySubObject("Range(QVariant, QVariant)", "D1");
+                cell->dynamicCall("SetValue(const QVariant&)", QVariant("操作时间"));
+                cell = sheet->querySubObject("Range(QVariant, QVariant)", "E1");
+                cell->dynamicCall("SetValue(const QVariant&)", QVariant("操作"));
+                int num = 1;
+
+                while(query->next())
+                {
+                    num += 1;
+                    for(int i = 0; i<=4; ++i)
+                    {
+                        cell = sheet->querySubObject("Range(QVariant, QVariant)", this->excelMap[i] + QString("%1").arg(num));
+                        cell->dynamicCall("SetValue(const QVariant&)", QVariant(query->value(i).toString()));
+                    }
+                }
+                workbook->dynamicCall("Close()");
+                myexcel->dynamicCall("Quit()");
+                delete myexcel;
+
+                delete query;
+                this->setRecordsModel();
+                break;
+                }
+
+            default:
+                break;
+            }
+        }
+    }
+    else{
+        QMessageBox::warning(this, tr("输入结果"), tr("密码出错!"));
+    }
+
+
+
+
+
 }
 
 void manageaRecordsWindow::deleteSLOT()
@@ -126,6 +213,7 @@ void manageaRecordsWindow::deleteSLOT()
                 QString sqldelete = QString("DELETE records WHERE rectime between '%1' AND '%2 23:59:59'").arg(initdate).arg(lastdate);
                 this->query->exec(sqldelete);
                 delete query;
+                QMessageBox::information(this, tr("删除结果"), tr("删除成功"));
                 this->setRecordsModel();
                 break;
                 }
