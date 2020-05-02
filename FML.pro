@@ -72,7 +72,8 @@ SOURCES += \
     window_manage_user.cpp \
     window_manage_password.cpp \
     window_manage_userecords.cpp \
-    window_manage_experience_par.cpp
+    window_manage_experience_par.cpp \
+    window_equipment_parameter_total.cpp
 
 HEADERS += \
     main_window.h \
@@ -121,7 +122,8 @@ HEADERS += \
     window_manage_user.h \
     window_manage_password.h \
     window_manage_userecords.h \
-    window_manage_experience_par.h
+    window_manage_experience_par.h \
+    window_equipment_parameter_total.h
 
 DISTFILES += \
     icon/new.ico \

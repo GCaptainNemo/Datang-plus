@@ -62,6 +62,8 @@
 #include "window_manage_userecords.h"
 #include "window_manage_experience_par.h"
 
+#include "window_equipment_parameter_total.h"
+
 
 class MainWindow : public QMainWindow
 {
@@ -123,6 +125,10 @@ private slots:
     void createPdfSLOT();
     void inputParSLOT();
 
+
+    void equipmentParSetSLOT();
+
+
     void messageboxShowSLOT(int num);
 
 
@@ -167,6 +173,9 @@ private:
     window_manage_password * managePwWindow;
     manageaRecordsWindow * manageRecWindow;
     window_manage_experience_par * manageExpParWindow;
+
+    window_equipment_parameter_total * equipmentParTotalWindow;
+
 
     //    工具栏
 

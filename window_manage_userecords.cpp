@@ -163,14 +163,17 @@ void manageaRecordsWindow::exportExcelSLOT()
                 cell = sheet->querySubObject("Range(QVariant, QVariant)", "E1");
                 cell->dynamicCall("SetValue(const QVariant&)", QVariant("操作"));
                 int num = 1;
-
+                QAxObject * range;
                 while(query->next())
                 {
                     num += 1;
                     for(int i = 0; i<=4; ++i)
                     {
-                        cell = sheet->querySubObject("Range(QVariant, QVariant)", this->excelMap[i] + QString("%1").arg(num));
+                        QString pos = this->excelMap[i] + QString("%1").arg(num);
+                        cell = sheet->querySubObject("Range(QVariant, QVariant)", pos);
                         cell->dynamicCall("SetValue(const QVariant&)", QVariant(query->value(i).toString()));
+                        range = sheet->querySubObject("Range(const QString&)", pos);
+                        range->setProperty("HorizontalAlignment", -4108);
                     }
                 }
                 workbook->dynamicCall("Close()");

@@ -114,7 +114,7 @@ void MainWindow::createAction()
     connect(wasteH2OfeedAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2oFeedPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->equipmentParSetAction = new QAction(QIcon("..//FML//icon//equip.ico"), tr("设备参数汇总"));
-
+    connect(equipmentParSetAction, SIGNAL(triggered(bool)), this, SLOT(equipmentParSetSLOT()));
 
     //    data process menu
 
@@ -323,6 +323,23 @@ void MainWindow::experienceParManageSLOT()
     }
 
 }
+
+
+void MainWindow::equipmentParSetSLOT()
+{
+    if (window_equipment_parameter_total::num == 0){
+        this->equipmentParTotalWindow = new window_equipment_parameter_total(this);
+    }
+    else{
+        this->equipmentParTotalWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->equipmentParTotalWindow->showMaximized();
+    }
+
+
+}
+
+
+
 
 void MainWindow::userManageSLOT()
 {
