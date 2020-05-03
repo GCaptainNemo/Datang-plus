@@ -1,14 +1,14 @@
-#include "window_equipment_parameter_total.h"
+#include "window_total_equipment_parameter.h"
 
-int window_equipment_parameter_total::num = 0;
+int window_total_equipment_parameter::num = 0;
 
-window_equipment_parameter_total::window_equipment_parameter_total(QWidget *parent) : QDialog(parent)
+window_total_equipment_parameter::window_total_equipment_parameter(QWidget *parent) : QDialog(parent)
 {
     Qt::WindowFlags flags=Qt::Dialog;
     flags |=Qt::WindowMinMaxButtonsHint;
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
-    window_equipment_parameter_total::num += 1;
+    window_total_equipment_parameter::num += 1;
     this->setAttribute(Qt::WA_DeleteOnClose);
     this->setWindowTitle(tr("设备参数汇总"));
 
@@ -28,12 +28,12 @@ window_equipment_parameter_total::window_equipment_parameter_total(QWidget *pare
 
 }
 
-window_equipment_parameter_total::~window_equipment_parameter_total()
+window_total_equipment_parameter::~window_total_equipment_parameter()
 {
-    window_equipment_parameter_total::num -= 1;
+    window_total_equipment_parameter::num -= 1;
 }
 
-void window_equipment_parameter_total::initTableWidget()
+void window_total_equipment_parameter::initTableWidget()
 {
     this->tableWidget->setColumnCount(5);
     this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -147,7 +147,7 @@ void window_equipment_parameter_total::initTableWidget()
     this->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
 
-void window_equipment_parameter_total::judgePop()
+void window_total_equipment_parameter::judgePop()
 {
     if (pinf::zengya == 0)
     {
@@ -230,7 +230,7 @@ void window_equipment_parameter_total::judgePop()
 
 
 
-void window_equipment_parameter_total::exportSLOT()
+void window_total_equipment_parameter::exportSLOT()
 {
     myexcel = new QAxObject("Excel.Application");
     //false显示窗体（看具体过程）
@@ -299,24 +299,21 @@ void window_equipment_parameter_total::exportSLOT()
     int index = this->equipNameStringList.indexOf(rx);
     QString merge_cell;
     merge_cell = QString("A%1:A%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
-    qDebug() << "merge_cell = " << merge_cell;
     cell = sheet->querySubObject("Range(const QString&)", merge_cell);
     cell->setProperty("MergeCells", true);
     cell->setProperty("WarpText", true);
+
     merge_cell = QString("B%1:B%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
-    qDebug() << "merge_cell = " << merge_cell;
     cell = sheet->querySubObject("Range(const QString&)", merge_cell);
     cell->setProperty("MergeCells", true);
     cell->setProperty("WarpText", true);
+
     merge_cell = QString("D%1:D%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
-    qDebug() << "merge_cell = " << merge_cell;
     cell = sheet->querySubObject("Range(const QString&)", merge_cell);
     cell->setProperty("MergeCells", true);
     cell->setProperty("WarpText", true);
     mysheet = workbook->querySubObject("Worksheets(int)",1);
     mysheet->querySubObject("UsedRange")->querySubObject("Columns")->dynamicCall("AutoFit");
-
-
     workbook->dynamicCall("Close()");
     myexcel->dynamicCall("Quit(void)");
     delete myexcel;

@@ -2,6 +2,8 @@
 
 int systemConfigurationWindow::num = 0;
 int systemConfigurationWindow::pzh = 0;
+int systemConfigurationWindow::frm1_ = 0;
+
 
 systemConfigurationWindow::systemConfigurationWindow(QWidget *parent) : QDialog(parent)
 {

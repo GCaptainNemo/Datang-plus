@@ -1,6 +1,8 @@
 #include "main_window.h"
 #include "widget_central.h"
 
+int MainWindow::first = 0;
+
 
 void MainWindow::createAction()
 {
@@ -19,12 +21,18 @@ void MainWindow::createAction()
     connect(saveAction, SIGNAL(triggered()), this, SLOT(saveSLOT()));
 
     this->submitCheckingAction = new QAction(tr("提交校审"), this);
+    connect(submitCheckingAction, SIGNAL(triggered(bool)), this, SLOT(submitCheckingSLOT()));
+
 
     this->checkingProjectAction = new QAction(tr("校核项目"), this);
-    connect(checkingProjectAction, SIGNAL(triggered()), this, SLOT(checkSLOT()));
+    connect(checkingProjectAction, SIGNAL(triggered()), this, SLOT(checkProjectSLOT()));
 
     this->verifyProjectAction = new QAction(tr("审核项目"), this);
-    this->checkOpinionAction = new QAction(tr("校核意见"), this);
+    connect(verifyProjectAction, SIGNAL(triggered()), this, SLOT(verifyProjectSLOT()));
+
+    this->checkOpinionAction = new QAction(tr("校审意见"), this);
+    connect(checkOpinionAction, SIGNAL(triggered(bool)), this, SLOT(checkOpinionSLOT()));
+
 
     this->closeAction = new QAction(tr("关闭"), this);
     connect(closeAction , SIGNAL(triggered()), this, SLOT(close()));
@@ -118,7 +126,9 @@ void MainWindow::createAction()
 
     //    data process menu
 
-    this->balanceAction = new QAction(QIcon("..//FML//icon//data.ico"), tr("物料平衡计算结果"));
+    this->balanceDataAction = new QAction(QIcon("..//FML//icon//data.ico"), tr("物料平衡计算结果"));
+    connect(balanceDataAction, SIGNAL(triggered(bool)), this, SLOT(balanceDataSLOT()));
+
     this->curveAction = new QAction(QIcon("..//FML//icon//curve.ico"), tr("性能曲线"));
 
     //    System arrangement menu
@@ -238,7 +248,7 @@ void MainWindow::createMenus()
     //    data process menu
 
     this->dataProcessMenu = menuBar()->addMenu(tr("数据分析"));
-    this->dataProcessMenu->addAction(this->balanceAction);
+    this->dataProcessMenu->addAction(this->balanceDataAction);
     this->dataProcessMenu->addAction(this->curveAction);
 
     //    System arrangement menu
@@ -270,7 +280,7 @@ void MainWindow::createToolBars()
     this->inputTool->addAction(this->inputParAction);
     this->inputTool->addAction(this->equipmentParSetAction);
     this->outputTool = this->addToolBar("Output");
-    this->outputTool->addAction(this->balanceAction);
+    this->outputTool->addAction(this->balanceDataAction);
     this->outputTool->addAction(this->curveAction);
 }
 
@@ -325,17 +335,27 @@ void MainWindow::experienceParManageSLOT()
 }
 
 
+void MainWindow::balanceDataSLOT()
+{
+    if (window_total_calculationresult::num == 0){
+        this->calculationReslutTotalWindow = new window_total_calculationresult(this);
+    }
+    else{
+        this->calculationReslutTotalWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->calculationReslutTotalWindow->showMaximized();
+    }
+}
+
+
 void MainWindow::equipmentParSetSLOT()
 {
-    if (window_equipment_parameter_total::num == 0){
-        this->equipmentParTotalWindow = new window_equipment_parameter_total(this);
+    if (window_total_equipment_parameter::num == 0){
+        this->equipmentParTotalWindow = new window_total_equipment_parameter(this);
     }
     else{
         this->equipmentParTotalWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
         this->equipmentParTotalWindow->showMaximized();
     }
-
-
 }
 
 
@@ -585,14 +605,40 @@ void MainWindow::openSLOT()
 }
 
 
+void MainWindow::submitCheckingSLOT()
+{
+    this->askForCheckingObj = new askForCheckingObject;
+    connect(askForCheckingObj, SIGNAL(messageboxShowSIGNAL(int)), this, SLOT(messageboxShowSLOT(int)));
+    this->saveObj = new saveObject;
+    connect(saveObj, SIGNAL(messageboxShowSIGNAL(int)), this, SLOT(messageboxShowSLOT(int)));
+
+    switch(QMessageBox::question(this, tr("提交校审"), tr("是否保存项目并提交校审项目？"),
+                                 QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
+
+    {
+    case QMessageBox::Ok:{
+        this->saveObj->start();
+        this->askForCheckingObj->start();
+        break;
+    }
+    case QMessageBox::Cancel:
+        break;
+    default:
+        break;
+    }
+    delete askForCheckingObj;
+    delete saveObj;
+    return;
+}
+
 void MainWindow::setTitleSLOT()
 {
-    qDebug() << "pp1 = " << QString("%1").arg(pinf::PP1);
-    qDebug() << "pp2 = " << QString("%1").arg(pinf::PP2);
-
 
     this->setWindowTitle(QString::fromStdString("湿法烟气脱硫系统 - [" + projects::pj_name + "]"));
     systemConfigurationWindow::pzh = 1;
+
+    MainWindow::first = 1;
+
 }
 
 
@@ -823,6 +869,7 @@ void MainWindow::saveSLOT()
     default:
         break;   
     }
+    delete saveObj;
     return;
 }
 
@@ -840,26 +887,81 @@ void MainWindow::messageboxShowSLOT(int num)
     case 2:
         QMessageBox::warning(this, tr("保存结果"), tr("项目为只读模式打开,无法保存"));
         break;
-    case 3:
+    case 3:        
         QMessageBox::warning(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
         break;
     case 4:
-        QMessageBox::warning(this, tr("保存结果"), tr("项目保存成功"));
+        QMessageBox::information(this, tr("保存结果"), tr("项目保存成功!"));
         break;
+    case 5:
+        QMessageBox::information(this, tr("提交校审结果"), tr("项目提交校审成功!"));
+        break;
+
     default:
         break;
     }
 }
 
-
-
-void MainWindow::checkSLOT()
+void MainWindow::checkOpinionSLOT()
 {
-    if (checkPjWindow::num == 0)
-        this->checkOpinionWindow = new checkPjWindow(this);
+    if (window_project_check_opinion::num == 0 )
+    {
+        if (MainWindow::first == 1 && systemConfigurationWindow::pzh == 1)
+        {
+            this->checkOpinionWinow = new window_project_check_opinion(this);
+        }
+        else
+        {
+            QMessageBox::warning(this, tr("提示"), tr("须新建或打开项目"));
+        }
+    }
     else{
-        this->checkOpinionWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
-        this->checkOpinionWindow->showNormal();
+        this->checkOpinionWinow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->checkOpinionWinow->showNormal();
+    }
+
+}
+
+
+
+void MainWindow::verifyProjectSLOT()
+{
+    if (window_project_check_verify::num == 0 )
+    {
+        if (MainWindow::first == 1 && systemConfigurationWindow::pzh == 1)
+        {
+            this->verifyProjectWindow = new window_project_check_verify(this);
+        }
+        else
+        {
+            QMessageBox::warning(this, tr("提示"), tr("须新建或打开项目"));
+        }
+    }
+    else{
+        this->verifyProjectWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->verifyProjectWindow->showNormal();
+    }
+
+}
+
+
+void MainWindow::checkProjectSLOT()
+{
+
+    if (checkProjectWindow::num == 0 )
+    {
+        if (MainWindow::first == 1 && systemConfigurationWindow::pzh == 1)
+        {
+            this->checkPjWindow = new checkProjectWindow(this);
+        }
+        else
+        {
+            QMessageBox::warning(this, tr("提示"), tr("须新建或打开项目"));
+        }
+    }
+    else{
+        this->checkPjWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->checkPjWindow->showNormal();
     }
 }
 

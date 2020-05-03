@@ -62,7 +62,12 @@
 #include "window_manage_userecords.h"
 #include "window_manage_experience_par.h"
 
-#include "window_equipment_parameter_total.h"
+#include "window_total_equipment_parameter.h"
+#include "window_total_calculationresult.h"
+#include "window_project_checking_askfor.h"
+#include "window_project_verify.h"
+#include "window_project_check_opinion.h"
+
 
 
 class MainWindow : public QMainWindow
@@ -70,6 +75,7 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    static int first; // open / new project;
     MainWindow(QWidget *parent = 0);
     ~MainWindow();
     void createAction();
@@ -89,12 +95,12 @@ private slots:
     void passwordManageSLOT();
     void recordsManageSLOT();
     void experienceParManageSLOT();
-
+    void balanceDataSLOT();
 
     void newSLOT();
     void openSLOT();
     void saveSLOT();
-    void checkSLOT();
+    void checkProjectSLOT();
     void aboutSLOT();
     void wasteH2OrotationalFlowSLOT();
     void caso4RotationalFlowSLOT();
@@ -132,7 +138,13 @@ private slots:
     void messageboxShowSLOT(int num);
 
 
+    void submitCheckingSLOT();
+    void verifyProjectSLOT();
+    void checkOpinionSLOT();
+
+
 private:
+    askForCheckingObject * askForCheckingObj;
     saveObject * saveObj;
     QThread * myThread;
 
@@ -141,7 +153,11 @@ private:
 
     newPjWindow * newWindow;
     openPjWindow * openProjectwindow;
-    checkPjWindow * checkOpinionWindow ;
+    checkProjectWindow * checkPjWindow ;
+    window_project_check_verify * verifyProjectWindow;
+    window_project_check_opinion * checkOpinionWinow;
+
+
     about_window * aboutWindow ;
     wasteH2OrotationalFlow_window * wasteH2OroFlowWindow ;
     caso4RotationalFlow_window * caso4RoFlowWindow;
@@ -174,8 +190,8 @@ private:
     manageaRecordsWindow * manageRecWindow;
     window_manage_experience_par * manageExpParWindow;
 
-    window_equipment_parameter_total * equipmentParTotalWindow;
-
+    window_total_equipment_parameter * equipmentParTotalWindow;
+    window_total_calculationresult * calculationReslutTotalWindow;
 
     //    工具栏
 
@@ -262,7 +278,7 @@ private:
     //    Data proccess menu
 
     QMenu * dataProcessMenu;
-    QAction * balanceAction;
+    QAction * balanceDataAction;
     QAction * curveAction;
 
     //    System arrangement menu

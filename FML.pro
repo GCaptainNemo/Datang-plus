@@ -73,7 +73,11 @@ SOURCES += \
     window_manage_password.cpp \
     window_manage_userecords.cpp \
     window_manage_experience_par.cpp \
-    window_equipment_parameter_total.cpp
+    window_total_calculationresult.cpp \
+    window_total_equipment_parameter.cpp \
+    window_project_checking_askfor.cpp \
+    window_project_check_opinion.cpp \
+    window_project_verify.cpp
 
 HEADERS += \
     main_window.h \
@@ -123,7 +127,11 @@ HEADERS += \
     window_manage_password.h \
     window_manage_userecords.h \
     window_manage_experience_par.h \
-    window_equipment_parameter_total.h
+    window_total_calculationresult.h \
+    window_total_equipment_parameter.h \
+    window_project_checking_askfor.h \
+    window_project_check_opinion.h \
+    window_project_verify.h
 
 DISTFILES += \
     icon/new.ico \

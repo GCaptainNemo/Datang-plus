@@ -22,6 +22,8 @@ class systemConfigurationWindow : public QDialog
     Q_OBJECT
 public:
     static int pzh;
+    static int frm1_;
+
     explicit systemConfigurationWindow(QWidget *parent = nullptr);
     static int num;
     ~systemConfigurationWindow();

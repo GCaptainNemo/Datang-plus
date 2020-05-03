@@ -10,32 +10,39 @@
 #include <QVBoxLayout>
 #include <iostream>
 #include <QDialog>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include "widget_okcancel.h"
+#include "utils.h"
+#include "par_others.h"
 
-class checkPjWindow : public QDialog
+class checkProjectWindow : public QDialog
 {
     Q_OBJECT
 public:
-    explicit checkPjWindow(QWidget *parent = nullptr);
-    ~checkPjWindow();
+    explicit checkProjectWindow(QWidget *parent = nullptr);
+    ~checkProjectWindow();
     static int num;
+    virtual void checking();
+    bool verifyLimit();
+
 
 signals:
 
 public slots:
-    void operatingModeSLOT();
+    virtual void okSLOT();
 
-
-private:
+protected:
     QTextEdit * checkOpinionTextedit;
     QRadioButton * passRadioButton;
     QRadioButton * recalculateRadioButton;
-    QPushButton * okButton;
-    QPushButton * cancelButton;
-    QButtonGroup * bg;
+    QButtonGroup * buttonGroup;
     QVBoxLayout * layout;
     QHBoxLayout * hlayout1;
-    QHBoxLayout * hlayout2;
-
+    widget_okcancel * okCancelButtonWidget;
+    QWidget * radioButtonWidget;
+    QSqlDatabase db;
+    QSqlQuery * query;
 
 };
 

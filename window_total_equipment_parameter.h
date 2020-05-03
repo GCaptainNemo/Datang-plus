@@ -16,13 +16,13 @@
 #include "widget_okcancel.h"
 #include "par_pinf.h"
 
-class window_equipment_parameter_total : public QDialog
+class window_total_equipment_parameter : public QDialog
 {
     Q_OBJECT
 public:
-    explicit window_equipment_parameter_total(QWidget *parent = nullptr);
+    explicit window_total_equipment_parameter(QWidget *parent = nullptr);
     static int num;
-    ~window_equipment_parameter_total();
+    ~window_total_equipment_parameter();
 
 signals:
 
