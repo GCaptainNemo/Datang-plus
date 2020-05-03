@@ -36,7 +36,6 @@ window_equipment_parameter_total::~window_equipment_parameter_total()
 void window_equipment_parameter_total::initTableWidget()
 {
     this->tableWidget->setColumnCount(5);
-    this->tableWidget->setRowCount(40);
     this->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     this->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -92,19 +91,6 @@ void window_equipment_parameter_total::initTableWidget()
                             << QString("流量%1m3/h").arg(wasteH2OproSystem::Qfx)
                             << QString("流量%1m3/h、扬程%2m、轴功率%3kW、电机功率%4kW").arg(wasteH2OproSystem::Qfshb).arg(wasteH2OproSystem::Hfshb).arg(wasteH2OproSystem::Nffshb).arg(wasteH2OproSystem::Nkfshb);
 
-
-
-
-
-    QString jyxhb = QString("流量%1").arg(so2AbsorbSystem::Qjxb);
-    for(int i=0;i < so2AbsorbSystem::xg ;++i)
-    {
-        jyxhb += QString("; 第%1个泵的参数: 扬程%2m, 轴功率%3kW, 电机功率%4kW").arg(i + 1).arg(so2AbsorbSystem::Hjxb[i]).arg(so2AbsorbSystem::Nfjxb[i]).arg(so2AbsorbSystem::Nkjxb[i]);
-    }
-
-
-    specificationStringList.insert(5, jyxhb);
-
     equipNumStringList << "" << "1" << "1" << "" << "1" << QString("%1").arg(so2AbsorbSystem::xg) << QString("%1").arg(absorberSystem::NUMjb) << "1" << ""
                         << "1" << "1" << "1" << "1" << "1" << "1" << "1" << "1" << ""
                         << "1" << "1" << "1" << "1" << "1" << "1" << "1" << "1" << "1" << ""
@@ -113,14 +99,30 @@ void window_equipment_parameter_total::initTableWidget()
                         << "1" << "1";
 
 
+
+
+    QString jyxhb = QString("流量%1").arg(so2AbsorbSystem::Qjxb);
+    specificationStringList.insert(5, jyxhb);
+
+    for(int i = so2AbsorbSystem::xg - 1; i>=0 ;--i)
+    {
+        this->columnheadStringList.insert(6, "");
+        this->equipNameStringList.insert(6, "");
+        this->specificationStringList.insert(6, QString("第%1个泵的参数: 扬程%2m, 轴功率%3kW, 电机功率%4kW").arg(i + 1).arg(so2AbsorbSystem::Hjxb[i]).arg(so2AbsorbSystem::Nfjxb[i]).arg(so2AbsorbSystem::Nkjxb[i]));
+        this->equipNumStringList.insert(6, "");
+
+    }
+
     this->judgePop();
-
-
 
     QFont font ;//定义一个字体变量
     font.setBold(true);
 
     tableWidget->verticalHeader()->setHidden(true);
+    qDebug() << "size = " << columnheadStringList.size();
+
+    this->tableWidget->setRowCount(columnheadStringList.size());
+
     for(int i = 0; i < columnheadStringList.size(); i++)
     {
         this->tableWidget->setItem(i, 0, new QTableWidgetItem(columnheadStringList[i]));
@@ -133,9 +135,14 @@ void window_equipment_parameter_total::initTableWidget()
         this->tableWidget->setItem(i, 3, new QTableWidgetItem(equipNumStringList[i]));
         this->tableWidget->item(i, 3)->setFont(font);
         this->tableWidget->item(i, 3)->setTextAlignment(Qt::AlignCenter);
-
-
     }
+    QRegExp rx("浆液循环泵");
+    int index = this->equipNameStringList.indexOf(rx);
+    tableWidget->setSpan(index, 0, so2AbsorbSystem::xg + 1, 1);
+    tableWidget->setSpan(index, 1, so2AbsorbSystem::xg + 1, 1);
+    tableWidget->setSpan(index, 3, so2AbsorbSystem::xg + 1, 1);
+
+
     this->tableWidget->horizontalHeader()->setFont(font);
     this->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 }
@@ -234,10 +241,10 @@ void window_equipment_parameter_total::exportSLOT()
     mywork = myexcel->querySubObject("WorkBooks");
     mywork->dynamicCall("Add");
     workbook = myexcel->querySubObject("ActiveWorkBook");
-    mysheets = workbook->querySubObject("Sheets");
+    mysheet = workbook->querySubObject("Sheets");
 
 
-    mysheets->dynamicCall("Add");
+    mysheet->dynamicCall("Add");
     QAxObject *sheet = workbook->querySubObject("ActiveSheet");
     sheet->setProperty("Name", "设备参数汇总");
 
@@ -288,20 +295,31 @@ void window_equipment_parameter_total::exportSLOT()
         cell->setProperty("HorizontalAlignment", -4108);
         cell->querySubObject("Font")->setProperty("Bold", true);
     }
-//    QString merge_cell;
-//    merge_cell.append(QChar(3 - 1 + 'A'));  //初始列
-//    merge_cell.append(QString::number(5));  //初始行
-//    merge_cell.append(":");
-//    merge_cell.append(QChar(5 - 1 + 'A'));  //终止列
-//    merge_cell.append(QString::number(8));  //终止行
-//    QAxObject *merge_range = sheet->querySubObject("Range(const QString&)", merge_cell);
-//    merge_range->querySubObject("Borders")->setProperty("Color", QColor(0, 0, 255));
+    QRegExp rx("浆液循环泵");
+    int index = this->equipNameStringList.indexOf(rx);
+    QString merge_cell;
+    merge_cell = QString("A%1:A%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
+    qDebug() << "merge_cell = " << merge_cell;
+    cell = sheet->querySubObject("Range(const QString&)", merge_cell);
+    cell->setProperty("MergeCells", true);
+    cell->setProperty("WarpText", true);
+    merge_cell = QString("B%1:B%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
+    qDebug() << "merge_cell = " << merge_cell;
+    cell = sheet->querySubObject("Range(const QString&)", merge_cell);
+    cell->setProperty("MergeCells", true);
+    cell->setProperty("WarpText", true);
+    merge_cell = QString("D%1:D%2").arg(index + 2).arg(index + so2AbsorbSystem::xg + 2);
+    qDebug() << "merge_cell = " << merge_cell;
+    cell = sheet->querySubObject("Range(const QString&)", merge_cell);
+    cell->setProperty("MergeCells", true);
+    cell->setProperty("WarpText", true);
+    mysheet = workbook->querySubObject("Worksheets(int)",1);
+    mysheet->querySubObject("UsedRange")->querySubObject("Columns")->dynamicCall("AutoFit");
 
 
     workbook->dynamicCall("Close()");
-    myexcel->dynamicCall("Quit()");
+    myexcel->dynamicCall("Quit(void)");
     delete myexcel;
-
 
 }
 

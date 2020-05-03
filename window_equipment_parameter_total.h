@@ -38,7 +38,7 @@ protected:
     QStringList columnheadStringList;
     QStringList specificationStringList;
     QStringList equipNumStringList;
-    QAxObject * myexcel, *mywork, *workbook, *mysheets;
+    QAxObject * myexcel, *mywork, *workbook, *mysheet;
     QMap <int, QString> excelMap = {
         {0, "A"}, {1, "B"}, {2, "C"}, {3, "D"}, {4, "E"}
 

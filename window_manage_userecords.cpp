@@ -144,10 +144,10 @@ void manageaRecordsWindow::exportExcelSLOT()
                 mywork = myexcel->querySubObject("WorkBooks");
                 mywork->dynamicCall("Add");
                 workbook = myexcel->querySubObject("ActiveWorkBook");
-                mysheets = workbook->querySubObject("Sheets");
+                mysheet = workbook->querySubObject("Sheets");
 
 
-                mysheets->dynamicCall("Add");
+                mysheet->dynamicCall("Add");
                 QAxObject *sheet = workbook->querySubObject("ActiveSheet");
                 sheet->setProperty("Name", "使用记录");
 
@@ -176,8 +176,11 @@ void manageaRecordsWindow::exportExcelSLOT()
                         range->setProperty("HorizontalAlignment", -4108);
                     }
                 }
+                mysheet = workbook->querySubObject("Worksheets(int)",1);
+                mysheet->querySubObject("UsedRange")->querySubObject("Columns")->dynamicCall("AutoFit");
+
                 workbook->dynamicCall("Close()");
-                myexcel->dynamicCall("Quit()");
+                myexcel->dynamicCall("Quit(void)");
                 delete myexcel;
 
                 delete query;

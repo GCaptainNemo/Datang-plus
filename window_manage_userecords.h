@@ -67,7 +67,7 @@ protected:
     QAxObject * myexcel;
     QAxObject * mywork;
     QAxObject * workbook;
-    QAxObject * mysheets;
+    QAxObject * mysheet;
     int totalRecordsNum;
     void initSqlStatement(QString prid);
     void setRecordsModel();
