@@ -26,6 +26,9 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 
+
+
+
 SOURCES += \
         main.cpp \
     main_window.cpp \
@@ -141,5 +144,7 @@ DISTFILES += \
     icon/审核.ico \
     icon/统计.ico \
     icon/退出.ico \
-    icon/项目.ico
+    icon/项目.ico \
+    C:/Users/wang1/Desktop/stylesheet.qss
 QT += axcontainer
+
