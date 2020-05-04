@@ -19,14 +19,14 @@
 #include <QPixmap>
 #include <QPalette>
 
-class CentralWidget : public QWidget
+#include "window_parameter_flue_gas.h"
+#include "window_parameter_slurry.h"
+
+class middleWidget : public QWidget
 {
     Q_OBJECT
 public:
-    explicit CentralWidget(QWidget *parent = nullptr);
-//    QTableWidget *table_widget;
-//    QOpenGLWidget * openGLwindow;
-//    QTreeWidget *tree_widget;
+    explicit middleWidget(QWidget *parent = nullptr);
     QWidget * widgetMain, *widgetFlowChart;
     QPushButton *pushButton;
 
@@ -35,19 +35,18 @@ public:
     QLabel *label;
     QLabel *label_2;
     QVBoxLayout * vlayout;
+    window_parameter_flue_gas * windowParFlueGas;
+    window_parameter_slurry * windowParSry;
+
 
 private:
-//    QVBoxLayout *vlayout;
-//    QSplitter *hsplitter;
 
 signals:
 
 public slots:
-
-
+    void showFlueGasParSLOT();
+    void showSrySLOT();
 protected:
-//    virtual void paintEvent(QPaintEvent *);
-
 
 };
 

@@ -408,6 +408,7 @@ void MainWindow::projectManageSLOT()
 
 
 
+
 void MainWindow::setLimitSLOT(QString usrlimit)
 {
     qDebug() << "in设计";
@@ -985,8 +986,9 @@ MainWindow::MainWindow(QWidget *parent)
     this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     this->setWindowTitle(tr("湿法烟气脱硫系统"));
-    CentralWidget *central_widget = new CentralWidget(this);
-    this->setCentralWidget(central_widget);
+    this->midWidget = new middleWidget(this);
+
+    this->setCentralWidget(this->midWidget);
     this->createAction();
     this->createMenus();
     this->createToolBars();

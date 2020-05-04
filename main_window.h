@@ -72,8 +72,7 @@
 #include "window_project_checking_askfor.h"
 #include "window_project_verify.h"
 #include "window_project_check_opinion.h"
-
-
+#include "widget_central.h"
 
 class MainWindow : public QMainWindow
 {
@@ -148,6 +147,8 @@ private slots:
 
 
 private:
+    middleWidget * midWidget;
+
     askForCheckingObject * askForCheckingObj;
     saveObject * saveObj;
 
@@ -194,6 +195,8 @@ private:
 
     window_total_equipment_parameter * equipmentParTotalWindow;
     window_total_calculationresult * calculationReslutTotalWindow;
+
+
 
     //    工具栏
 

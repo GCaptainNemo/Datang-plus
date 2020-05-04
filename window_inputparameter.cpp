@@ -49,11 +49,8 @@ inputParameterWindow::inputParameterWindow(QWidget *parent) : QDialog(parent)
     connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
 
     this->initParWidget1();
-    qDebug() << "initParWidget1";
     this->initParWidget2();
-    qDebug() << "initParWidget2";
     this->initParWidget3();
-    qDebug() << "initParWidget3";
 
     this->show();
     this->setWindowTitle(tr("输入参数"));

@@ -80,7 +80,9 @@ SOURCES += \
     window_total_equipment_parameter.cpp \
     window_project_checking_askfor.cpp \
     window_project_check_opinion.cpp \
-    window_project_verify.cpp
+    window_project_verify.cpp \
+    window_parameter_flue_gas.cpp \
+    window_parameter_slurry.cpp
 
 HEADERS += \
     main_window.h \
@@ -134,7 +136,9 @@ HEADERS += \
     window_total_equipment_parameter.h \
     window_project_checking_askfor.h \
     window_project_check_opinion.h \
-    window_project_verify.h
+    window_project_verify.h \
+    window_parameter_flue_gas.h \
+    window_parameter_slurry.h
 
 DISTFILES += \
     icon/new.ico \
