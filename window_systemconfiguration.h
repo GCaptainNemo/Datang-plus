@@ -1,6 +1,9 @@
-#ifndef WINDOW_SYSTEMCONFIGURATION_H
+﻿#ifndef WINDOW_SYSTEMCONFIGURATION_H
 #define WINDOW_SYSTEMCONFIGURATION_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QCheckBox>

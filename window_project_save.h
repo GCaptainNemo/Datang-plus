@@ -1,6 +1,9 @@
-#ifndef WINDOW_PROJECT_SAVE_H
+﻿#ifndef WINDOW_PROJECT_SAVE_H
 #define WINDOW_PROJECT_SAVE_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QObject>
 #include <QDebug>
 #include <QSqlDatabase>

@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_inputparameter.h"
 
 int inputParameterWindow::num = 0;
@@ -159,6 +163,10 @@ void inputParameterWindow::initParWidget3()
 
 void inputParameterWindow::initWidget1()
 {
+    tabInWidget1 = new QWidget(this);
+    layout1 = new QVBoxLayout(tabInWidget1);
+
+
     // widget11
 
     widget11 = new QWidget(tabInWidget1);
@@ -204,7 +212,7 @@ void inputParameterWindow::initWidget1()
 
     // widget13
 
-    widget13 = new QWidget(tabInWidget2);
+    widget13 = new QWidget(tabInWidget1);
     gridLayout13 = new QGridLayout(widget13);
     dryCheckbox = new QCheckBox(tr("干基标态6%O2"), widget13);
     so2Label = new QLabel(tr("SO2(mg/Nm3):"), widget13);
@@ -231,8 +239,6 @@ void inputParameterWindow::initWidget1()
 
     // tabInwidget1
 
-    tabInWidget1 = new QWidget(this);
-    layout1 = new QVBoxLayout(tabInWidget1);
     layout1->addWidget(widget11);
     layout1->addWidget(widget12);
     layout1->addWidget(widget13);

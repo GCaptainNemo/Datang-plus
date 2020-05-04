@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_tankproh2o.h"
 
 int proH2OtankWindow::num = 0;
@@ -98,6 +102,6 @@ proH2OtankWindow::~proH2OtankWindow()
 
 void proH2OtankWindow::okSLOT()
 {
-    
+
 }
 

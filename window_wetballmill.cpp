@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_wetballmill.h"
 
 
@@ -10,7 +14,6 @@ wetBallMillWindow::wetBallMillWindow(float & qmj, float & nfmj, float & nemj, QW
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
 
-    qDebug() << "in wetBallWindow";
     wetBallMillWindow::num += 1;
     this->setWindowTitle(tr("湿式球磨机"));
     this->setAttribute(Qt::WA_DeleteOnClose);
@@ -39,12 +42,8 @@ wetBallMillWindow::wetBallMillWindow(float & qmj, float & nfmj, float & nemj, QW
     buttonWidget = new widget_okcancel(this);
     connect(buttonWidget->okButton, SIGNAL(clicked(bool)), this, SLOT(okSLOT()));
     connect(buttonWidget->cancelButton, SIGNAL(clicked(bool)), this, SLOT(close()));
-
-    layout = new QVBoxLayout(this);
-    layout->addLayout(gridLayout);
-    layout->addWidget(buttonWidget);
+    gridLayout->addWidget(buttonWidget, 3, 0, 1, 6);
     this->show();
-
 }
 
 

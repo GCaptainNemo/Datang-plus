@@ -1,6 +1,9 @@
-#ifndef WINDOW_MANAGE_PASSWORD_H
+﻿#ifndef WINDOW_MANAGE_PASSWORD_H
 #define WINDOW_MANAGE_PASSWORD_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QGridLayout>
 #include <QLineEdit>
@@ -34,7 +37,9 @@ protected:
     *okNewPasswordLineedit;
     widget_okcancel * buttonWidget;
     QGridLayout * gridLayout;
+//    QSqlDatabase db;
     QSqlDatabase db;
+
     QSqlQuery * query;
     void updatePassword(const QString &newpw2);
 

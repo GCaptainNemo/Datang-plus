@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_manage_password.h"
 
 int window_manage_password::num = 0;
@@ -63,7 +67,7 @@ window_manage_password::window_manage_password(QWidget *parent) : QDialog(parent
 
 window_manage_password::~window_manage_password()
 {
-    delete query;
+//    delete query;
     window_manage_password::num -= 1;
 }
 

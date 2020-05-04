@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "par_gslresult.h"
 float gslResultPar::GSL[13][30][18] = {{{0, 0, 0, 0, 0, 0, 0, 0}}};
 

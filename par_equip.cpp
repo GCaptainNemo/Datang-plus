@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "par_equip.h"
 
 
@@ -275,7 +279,7 @@ so2AbsorbSystem::so2AbsorbSystem(std::string &s4, std::string &s5, std::string &
     so2AbsorbSystem::Nfxsh = std::atof(res[1].c_str());
     so2AbsorbSystem::Nexsh = std::atof(res[2].c_str());
     so2AbsorbSystem::Nkxsh = std::atof(res[3].c_str());
-    
+
     // 系统2 - 7. 石膏排除泵
 
     res = utils::Split(s7, "[*]");
@@ -285,7 +289,7 @@ so2AbsorbSystem::so2AbsorbSystem(std::string &s4, std::string &s5, std::string &
     so2AbsorbSystem::Nfshpb = std::atof(res[3].c_str());
     so2AbsorbSystem::Neshpb = std::atof(res[4].c_str());
     so2AbsorbSystem::Nkshpb = std::atof(res[5].c_str());
-        
+
 }
 
 
@@ -361,16 +365,16 @@ float caso4ExtractH2Osystem::Nklyb = 0;
 caso4ExtractH2Osystem::caso4ExtractH2Osystem(std::string & s8, std::string & s9, std::string & s10,
                                              std::string & s11, std::string & s12, std::string & s13,
                                              std::string & s14, std::string & s15)
-{    
+{
 
     //    系统3 - 10 石膏旋流器
-    
+
     std::vector<std::string> res = utils::Split(s8, "[*]");
     caso4ExtractH2Osystem::Qshgx = std::atof(res[0].c_str());
     caso4ExtractH2Osystem::XZshgx = std::atof(res[1].c_str());
-    
+
     //    系统3 - 9 真空皮带脱水机
-    
+
     res = utils::Split(s9, "[*]");
     caso4ExtractH2Osystem::Qzhk = std::atof(res[0].c_str());
     caso4ExtractH2Osystem::Szhk = std::atof(res[1].c_str());

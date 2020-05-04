@@ -1,6 +1,9 @@
-#ifndef NEWPROJECTWINDOW_H
+﻿#ifndef NEWPROJECTWINDOW_H
 #define NEWPROJECTWINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QDialog>
 #include <QHBoxLayout>
 #include <QLabel>

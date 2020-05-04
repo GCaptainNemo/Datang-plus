@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_rotationalflowwasteh2o_base.h"
 
 int wasteH2OrotationalFlow_window::num = 0;
@@ -17,7 +21,7 @@ wasteH2OrotationalFlow_window::wasteH2OrotationalFlow_window(float & qfx, float 
 
     this->layout->addWidget(this->qfxLabel, 0, 0, 1, 3);
     this->layout->addWidget(this->qfxLineedit, 0, 3, 1, 3);
-    
+
     this->xzfxLabel = new QLabel("旋流子个数", this);
     this->xzfxLineedit = new QLineEdit(this);
     this->xzfxLineedit->setText(QString("%1").arg(xzfx));

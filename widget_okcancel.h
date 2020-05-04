@@ -1,5 +1,10 @@
-#ifndef WIDGET_OKCANCEL_H
+﻿#ifndef WIDGET_OKCANCEL_H
 #define WIDGET_OKCANCEL_H
+
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 
 #include <QWidget>
 #include <QHBoxLayout>

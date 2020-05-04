@@ -1,5 +1,9 @@
-#include "main_window.h"
+﻿#include "main_window.h"
 #include "widget_central.h"
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 
 int MainWindow::first = 0;
 
@@ -61,8 +65,8 @@ void MainWindow::createAction()
     connect(oxidationAirBlowerAction, SIGNAL(triggered(bool)), this, SLOT(oxidationAiBlowerSLOT()));
     this->slurryCirculationPumpAction = new QAction(tr("浆液循环泵"), this);
     connect(slurryCirculationPumpAction, SIGNAL(triggered(bool)), this, SLOT(absorberSryCirPumpSLOT()));
-    
-    
+
+
     this->caso4DischargePumpAction = new QAction(tr("石膏排出泵"), this);
     connect(caso4DischargePumpAction, SIGNAL(triggered(bool)), this, SLOT(caso4DischargePumpSLOT()));
 
@@ -72,7 +76,7 @@ void MainWindow::createAction()
 
     this->vacuumBeltDehydratorAction = new QAction(tr("真空皮带脱水机"), this);
     connect(vacuumBeltDehydratorAction, SIGNAL(triggered(bool)), this, SLOT(vacuumBeltDeWindowSLOT()));
-    
+
     this->filterTankAndAgitatorAction = new QAction(tr("滤液箱及搅拌器"), this);
     connect(filterTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(filterSryAndAgitatorSLOT()));
     this->filterPumpAction = new QAction(tr("滤液泵"), this);
@@ -85,76 +89,75 @@ void MainWindow::createAction()
     this->wetBallMillAction = new QAction(tr("湿式球磨机"), this);
     connect(wetBallMillAction, SIGNAL(triggered(bool)), this, SLOT(wetMillSLOT()));
 
-    this->caco3CirculantTankAndAgitatorAction = new QAction(tr("石灰石浆液循环箱及搅拌器"));
+    this->caco3CirculantTankAndAgitatorAction = new QAction(tr("石灰石浆液循环箱及搅拌器"), this);
     connect(caco3CirculantTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryCirAndAgitatorSLOT()));
-    this->caco3SlurryCirculantPumpAction= new QAction(tr("石灰石浆液循环泵"));
+    this->caco3SlurryCirculantPumpAction= new QAction(tr("石灰石浆液循环泵"), this);
     connect(caco3SlurryCirculantPumpAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryPumpCirSLOT()));
 
 
-    this->caco3RotationalFlowAction = new QAction(tr("石灰石旋流器"));
+    this->caco3RotationalFlowAction = new QAction(tr("石灰石旋流器"), this);
     connect(caco3RotationalFlowAction, SIGNAL(triggered(bool)), this, SLOT(caco3RotationalFlowSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->caco3PowderHouseAction = new QAction(tr("石灰石粉仓"));
-    this->caco3SlurryTankAndAgitatorAction = new QAction(tr("石灰石浆液箱及搅拌器"));
+    this->caco3PowderHouseAction = new QAction(tr("石灰石粉仓"), this);
+    this->caco3SlurryTankAndAgitatorAction = new QAction(tr("石灰石浆液箱及搅拌器"), this);
     connect(caco3SlurryTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryAndAgitatorSLOT()));
-    this->caco3SlurryPumpAction = new QAction(tr("石灰石浆液泵"));
+    this->caco3SlurryPumpAction = new QAction(tr("石灰石浆液泵"), this);
     connect(caco3SlurryPumpAction, SIGNAL(triggered(bool)), this, SLOT(caco3SryPumpSLOT()));
 
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->processWaterTankAction = new QAction(tr("工艺水箱"));
+    this->processWaterTankAction = new QAction(tr("工艺水箱"), this);
     connect(processWaterTankAction, SIGNAL(triggered(bool)), this, SLOT(proH2OtankSLOT()));
-    this->processWaterPumpAction = new QAction(tr("工艺水泵"));
+    this->processWaterPumpAction = new QAction(tr("工艺水泵"), this);
     connect(processWaterPumpAction, SIGNAL(triggered(bool)), this, SLOT(proH2OpumpSLOT()));
 
-    this->waterPumpAction = new QAction(tr("除雾器冲洗水泵"));
+    this->waterPumpAction = new QAction(tr("除雾器冲洗水泵"), this);
     connect(waterPumpAction, SIGNAL(triggered(bool)), this, SLOT(waterPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->emergencySlurryTankAndAgitatorAction = new QAction(tr("事故浆液箱及搅拌器"));
+    this->emergencySlurryTankAndAgitatorAction = new QAction(tr("事故浆液箱及搅拌器"), this);
     connect(emergencySlurryTankAndAgitatorAction, SIGNAL(triggered(bool)), this, SLOT(emergencySryAndAgitatorSLOT()));
-    
-    this->emergencySlurryPumpAction = new QAction(tr("事故浆液箱泵"));
+
+    this->emergencySlurryPumpAction = new QAction(tr("事故浆液箱泵"), this);
     connect(emergencySlurryPumpAction, SIGNAL(triggered(bool)), this, SLOT(emergencySryPumpSLOT()));
 
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->wasteH2OrotationalFlowAction = new QAction(tr("废水旋流器"));
+    this->wasteH2OrotationalFlowAction = new QAction(tr("废水旋流器"), this);
     connect(wasteH2OrotationalFlowAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2OrotationalFlowSLOT()));
-    this->wasteH2OfeedAction = new QAction(tr("废水旋流器给料泵"));
+    this->wasteH2OfeedAction = new QAction(tr("废水旋流器给料泵"), this);
     connect(wasteH2OfeedAction, SIGNAL(triggered(bool)), this, SLOT(wasteH2oFeedPumpSLOT()));
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->equipmentParSetAction = new QAction(QIcon("..//FML//icon//equip.ico"), tr("设备参数汇总"));
+    this->equipmentParSetAction = new QAction(QIcon("..//FML//icon//equip.ico"), tr("设备参数汇总"), this);
     connect(equipmentParSetAction, SIGNAL(triggered(bool)), this, SLOT(equipmentParSetSLOT()));
 
     //    data process menu
 
-    this->balanceDataAction = new QAction(QIcon("..//FML//icon//data.ico"), tr("物料平衡计算结果"));
+    this->balanceDataAction = new QAction(QIcon("..//FML//icon//data.ico"), tr("物料平衡计算结果"), this);
     connect(balanceDataAction, SIGNAL(triggered(bool)), this, SLOT(balanceDataSLOT()));
 
-    this->curveAction = new QAction(QIcon("..//FML//icon//curve.ico"), tr("性能曲线"));
+    this->curveAction = new QAction(QIcon("..//FML//icon//curve.ico"), tr("性能曲线"), this);
 
     //    System arrangement menu
 
-    this->changePasswordAction = new QAction(tr("修改密码"));
+    this->changePasswordAction = new QAction(tr("修改密码"), this);
     connect(changePasswordAction, SIGNAL(triggered(bool)), this, SLOT(passwordManageSLOT()));
-    this->usrManageAction = new QAction(tr("用户管理"));
+    this->usrManageAction = new QAction(tr("用户管理"), this);
     connect(usrManageAction, SIGNAL(triggered(bool)), this, SLOT(userManageSLOT()));
 
-    this->projectManageAction = new QAction(tr("项目管理"));
+    this->projectManageAction = new QAction(tr("项目管理"), this);
     connect(projectManageAction, SIGNAL(triggered(bool)), this, SLOT(projectManageSLOT()));
 
 
-    this->usageRecordAction = new QAction(tr("使用记录"));
+    this->usageRecordAction = new QAction(tr("使用记录"), this);
     connect(usageRecordAction, SIGNAL(triggered(bool)), this, SLOT(recordsManageSLOT()));
 
-    this->experParAction = new QAction(tr("经验参数"));
+    this->experParAction = new QAction(tr("经验参数"), this);
     connect(experParAction, SIGNAL(triggered(bool)), this, SLOT(experienceParManageSLOT()));
 
 
     //    System arrangement menu
 
-    this->helpAction = new QAction(tr("帮助"));
-    this->aboutAction = new QAction(tr("关于"));
+    this->helpAction = new QAction(tr("帮助"), this);
+    this->aboutAction = new QAction(tr("关于"), this);
     connect(aboutAction, SIGNAL(triggered(bool)), this, SLOT(aboutSLOT()));
-
 
 }
 
@@ -162,6 +165,7 @@ void MainWindow::createMenus()
 {
 
     //    file menu
+
 
     this->filemenu = menuBar()->addMenu(tr("项目管理"));
     this->filemenu->addAction(this->newAction);
@@ -183,6 +187,7 @@ void MainWindow::createMenus()
 
     //    parameter input menu
 
+
     this->inputmenu = menuBar()->addMenu(tr("参数输入"));
     this->inputmenu->addAction(this->inputParAction);
     this->inputmenu->addAction(this->coalQualityCalculationAction);
@@ -191,56 +196,51 @@ void MainWindow::createMenus()
 
     this->equipmentmenu= menuBar()->addMenu(tr("设备参数"));
     this->equipmentmenu->addAction(this->absorberParAction);
-    
-    this->smokeSystemmenu = new QMenu("烟气系统");
+
+    this->smokeSystemmenu = this->equipmentmenu->addMenu(tr("烟气系统"));
     this->smokeSystemmenu->addAction(this->pressureAirBlowerAction);
     this->smokeSystemmenu->addAction(this->heatExchangerAction);
-    this->equipmentmenu->addMenu(this->smokeSystemmenu);
-    
-    this->so2AbsorbSystemmenu = new QMenu("SO2吸收系统");
+
+
+    this->so2AbsorbSystemmenu = this->equipmentmenu->addMenu(tr("SO2吸收系统"));
     this->so2AbsorbSystemmenu ->addAction(this->oxidationAirBlowerAction);
     this->so2AbsorbSystemmenu ->addAction(this->slurryCirculationPumpAction);
     this->so2AbsorbSystemmenu ->addAction(this->caso4DischargePumpAction);
-    this->equipmentmenu->addMenu(this->so2AbsorbSystemmenu );
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->caso4DehydrationSystemmenu = new QMenu("石膏脱水系统");
+    this->caso4DehydrationSystemmenu = this->equipmentmenu->addMenu(tr("石膏脱水系统"));
     this->caso4DehydrationSystemmenu->addAction(this->caso4RotationalFlowAction);
     this->caso4DehydrationSystemmenu->addAction(this->vacuumBeltDehydratorAction);
     this->caso4DehydrationSystemmenu->addAction(this->filterTankAndAgitatorAction);
     this->caso4DehydrationSystemmenu->addAction(this->filterPumpAction);
-    this->equipmentmenu->addMenu(this->caso4DehydrationSystemmenu);
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->wetPulpingSystemmenu = new QMenu("湿式制浆系统");
+    this->wetPulpingSystemmenu = this->equipmentmenu->addMenu(tr("湿式制浆系统"));
     this->wetPulpingSystemmenu->addAction(this->caco3HouseAction);
     this->wetPulpingSystemmenu->addAction(this->wetBallMillAction);
     this->wetPulpingSystemmenu->addAction(this->caco3CirculantTankAndAgitatorAction);
     this->wetPulpingSystemmenu->addAction(this->caco3SlurryCirculantPumpAction);
     this->wetPulpingSystemmenu->addAction(this->caco3RotationalFlowAction);
-    this->equipmentmenu->addMenu(this->wetPulpingSystemmenu);
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->powderPulpingSystemmenu = new QMenu("粉制浆系统");
+    this->powderPulpingSystemmenu = this->equipmentmenu->addMenu(tr("粉制浆系统"));
     this->powderPulpingSystemmenu ->addAction(this->caco3PowderHouseAction);
     this->powderPulpingSystemmenu ->addAction(this->caco3SlurryTankAndAgitatorAction);
-
-
     this->powderPulpingSystemmenu ->addAction(this->caco3SlurryPumpAction);
-    this->equipmentmenu->addMenu(this->powderPulpingSystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->processWaterSystemmenu = new QMenu("工艺水系统");
+    this->processWaterSystemmenu = this->equipmentmenu->addMenu(tr("工艺水系统"));
     this->processWaterSystemmenu->addAction(this->processWaterTankAction);
     this->processWaterSystemmenu->addAction(this->processWaterPumpAction);
     this->processWaterSystemmenu->addAction(this->waterPumpAction);
-    this->equipmentmenu->addMenu(this->processWaterSystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->emergencySlurrySystemmenu = new QMenu(tr("事故浆液系统"));
+    this->emergencySlurrySystemmenu = this->equipmentmenu->addMenu(tr("事故浆液系统"));
     this->emergencySlurrySystemmenu->addAction(emergencySlurryTankAndAgitatorAction);
     this->emergencySlurrySystemmenu->addAction(emergencySlurryPumpAction);
-    this->equipmentmenu->addMenu(this->emergencySlurrySystemmenu);
+
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    this->wasteH2Osystemmenu = new QMenu(tr("废水处理系统"));
+
+    this->wasteH2Osystemmenu = this->equipmentmenu->addMenu(tr("废水处理系统"));
     this->wasteH2Osystemmenu->addAction(wasteH2OrotationalFlowAction);
     this->wasteH2Osystemmenu->addAction(wasteH2OfeedAction);
-    this->equipmentmenu->addMenu(this->wasteH2Osystemmenu);
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     this->equipmentmenu->addAction(this->equipmentParSetAction);
 
@@ -572,7 +572,7 @@ void MainWindow::emergencySryAndAgitatorSLOT()
                 emergencySlurrySystem::Dshg, emergencySlurrySystem::Hshg, emergencySlurrySystem::HDshg, emergencySlurrySystem::Vshg, emergencySlurrySystem::VTshg, emergencySlurrySystem::Yshg,
                 emergencySlurrySystem::Nbshg, emergencySlurrySystem::Nfshg, emergencySlurrySystem::Neshg, emergencySlurrySystem::Nkshg, this);
     else{
-        
+
         this->emeSryTankAndAgitatorWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
         this->emeSryTankAndAgitatorWindow->showNormal();
     }
@@ -802,17 +802,17 @@ void MainWindow::pressureAirBlowerSLOT()
 }
 
 void MainWindow::absorberSryCirPumpSLOT()
-{   
+{
     if (absorberSryCirPumpWindow::num == 0)
         // 效率:yjxb, 数量:xg, 流量:Qjxb
-        
+
         this->absorberSlrCirWindow = new absorberSryCirPumpWindow(so2AbsorbSystem::Yjxb, so2AbsorbSystem::Qjxb, so2AbsorbSystem::Hjxb, so2AbsorbSystem::Nfjxb, so2AbsorbSystem::Nejxb,
                                                                   so2AbsorbSystem::Nkjxb, so2AbsorbSystem::xg, this);
     else{
         this->absorberSlrCirWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
         this->absorberSlrCirWindow->showNormal();
     }
-    
+
 }
 
 
@@ -858,7 +858,7 @@ void MainWindow::saveSLOT()
 
     switch(QMessageBox::question(this, tr("保存项目"), tr("是否确定保存该项目？"),
                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::Ok))
-    
+
     {
     case QMessageBox::Ok:{
         this->saveObj->start();
@@ -867,7 +867,7 @@ void MainWindow::saveSLOT()
     case QMessageBox::Cancel:
         break;
     default:
-        break;   
+        break;
     }
     delete saveObj;
     return;
@@ -887,7 +887,7 @@ void MainWindow::messageboxShowSLOT(int num)
     case 2:
         QMessageBox::warning(this, tr("保存结果"), tr("项目为只读模式打开,无法保存"));
         break;
-    case 3:        
+    case 3:
         QMessageBox::warning(this, tr("连接结果"), tr("服务器连接失败, 请进行网络测试"));
         break;
     case 4:
@@ -982,6 +982,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setAttribute(Qt::WA_QuitOnClose, true);
+    this->setAttribute(Qt::WA_DeleteOnClose, true);
 
     this->setWindowTitle(tr("湿法烟气脱硫系统"));
     CentralWidget *central_widget = new CentralWidget(this);
@@ -992,9 +993,3 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 
-MainWindow::~MainWindow()
-{
-    delete myThread;
-    myThread->quit();
-    myThread->wait();
-}

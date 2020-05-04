@@ -1,6 +1,9 @@
-#ifndef WINDOW_INPUTPARAMETER_H
+﻿#ifndef WINDOW_INPUTPARAMETER_H
 #define WINDOW_INPUTPARAMETER_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QTabWidget>
@@ -34,7 +37,7 @@ signals:
 
 public slots:
     void okSLOT();
-    
+
 protected:
     QGridLayout * zongLayout;
     QTabWidget *tabwidget;

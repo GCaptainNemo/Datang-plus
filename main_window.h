@@ -1,5 +1,10 @@
-#ifndef MAINWINDOW_H
+﻿#ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
+
 
 #include <QMainWindow>
 #include <QDialog>
@@ -77,7 +82,6 @@ class MainWindow : public QMainWindow
 public:
     static int first; // open / new project;
     MainWindow(QWidget *parent = 0);
-    ~MainWindow();
     void createAction();
     void createMenus();
     void createToolBars();
@@ -146,8 +150,6 @@ private slots:
 private:
     askForCheckingObject * askForCheckingObj;
     saveObject * saveObj;
-    QThread * myThread;
-
 
     QSqlDatabase db;
 
@@ -274,7 +276,7 @@ private:
     //  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     QAction * equipmentParSetAction;\
 
-    
+
     //    Data proccess menu
 
     QMenu * dataProcessMenu;

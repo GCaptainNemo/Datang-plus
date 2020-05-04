@@ -1,4 +1,4 @@
-#include "window_project_checking_askfor.h"
+﻿#include "window_project_checking_askfor.h"
 
 askForCheckingObject::askForCheckingObject(QWidget *parent) : QObject(parent)
 {

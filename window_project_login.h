@@ -1,5 +1,10 @@
-#ifndef LOGIN_WINDOW_H
+﻿#ifndef LOGIN_WINDOW_H
 #define LOGIN_WINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
+
 
 #include <QDialog>
 #include <QLabel>

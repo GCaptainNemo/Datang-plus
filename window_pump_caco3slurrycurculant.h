@@ -1,6 +1,9 @@
-#ifndef WINDOW_PUMPCACO3SLURRYCURCULANT_H
+﻿#ifndef WINDOW_PUMPCACO3SLURRYCURCULANT_H
 #define WINDOW_PUMPCACO3SLURRYCURCULANT_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include "window_pump_caso4discharge_base.h"
 #include "utils.h"
 

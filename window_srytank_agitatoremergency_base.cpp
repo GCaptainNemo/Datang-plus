@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_srytank_agitatoremergency_base.h"
 
 int emergencySryTankAndAgitatorWindow::num = 0;

@@ -1,6 +1,10 @@
-#ifndef PAR_PROJECTS_H
+﻿#ifndef PAR_PROJECTS_H
 #define PAR_PROJECTS_H
 
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 
 #include <iostream>
 

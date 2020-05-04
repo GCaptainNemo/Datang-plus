@@ -1,5 +1,10 @@
-#ifndef CENTRALWIDGET_H
+﻿#ifndef CENTRALWIDGET_H
 #define CENTRALWIDGET_H
+
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 
 #include <QWidget>
 #include <QVBoxLayout>

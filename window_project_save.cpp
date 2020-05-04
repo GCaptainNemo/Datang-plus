@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_project_save.h"
 
 saveObject::saveObject(QObject *parent) : QObject(parent)
@@ -430,7 +434,7 @@ void saveObject::commandSave()
 
 
     QString res20 = lst20.join("*");
-    
+
 
     // 21. 石灰石旋流器
 

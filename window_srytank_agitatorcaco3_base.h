@@ -1,6 +1,9 @@
-#ifndef WINDOW_SRYTANKANDAGITATORCACO3_H
+﻿#ifndef WINDOW_SRYTANKANDAGITATORCACO3_H
 #define WINDOW_SRYTANKANDAGITATORCACO3_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QDialog>
 #include <QWidget>
 #include <math.h>

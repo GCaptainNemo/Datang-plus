@@ -1,6 +1,9 @@
-#ifndef ABOUT_WINDOW_H
+﻿#ifndef ABOUT_WINDOW_H
 #define ABOUT_WINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>

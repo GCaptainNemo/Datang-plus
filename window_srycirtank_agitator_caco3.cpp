@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_srycirtank_agitatorcaco3.h"
 
 void caco3SryCirTankAndAgitatorWindow::okSLOT()

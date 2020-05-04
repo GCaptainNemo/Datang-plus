@@ -1,5 +1,7 @@
-#include "window_project_login.h"
-
+﻿#include "window_project_login.h"
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
 
 void Login_window::start()
 {
@@ -111,7 +113,6 @@ Login_window::Login_window(QWidget *parent) : QDialog(parent)
     flags |=Qt::WindowMinimizeButtonHint;
     flags |=Qt::WindowCloseButtonHint;
     this->setWindowFlags(flags);
-
     this->layout = new QGridLayout(this);
 
     this->usrnameLabel = new QLabel(tr("用户名"), this);

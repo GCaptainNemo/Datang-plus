@@ -1,6 +1,9 @@
-#ifndef WINDOW_PUMPABSORBERSLURRYCIRCULANT_H
+﻿#ifndef WINDOW_PUMPABSORBERSLURRYCIRCULANT_H
 #define WINDOW_PUMPABSORBERSLURRYCIRCULANT_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -30,7 +33,7 @@ public:
 signals:
 
 public slots:
-    
+
 private:
     QLabel * efficiencyLabel, *numLabel, * flowLabel;
     QLineEdit * efficiencyLineedit, *numLineedit, * flowLineedit;

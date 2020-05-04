@@ -1,6 +1,9 @@
-#ifndef WINDOW_TOTAL_CALCULATIONRESULT_H
+﻿#ifndef WINDOW_TOTAL_CALCULATIONRESULT_H
 #define WINDOW_TOTAL_CALCULATIONRESULT_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QTableWidget>

@@ -1,6 +1,9 @@
-#ifndef CASO4DISCHARGEPUMP_WINDOW_H
+﻿#ifndef CASO4DISCHARGEPUMP_WINDOW_H
 #define CASO4DISCHARGEPUMP_WINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QHBoxLayout>

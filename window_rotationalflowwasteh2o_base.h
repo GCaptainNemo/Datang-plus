@@ -1,6 +1,9 @@
-#ifndef WASTEH2OROTATIONALFLOW_WINDOW_H
+﻿#ifndef WASTEH2OROTATIONALFLOW_WINDOW_H
 #define WASTEH2OROTATIONALFLOW_WINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QGridLayout>
@@ -25,7 +28,7 @@ signals:
 public slots:
     void okSLOT();
 
-    
+
 private:
     widget_okcancel * buttonWidget;
     QGridLayout * layout;

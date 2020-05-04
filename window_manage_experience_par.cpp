@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "window_manage_experience_par.h"
 
 int window_manage_experience_par::num = 0;

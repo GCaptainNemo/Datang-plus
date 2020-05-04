@@ -1,6 +1,9 @@
-#ifndef WINDOW_PUMPPROCCESSH2O_H
+﻿#ifndef WINDOW_PUMPPROCCESSH2O_H
 #define WINDOW_PUMPPROCCESSH2O_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include "window_pump_caso4discharge_base.h"
 #include "utils.h"
 

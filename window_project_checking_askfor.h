@@ -1,6 +1,9 @@
-#ifndef WINDOW_CHECKING_ASKFOR_H
+﻿#ifndef WINDOW_CHECKING_ASKFOR_H
 #define WINDOW_CHECKING_ASKFOR_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QDialog>
 #include <QLabel>

@@ -1,5 +1,9 @@
-#ifndef GLOBAL_PAR_H
+﻿#ifndef GLOBAL_PAR_H
 #define GLOBAL_PAR_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+#endif
+
 #include <QSqlQuery>
 #include "utils.h"
 #include "par_gasresult.h"
@@ -23,7 +27,7 @@ private:
 class absorberSystem
 {
 public:
-    
+
     static int FGDnum ; //吸收塔数量
     static double vin ; //入口烟气流速 目标
     static double vout ; //出口烟气流速  目标
@@ -37,7 +41,7 @@ public:
     static double k ; //除雾器距顶部烟气出口
     static double hx ; //烟道宽度 %
     static int NUMjb ; //个数
-    static double V ; //浆池容量    
+    static double V ; //浆池容量
     absorberSystem(const std::string &s);
 
     static float B ; //氧化空气管距正常液面高度差
@@ -68,10 +72,10 @@ public:
     static float Pfans ; //设计BMCR压升
 
 //  3. 换热器
-    
-        
+
+
     flueGasSystem(const std::string &s1, const std::string &s2);
-    
+
 };
 
 
@@ -93,7 +97,7 @@ public:
 
 
 //    5. 浆液循环泵
-    
+
     static float Yjxb ; //效率
     static float Qjxb ; //流量
     static int xg ; //循环泵数量
@@ -103,30 +107,30 @@ public:
     static float Nkjxb[6]; //电机功率靠档
 
 //    6. 吸收塔搅拌器
-        
+
     static float Nbxsh ; //比功率
     static float Nfxsh ; //轴功率
     static float Nexsh ; //电机功率
     static float Nkxsh ; //电机功率靠档
-    
+
 //    7. 石膏排除泵
-    
+
     static float Yshpb ; //效率
     static float Qshpb ; //流量
     static float Hshpb ; //扬程
     static float Nfshpb ; //轴功率
     static float Neshpb ; //电机功率
     static float Nkshpb ; //电机功率靠档
-    
-    
-    
+
+
+
     so2AbsorbSystem(std::string &s4, std::string &s5, std::string &s6, std::string &s7);
-    
+
 
 private:
-    
-    
-    
+
+
+
 };
 
 //系统3.石膏脱水系统
@@ -134,18 +138,18 @@ class caso4ExtractH2Osystem
 {
 
 public:
-    
+
 //    8.石膏旋流器
-    
+
     static float Qshgx ; //流量
     static float XZshgx ; //旋流子个数
-    
+
 //    9.真空皮带脱水机
-    
+
     static float Qzhk ; //最大出力
     static float Szhk ; //过滤面积
     static float Nezhk ; //主驱动电机功率
-    
+
 //    10.真空泵
 
     static float Qzhb ; //真空泵出力
@@ -195,7 +199,7 @@ public:
 
     caso4ExtractH2Osystem(std::string &s8, std::string &s9, std::string &s10, std::string &s11,
                           std::string & s12, std::string & s13, std::string & s14, std::string & s15);
-    
+
 };
 
 
@@ -281,7 +285,7 @@ public:
     static float Nbsj ; //比功率
     static float Nfsj ; //轴功率
     static float Nesj ; //电机功率
-    static float Nksj ; //电机功率    
+    static float Nksj ; //电机功率
     static float Vsj ; //有效容积
     static float VTsj ; //总容积
 
@@ -346,7 +350,7 @@ public:
 
     processH2Osystem(std::string &s25, std::string &s26, std::string &s27);
 
-    
+
 };
 //系统6.事故浆液系统
 class  emergencySlurrySystem
@@ -367,7 +371,7 @@ public:
     static float Nbshg ; //比功率
     static float Nfshg ; //轴功率
     static float Neshg ; //电机功率
-    static float Nkshg ; //电机功率    
+    static float Nkshg ; //电机功率
     static float Vjshg ; //计算有效容积
     static float VTjshg ; //计算总容积
     static int BGL(const float & JN);
@@ -386,7 +390,7 @@ public:
 
     emergencySlurrySystem(std::string &s28, std::string &s29,std::string &s30);
 
-    
+
 };
 
 //系统7.废水处理系统
@@ -409,7 +413,7 @@ public:
     static float XZfx ; //旋流子个数
 
     wasteH2OproSystem(std::string & s31, std::string & s32);
-    
+
 };
 
 

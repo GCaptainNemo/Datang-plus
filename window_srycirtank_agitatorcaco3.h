@@ -1,6 +1,9 @@
-#ifndef WINDOW_SRYCIRTANK_AGITATOR_CACO3_H
+﻿#ifndef WINDOW_SRYCIRTANK_AGITATOR_CACO3_H
 #define WINDOW_SRYCIRTANK_AGITATOR_CACO3_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include "window_srytank_agitatorcaco3_base.h"
 

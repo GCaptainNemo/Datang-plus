@@ -1,3 +1,7 @@
+﻿#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
+
+#endif
 #include "par_experience.h"
 
 float experiencePar::GGHx = 0; //回转换热器泄露率

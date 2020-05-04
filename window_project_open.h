@@ -1,6 +1,9 @@
-#ifndef OPENWINDOW_H
+﻿#ifndef OPENWINDOW_H
 #define OPENWINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QTableWidget>
 #include <QLabel>
@@ -37,7 +40,7 @@ public:
 signals:
     void threadStart(int p);
     void finishedSIGNAL();
-    
+
 
 public slots:
     void setLineeditTextSLOT(const QModelIndex &index);

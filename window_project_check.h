@@ -1,6 +1,9 @@
-#ifndef CHECKPROJECTWINDOW_H
+﻿#ifndef CHECKPROJECTWINDOW_H
 #define CHECKPROJECTWINDOW_H
+#if _MSC_VER >= 1600
+#pragma execution_character_set("utf-8")
 
+#endif
 #include <QWidget>
 #include <QTextEdit>
 #include <QRadioButton>
