@@ -7,16 +7,21 @@
 #endif
 
 #include <iostream>
+#include <QString>
 
-
-class projects
+class projectPar
 {
 public:
-    static std::string pj_name;
-    static int pj_num;
-    static void setPar(const std::string &name, const int num){
-        projects::pj_name = name;
-        projects::pj_num = num;
+    static QString pj_name;
+
+    static int preditnum;
+    static QString prstate;
+    static QString prid;
+    static void setPar(const QString &name, const QString &state, const int &num){
+        projectPar::pj_name = name;
+        projectPar::prstate = state;
+        projectPar::preditnum = num;
+
     }
 };
 

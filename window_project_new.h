@@ -5,29 +5,35 @@
 
 #endif
 #include <QDialog>
-#include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
-#include <QPushButton>
-#include <QWidget>
 #include <QMessageBox>
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QDebug>
+#include <QDateTime>
+#include <QSqlQuery>
+#include <QGridLayout>
+#include <QDialog>
+
 #include "utils.h"
-#include "par_others.h"
+#include "par_users.h"
+#include "par_projects.h"
+#include "widget_okcancel.h"
+#include "par_pinf.h"
+#include "par_equip.h"
 
-
-class newPjWindow : public QDialog
+class newProjectWindow : public QDialog
 {
     Q_OBJECT
 public:
     static int num;
-    explicit newPjWindow(QWidget *parent = nullptr);
-    ~newPjWindow();
+    explicit newProjectWindow(QWidget *parent = nullptr);
+    ~newProjectWindow();
 
 
 signals:
+    void changeTitleSIGNAL();
 
 public slots:
     void okSLOT();
@@ -35,11 +41,12 @@ public slots:
 private:
     QLabel * nameLabel;
     QLineEdit * nameLineedit;
-    QPushButton * okButton;
-    QHBoxLayout * layout;
+    widget_okcancel * buttonWidget;
+    QGridLayout * layout;
     QSqlQuery * query;
     QSqlDatabase db;
     int testDb();
+    void setInitValue();
 };
 
 #endif // NEWPROJECTWINDOW_H

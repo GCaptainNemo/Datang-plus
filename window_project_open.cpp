@@ -74,14 +74,14 @@ void openPjWindow::start(QString prid)
 
     this->initSqlStatement(prid);
     qDebug() << "openPj work thread id = " << QThread::currentThreadId();
-    if (QSqlDatabase::contains("SQLserver"))
-        this->db = QSqlDatabase::database("SQLserver");
-    else{
-        this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-        QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
-                "UID=sa;PWD=123456;";
-        db.setDatabaseName(dsn);
-    }
+//    if (QSqlDatabase::contains("SQLserver"))
+//        this->db = QSqlDatabase::database("SQLserver");
+//    else{
+//        this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
+//        QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
+//                "UID=sa;PWD=123456;";
+//        db.setDatabaseName(dsn);
+//    }
 
     if (db.open())
     {
@@ -106,7 +106,7 @@ void openPjWindow::start(QString prid)
 
         this->query->exec(sqlEquip);
         if (query->next()){
-            equipPtr = new Equip(query);
+            equipPtr = new equipPar(query);
             delete equipPtr;
         }
         else
@@ -128,10 +128,13 @@ void openPjWindow::start(QString prid)
             delete gslResultPtr;
         }
 
+        qDebug() << "finish gsl";
+
         this->query->exec(sqlPinf);
         if(query->next()){
-            pinf::pinfPar(query);
+            pinfPar::setPinfPar(query);
         }
+        qDebug() << "finish pinf";
 
         this->query->exec(sqlExp);
         if(query->next()){
@@ -145,7 +148,7 @@ void openPjWindow::start(QString prid)
 
     //    保存prid，用于保存操作
 
-    otherPar::prid = prid;
+    projectPar::prid = prid;
 
     //  保存操作插入记录表
 
@@ -153,12 +156,11 @@ void openPjWindow::start(QString prid)
     QString ipv4 = utils::getIPV4address();
     QDateTime curDateTime = QDateTime::currentDateTime();
     QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
-
     query->exec("SELECT MAX(recid) FROM records");
     query->next();
     int recid = query->value(0).toInt() + 1;
     QString sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '打开项目%5')").arg(recid).
-            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
     query->exec(sqlInsertRecord);
 
 
@@ -185,8 +187,7 @@ void openPjWindow::openPjSLOT()
             QMessageBox::information(this, tr("打开结果"), tr("没有该项目"));
         else{
             QMessageBox::information(this, tr("打开结果"), tr("项目打开成功"));
-            projects::setPar(query.value(1).toString().toStdString(), query.value(2).toInt());
-            qDebug() << "pj_name = " << QString::fromStdString(projects::pj_name);
+            projectPar::setPar(query.value(1).toString(), query.value(2).toString(), query.value(3).toInt());
             this->start(prid);
             this->close();
         }
@@ -197,13 +198,13 @@ void openPjWindow::openPjSLOT()
 
 void openPjWindow::setPjModel()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }

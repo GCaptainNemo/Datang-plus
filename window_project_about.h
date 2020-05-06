@@ -8,7 +8,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include <QDialog>
-#include "par_others.h"
+#include "par_users.h"
 
 class about_window : public QDialog
 {

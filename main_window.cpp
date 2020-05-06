@@ -293,11 +293,10 @@ void MainWindow::createPdfSLOT()
 
     {
     case QMessageBox::Ok:{
-        std::string a = "..\\FML\\dwg2PDF\\" ;
-        std::string b = ".pdf";
-        std::string c = a + pinf::ss.substr(0, 5) + b;
-        qDebug() << QString::fromStdString(c);
-        QString qtManulFile=QString::fromStdString(c);;
+        QString a = "..\\FML\\dwg2PDF\\" ;
+        QString b = ".pdf";
+        QString qtManulFile = a + pinfPar::ss.left(5) + b;
+        qDebug() << qtManulFile;
         QDesktopServices::openUrl(QUrl::fromLocalFile(qtManulFile));
         break;
     }
@@ -568,7 +567,7 @@ void MainWindow::caco3SryAndAgitatorSLOT()
 
 void MainWindow::emergencySryAndAgitatorSLOT()
 {
-    if (newPjWindow::num == 0)
+    if (newProjectWindow::num == 0)
         this->emeSryTankAndAgitatorWindow = new emergencySryTankAndAgitatorWindow(
                 emergencySlurrySystem::Dshg, emergencySlurrySystem::Hshg, emergencySlurrySystem::HDshg, emergencySlurrySystem::Vshg, emergencySlurrySystem::VTshg, emergencySlurrySystem::Yshg,
                 emergencySlurrySystem::Nbshg, emergencySlurrySystem::Nfshg, emergencySlurrySystem::Neshg, emergencySlurrySystem::Nkshg, this);
@@ -582,8 +581,11 @@ void MainWindow::emergencySryAndAgitatorSLOT()
 
 void MainWindow::newSLOT()
 {
-    if (newPjWindow::num == 0)
-        this->newWindow = new newPjWindow(this);
+    if (newProjectWindow::num == 0)
+    {
+        this->newWindow = new newProjectWindow(this);
+        connect(newWindow, SIGNAL(changeTitleSIGNAL()), this, SLOT(setTitleSLOT()));
+    }
     else{
         this->newWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
         this->newWindow->showNormal();
@@ -635,7 +637,7 @@ void MainWindow::submitCheckingSLOT()
 void MainWindow::setTitleSLOT()
 {
 
-    this->setWindowTitle(QString::fromStdString("湿法烟气脱硫系统 - [" + projects::pj_name + "]"));
+    this->setWindowTitle("湿法烟气脱硫系统 - [" + projectPar::pj_name + "]");
     systemConfigurationWindow::pzh = 1;
 
     MainWindow::first = 1;

@@ -2,7 +2,7 @@
 #pragma execution_character_set("utf-8")
 
 #endif
-#include "window_inputparameter.h"
+#include "window_parameter_input.h"
 
 int inputParameterWindow::num = 0;
 
@@ -114,18 +114,18 @@ void inputParameterWindow::initParWidget2()
     this->otherCombobox->setEnabled(false);
 
 
-    caco3Lineedit1->setText(QString("%1").arg(round(pinf::VCaCO3 * 100) / 100.0));
-    caco3Lineedit2->setText(QString("%1").arg(round(pinf::VMgCO3 * 100) / 100.0));
-    otherLineedit->setText(QString("%1").arg(100 - pinf::VMgCO3 - pinf::VCaCO3));
+    caco3Lineedit1->setText(QString("%1").arg(round(pinfPar::VCaCO3 * 100) / 100.0));
+    caco3Lineedit2->setText(QString("%1").arg(round(pinfPar::VMgCO3 * 100) / 100.0));
+    otherLineedit->setText(QString("%1").arg(100 - pinfPar::VMgCO3 - pinfPar::VCaCO3));
     clLineedit->setText(QString("%1").arg(gslResultPar::GSL[0][19][14]));
 
-    lineedit21->setText(QString("%1").arg(pinf::Pcaco3));
-    lineedit22->setText(QString("%1").arg(pinf::yS * 100));
+    lineedit21->setText(QString("%1").arg(pinfPar::Pcaco3));
+    lineedit22->setText(QString("%1").arg(pinfPar::yS * 100));
     lineedit23->setText(QString("%1").arg(gslResultPar::GSL[0][11][14]));
     lineedit24->setText(QString("%1").arg(gslResultPar::GSL[0][5][16] * 100));
-    lineedit25->setText(QString("%1").arg(pinf::zysh * 100));
-    qDebug() << "pinf::huanre = " << QString("%1").arg(pinf::huanre);
-    if(pinf::huanre == 1)
+    lineedit25->setText(QString("%1").arg(pinfPar::zysh * 100));
+    qDebug() << "pinf::huanre = " << QString("%1").arg(pinfPar::huanre);
+    if(pinfPar::huanre == 1)
     {
 
         lineedit26->setText(tr("80"));
@@ -140,18 +140,18 @@ void inputParameterWindow::initParWidget2()
 
 void inputParameterWindow::initParWidget3()
 {
-    lineedit1->setText(QString("%1").arg(pinf::PP1));
-    lineedit2->setText(QString("%1").arg(pinf::PP2));
-    lineedit3->setText(QString("%1").arg(pinf::PP3));
-    lineedit4->setText(QString("%1").arg(pinf::PP4));
-    lineedit5->setText(QString("%1").arg(pinf::PP5));
-    lineedit6->setText(QString("%1").arg(pinf::PP6));
-    lineedit7->setText(QString("%1").arg(pinf::PP7));
-    lineedit8->setText(QString("%1").arg(pinf::PP8));
-    lineedit9->setText(QString("%1").arg(pinf::PP9));
-    lineedit10->setText(QString("%1").arg(pinf::PP10));
-    lineedit11->setText(QString("%1").arg(pinf::PP11));
-    lineedit12->setText(QString("%1").arg(pinf::PP12));
+    lineedit1->setText(QString("%1").arg(pinfPar::PP1));
+    lineedit2->setText(QString("%1").arg(pinfPar::PP2));
+    lineedit3->setText(QString("%1").arg(pinfPar::PP3));
+    lineedit4->setText(QString("%1").arg(pinfPar::PP4));
+    lineedit5->setText(QString("%1").arg(pinfPar::PP5));
+    lineedit6->setText(QString("%1").arg(pinfPar::PP6));
+    lineedit7->setText(QString("%1").arg(pinfPar::PP7));
+    lineedit8->setText(QString("%1").arg(pinfPar::PP8));
+    lineedit9->setText(QString("%1").arg(pinfPar::PP9));
+    lineedit10->setText(QString("%1").arg(pinfPar::PP10));
+    lineedit11->setText(QString("%1").arg(pinfPar::PP11));
+    lineedit12->setText(QString("%1").arg(pinfPar::PP12));
 
 }
 

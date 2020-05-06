@@ -8,7 +8,7 @@ void Login_window::start()
     qDebug() << "I'm working in thread:" << QThread::currentThreadId();
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+    QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
             "UID=sa;PWD=123456;";
     db.setDatabaseName(dsn);
 
@@ -19,15 +19,14 @@ void Login_window::start()
     else
     {
         QSqlQuery query(db); //查询Card表并输出，测试能否正常操作数据库
-        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(otherPar::userid, otherPar::usercode);
+        QString sqlVerify = QString("SELECT * FROM users WHERE userid='%1' AND usercode = '%2'").arg(userPar::userid, userPar::usercode);
 
         query.exec(sqlVerify);
         if (query.next()){
 
             //            验证通过
-
-            otherPar::setUsrLimit(query.value(3).toString());
-            otherPar::username = query.value(2).toString();
+            userPar::userLimit = query.value(3).toString();
+            userPar::username = query.value(2).toString();
             QString ipv4 = utils::getIPV4address();
             QDateTime curDateTime = QDateTime::currentDateTime();
             QString date = curDateTime.toString("yyyy-MM-dd hh:mm:ss");
@@ -37,18 +36,17 @@ void Login_window::start()
 
             int recid = query.value(0).toInt() + 1;
             QString sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '登录成功')").arg(recid).
-                    arg(otherPar::userid).arg(ipv4).arg(date);
+                    arg(userPar::userid).arg(ipv4).arg(date);
             query.exec(sqlInsertRecord);
 
             QString sqlVersion = "SELECT * FROM version";
             query.exec(sqlVersion);
             if (query.next())
             {
-                QString version = query.value(0).toString();
-                otherPar::setVersion(version);
+                userPar::version = query.value(0).toString();
             }
             QMessageBox::information(this, tr("连接结果"), tr("数据库连接成功"));
-            emit setLimitSIGNAL(otherPar::userLimit);
+            emit setLimitSIGNAL(userPar::userLimit);
             accept();
             this->close();
         }
@@ -71,15 +69,15 @@ void Login_window::clearSLOT()
 void Login_window::okSLOT()
 {
 //    给静态全局变量赋值
-    otherPar::setGloabalvar(usrnameLineedit->text(), pwordLineedit->text(), ipLineedit->text());
+    userPar::setGloabalvar(usrnameLineedit->text(), pwordLineedit->text(), ipLineedit->text());
 
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }

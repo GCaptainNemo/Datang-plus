@@ -33,7 +33,7 @@ Coal::Coal(const float &ap, const float &coal, const float &water, const float &
 
 
 
-Equip::Equip(QSqlQuery * query):
+equipPar::equipPar(QSqlQuery * query):
     eq1(query->value(1).toString().toStdString()), eq2(query->value(2).toString().toStdString()), eq3(query->value(3).toString().toStdString()), eq4(query->value(4).toString().toStdString()),
     eq5(query->value(5).toString().toStdString()), eq6(query->value(6).toString().toStdString()), eq7(query->value(7).toString().toStdString()), eq8(query->value(8).toString().toStdString()),
     eq9(query->value(9).toString().toStdString()), eq10(query->value(10).toString().toStdString()), eq11(query->value(11).toString().toStdString()), eq12(query->value(12).toString().toStdString()),
@@ -121,6 +121,7 @@ absorberSystem::absorberSystem(const std::string &s){
     absorberSystem::cd = std::atof(res[5].c_str());
     absorberSystem::D = std::atof(res[6].c_str());
     absorberSystem::pc = std::atoi(res[7].c_str());
+    so2AbsorbSystem::xg = std::atoi(res[8].c_str());
     absorberSystem::E = std::atof(res[9].c_str());
     absorberSystem::g = std::atof(res[10].c_str());
     absorberSystem::k = std::atof(res[11].c_str());

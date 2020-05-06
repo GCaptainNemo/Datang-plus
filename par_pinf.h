@@ -12,12 +12,12 @@
 #include <iostream>
 #include "par_gslresult.h"
 #include "par_gasresult.h"
-#include "window_inputparameter.h"
+#include "window_parameter_input.h"
 
-class pinf
+class pinfPar
 {
 public:
-    static void pinfPar(QSqlQuery * query);
+    static void setPinfPar(QSqlQuery * query);
     static float VCaCO3 ; //CaCO3含量
     static float VMgCO3 ; //MgCO3含量
     static float Vother ; //其它
@@ -37,7 +37,7 @@ public:
     static float PP11 ; //出口阻力
     static float PP12 ; //烟囱阻力
     static float PP13 ; //局部总阻力
-    static std::string ss ; //系统配置（七个数）
+    static QString ss ; //系统配置（七个数）
     static int Expid ; //设备ID
 
     static int huanre ; //换热

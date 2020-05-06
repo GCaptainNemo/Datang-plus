@@ -24,7 +24,7 @@ void window_project_check_verify::okSLOT()
 
 void window_project_check_verify::checking()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if(!db.open())                                      //打开数据库
         {
@@ -37,13 +37,13 @@ void window_project_check_verify::checking()
             {
                 sqlStatement =  QString("UPDATE projects SET prstate = '审核通过', "
                                         "prverify='%1', prverifyinf='%2' WHERE prid='%3'"
-                                        ).arg(otherPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(otherPar::prid);
+                                        ).arg(userPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(projectPar::prid);
             }
             else
             {
                 sqlStatement =  QString("UPDATE projects SET prstate = '审核未通过返回重新计算', "
                                      "prverify='%1', prverifyinf='%2' WHERE prid='%3'"
-                                     ).arg(otherPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(otherPar::prid);
+                                     ).arg(userPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(projectPar::prid);
             }
             this->query->exec(sqlStatement);
             QString ipv4 = utils::getIPV4address();
@@ -54,7 +54,7 @@ void window_project_check_verify::checking()
             query->next();
             int recid = query->value(0).toInt() + 1;
             QString sqlInsertRecords = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '审核项目%5')").arg(recid).
-            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
 
             query->exec(sqlInsertRecords);
             delete query;

@@ -26,7 +26,7 @@
 #include <string>
 
 #include "utils.h"
-#include "par_others.h"
+#include "par_users.h"
 
 
 class manageaRecordsWindow : public QDialog

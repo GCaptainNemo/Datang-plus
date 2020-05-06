@@ -14,7 +14,7 @@ caco3HouseWindow::caco3HouseWindow(QWidget *parent) : QDialog(parent)
     this->setWindowFlags(flags);
 
     qDebug() << "state1";
-    if (pinf::shihui == 0)
+    if (pinfPar::shihui == 0)
         this->setWindowTitle(tr("石灰石仓"));
     else
         this->setWindowTitle(tr("石灰石粉仓"));

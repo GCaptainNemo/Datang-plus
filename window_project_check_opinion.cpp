@@ -44,14 +44,14 @@ window_project_check_opinion::window_project_check_opinion(QWidget *parent) : QD
 
 void window_project_check_opinion::initTextEdit()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
 
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -62,7 +62,7 @@ void window_project_check_opinion::initTextEdit()
         }
         else
         {
-            QString sqlStatement = QString("SELECT prstate, prcheckinf, prverifyinf FROM projects WHERE prid='%1'").arg(otherPar::prid);
+            QString sqlStatement = QString("SELECT prstate, prcheckinf, prverifyinf FROM projects WHERE prid='%1'").arg(projectPar::prid);
             qDebug() << sqlStatement;
             query = new QSqlQuery(db);
             this->query->exec(sqlStatement);

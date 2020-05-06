@@ -58,7 +58,7 @@
 #include "window_airblowerpressure.h"
 
 #include "window_systemconfiguration.h"
-#include "window_inputparameter.h"
+#include "window_parameter_input.h"
 #include "window_project_save.h"
 #include <QDesktopServices>
 #include "window_manage_project.h"
@@ -154,7 +154,7 @@ private:
 
     QSqlDatabase db;
 
-    newPjWindow * newWindow;
+    newProjectWindow * newWindow;
     openPjWindow * openProjectwindow;
     checkProjectWindow * checkPjWindow ;
     window_project_check_verify * verifyProjectWindow;

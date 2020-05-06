@@ -57,7 +57,6 @@ SOURCES += \
     window_project_login.cpp \
     window_project_new.cpp \
     window_project_open.cpp \
-    window_inputparameter.cpp \
     window_pump_absorberslurrycirculant.cpp \
     window_pump_caco3slurry.cpp \
     window_pump_caco3slurrycurculant.cpp \
@@ -67,7 +66,6 @@ SOURCES += \
     window_pump_proccessh2o.cpp \
     window_pump_wasteh2ofeed.cpp \
     window_pump_waterwindow.cpp \
-    par_others.cpp \
     window_project_save.cpp \
     widget_central.cpp \
     widget_okcancel.cpp \
@@ -82,7 +80,9 @@ SOURCES += \
     window_project_check_opinion.cpp \
     window_project_verify.cpp \
     window_parameter_flue_gas.cpp \
-    window_parameter_slurry.cpp
+    window_parameter_slurry.cpp \
+    window_parameter_input.cpp \
+    par_users.cpp
 
 HEADERS += \
     main_window.h \
@@ -113,7 +113,6 @@ HEADERS += \
     window_project_login.h \
     window_project_new.h \
     window_project_open.h \
-    window_inputparameter.h \
     window_pump_absorberslurrycirculant.h \
     window_pump_caco3slurry.h \
     window_pump_caco3slurrycurculant.h \
@@ -123,7 +122,6 @@ HEADERS += \
     window_pump_proccessh2o.h \
     window_pump_wasteh2ofeed.h \
     window_pump_waterwindow.h \
-    par_others.h \
     window_project_save.h \
     widget_central.h \
     widget_okcancel.h \
@@ -138,7 +136,9 @@ HEADERS += \
     window_project_check_opinion.h \
     window_project_verify.h \
     window_parameter_flue_gas.h \
-    window_parameter_slurry.h
+    window_parameter_slurry.h \
+    window_parameter_input.h \
+    par_users.h
 
 DISTFILES += \
     icon/new.ico \

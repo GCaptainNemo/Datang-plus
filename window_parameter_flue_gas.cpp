@@ -42,7 +42,9 @@ void window_parameter_flue_gas::initTableWidget()
 
     tableWidget->verticalHeader()->setHidden(true);
     tableWidget->horizontalHeader()->setHidden(true);
-    qDebug() << "size = " << verticalHeader.size();
+    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
 
     this->tableWidget->setRowCount(verticalHeader.size());
     this->tableWidget->setColumnCount(4);

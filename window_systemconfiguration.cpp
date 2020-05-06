@@ -117,44 +117,44 @@ void systemConfigurationWindow::initButtonState()
     this->addCombobox->addItem(tr("63 路工艺水"));
 
 
-    if(pinf::shihui == 0)
+    if(pinfPar::shihui == 0)
         caco3Radiobutton->setChecked(true);
     else
         wetCaco3Radiobutton->setChecked(true);
     if (systemConfigurationWindow::pzh == 1){
 
-        if (pinf::zhengong)
+        if (pinfPar::zhengong)
             vacuumCheckbox->setChecked(true);
         else
             vacuumCheckbox->setChecked(false);
 
-        if (pinf::feishui)
+        if (pinfPar::feishui)
             wasteH2Ocheckbox->setChecked(true);
         else
             wasteH2Ocheckbox->setChecked(false);
 
-        if (pinf::huanre)
+        if (pinfPar::huanre)
             gghSystemCheckbox->setChecked(true);
         else
             gghSystemCheckbox->setChecked(false);
 
-        if (pinf::zengya)
+        if (pinfPar::zengya)
             pAirBlowerCheckbox->setChecked(true);
         else
             pAirBlowerCheckbox->setChecked(false);
 
-        if (pinf::shuibeng)
+        if (pinfPar::shuibeng)
             waterPumpCheckbox->setChecked(true);
         else
             waterPumpCheckbox->setChecked(false);
 
-        if (pinf::gongyi)
+        if (pinfPar::gongyi)
             proH2Ocheckbox->setChecked(true);
         else
             proH2Ocheckbox->setChecked(false);
 
 
-        if (pinf::tianjia == 0)
+        if (pinfPar::tianjia == 0)
             addCombobox->setCurrentIndex(0);
         else
             addCombobox->setCurrentIndex(1);

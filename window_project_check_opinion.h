@@ -14,7 +14,8 @@
 #include <QSqlQuery>
 
 #include "utils.h"
-#include "par_others.h"
+#include "par_users.h"
+#include "par_projects.h"
 
 class window_project_check_opinion : public QDialog
 {

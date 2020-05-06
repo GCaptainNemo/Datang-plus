@@ -1,5 +1,5 @@
-﻿#ifndef WINDOW_INPUTPARAMETER_H
-#define WINDOW_INPUTPARAMETER_H
+﻿#ifndef WINDOW_PARAMETER_INPUT_H
+#define WINDOW_PARAMETER_INPUT_H
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
 
@@ -105,4 +105,4 @@ private:
 
 };
 
-#endif // WINDOW_INPUTPARAMETER_H
+#endif // WINDOW_PARAMETER_INPUT_H

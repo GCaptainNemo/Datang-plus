@@ -27,13 +27,13 @@ window_manage_password::window_manage_password(QWidget *parent) : QDialog(parent
     newPasswordLabel = new QLabel(tr("请输入新密码:"), this);
     okNewPasswordLabel = new QLabel(tr("请确认新密码:"), this);
     usridLineedit = new QLineEdit(this);
-    usridLineedit->setText(otherPar::userid);
+    usridLineedit->setText(userPar::userid);
     usridLineedit->setReadOnly(true);
     usrnameLineedit = new QLineEdit(this);
-    usrnameLineedit->setText(otherPar::username);
+    usrnameLineedit->setText(userPar::username);
     usrnameLineedit->setReadOnly(true);
     usrlimitLineedit = new QLineEdit(this);
-    usrlimitLineedit->setText(otherPar::userLimit);
+    usrlimitLineedit->setText(userPar::userLimit);
     usrlimitLineedit->setReadOnly(true);
 
     initPasswordLineedit = new QLineEdit(this);
@@ -86,13 +86,13 @@ void window_manage_password::okSLOT()
 
 void window_manage_password::updatePassword(const QString &newpassword)
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -107,9 +107,9 @@ void window_manage_password::updatePassword(const QString &newpassword)
             QString oldpw = this->initPasswordLineedit->text();
 
             this->query = new QSqlQuery(this->db);
-            this->query->exec(QString("SELECT * FROM users WHERE userid='%1' AND usercode='%2'").arg(otherPar::userid).arg(oldpw));
+            this->query->exec(QString("SELECT * FROM users WHERE userid='%1' AND usercode='%2'").arg(userPar::userid).arg(oldpw));
             if (query->next()){
-                this->query->exec(QString("UPDATE users SET usercode='%1' WHERE userid = '%2'").arg(newpassword).arg(otherPar::userid));
+                this->query->exec(QString("UPDATE users SET usercode='%1' WHERE userid = '%2'").arg(newpassword).arg(userPar::userid));
 
                 QString ipv4 = utils::getIPV4address();
                 QDateTime curDateTime = QDateTime::currentDateTime();
@@ -118,7 +118,7 @@ void window_manage_password::updatePassword(const QString &newpassword)
                 this->query->next();
                 int recid = this->query->value(0).toInt() + 1;
                 QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '更改密码')").arg(recid).
-                        arg(otherPar::userid).arg(ipv4).arg(date);
+                        arg(userPar::userid).arg(ipv4).arg(date);
                 this->query->exec(sqlInsertRecord);
                 this->okNewPasswordLineedit->clear();
                 this->newPasswordLineedit->clear();

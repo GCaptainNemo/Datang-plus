@@ -153,7 +153,7 @@ void window_total_equipment_parameter::initTableWidget()
 
 void window_total_equipment_parameter::judgePop()
 {
-    if (pinf::zengya == 0)
+    if (pinfPar::zengya == 0)
     {
         QRegExp rx("增压风机");
         int index = this->equipNameStringList.indexOf(rx);
@@ -163,7 +163,7 @@ void window_total_equipment_parameter::judgePop()
         this->equipNumStringList.removeAt(index);
         this->columnheadStringList.removeAt(index);
     }
-    if (pinf::huanre == 0)
+    if (pinfPar::huanre == 0)
     {
         QRegExp rx("烟气换热器");
         int index = this->equipNameStringList.indexOf(rx);
@@ -173,7 +173,7 @@ void window_total_equipment_parameter::judgePop()
         this->equipNumStringList.removeAt(index);
         this->columnheadStringList.removeAt(index);
     }
-    if (pinf::zhengong == 0)
+    if (pinfPar::zhengong == 0)
     {
         QRegExp rx("真空皮带脱水机");
         int index = this->equipNameStringList.indexOf(rx);
@@ -186,7 +186,7 @@ void window_total_equipment_parameter::judgePop()
             this->columnheadStringList.removeAt(index);
         }
     }
-    if (pinf::shuibeng == 0)
+    if (pinfPar::shuibeng == 0)
     {
         QRegExp rx("工艺水泵");
         int index = this->equipNameStringList.indexOf(rx);
@@ -198,7 +198,7 @@ void window_total_equipment_parameter::judgePop()
     }
 
 
-    if(pinf::feishui == 0)
+    if(pinfPar::feishui == 0)
     {
         QRegExp rx("废水旋流器");
         int index = this->equipNameStringList.indexOf(rx);
@@ -212,7 +212,7 @@ void window_total_equipment_parameter::judgePop()
         }
     }
 
-    if(pinf::shihui == 1)
+    if(pinfPar::shihui == 1)
     {
         QRegExp rx("湿式球磨机");
         int index = this->equipNameStringList.indexOf(rx);

@@ -61,13 +61,13 @@ manageProjectWindow::~manageProjectWindow()
 
 void manageProjectWindow::setPjModel()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -123,7 +123,7 @@ void manageProjectWindow::deleteProjectSLOT()
 {
     QString name = this->passwordLineedit->text();
     QString prid = this->pridLineedit->text();
-    if(name == otherPar::usercode)
+    if(name == userPar::usercode)
     {
         this->initSqlStatement(prid);
         if (db.open())
@@ -149,7 +149,7 @@ void manageProjectWindow::deleteProjectSLOT()
                     this->query->next();
                     int recid = this->query->value(0).toInt() + 1;
                     QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '删除项目").arg(recid).
-                            arg(otherPar::userid).arg(ipv4).arg(date) + prid + "')";
+                            arg(userPar::userid).arg(ipv4).arg(date) + prid + "')";
                     this->query->exec(sqlInsertRecord);
                     this->loadModel();
                 }

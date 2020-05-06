@@ -26,7 +26,7 @@
 #include "par_pinf.h"
 #include "par_projects.h"
 #include "par_experience.h"
-#include "par_others.h"
+#include "par_users.h"
 
 class openPjWindow : public QDialog
 {
@@ -63,7 +63,7 @@ private:
     // parameter
 
     absorberSystem * absorberPtr;
-    Equip * equipPtr;
+    equipPar * equipPtr;
     Coal * coalPtr;
     gasResultPar * gasResultPtr;
     gslResultPar * gslResultPtr;

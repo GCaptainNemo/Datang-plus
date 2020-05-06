@@ -11,14 +11,17 @@
 #include <QStringList>
 #include <QThread>
 #include "utils.h"
-#include "par_others.h"
+#include "par_users.h"
 #include <QMessageBox>
 #include "par_equip.h"
 #include "par_gasresult.h"
 #include "par_pinf.h"
 #include "par_gslresult.h"
+#include "par_projects.h"
 #include "window_project_login.h"
 #include "utils.h"
+
+
 #include <QDateTime>
 
 class saveObject : public QObject

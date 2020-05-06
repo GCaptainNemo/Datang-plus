@@ -26,8 +26,8 @@
 #include <string>
 
 #include "utils.h"
-#include "par_others.h"
-
+#include "par_users.h"
+#include "par_projects.h"
 
 
 class askForCheckingObject : public QObject

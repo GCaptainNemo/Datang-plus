@@ -2,18 +2,18 @@
 
 askForCheckingObject::askForCheckingObject(QWidget *parent) : QObject(parent)
 {
-    sqlUpdateProject = QString("UPDATE projects SET prstate = '提交校审' WHERE prid = '%1'").arg(otherPar::prid);
+    sqlUpdateProject = QString("UPDATE projects SET prstate = '提交校审' WHERE prid = '%1'").arg(projectPar::prid);
 }
 
 void askForCheckingObject::start()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -37,7 +37,7 @@ void askForCheckingObject::start()
             query->next();
             int recid = query->value(0).toInt() + 1;
             sqlInsertRecords = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '提交校审项目%5')").arg(recid).
-            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
 
             query->exec(sqlInsertRecords);
             emit messageboxShowSIGNAL(5);

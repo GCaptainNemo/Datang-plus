@@ -20,7 +20,7 @@ about_window::about_window(QWidget * parent):QDialog(parent)
     this->softwareLabel = new QLabel("烟气脱硫物料平衡计算软件", this);
     this->versionLabel = new QLabel("版本号", this);
     this->companyLabel = new QLabel("中国大唐集团科技工程有限公司", this);
-    this->resLabel = new QLabel(otherPar::version, this);
+    this->resLabel = new QLabel(userPar::version, this);
     this->okButton = new QPushButton("确定", this);
     this->layout = new QGridLayout(this);
     this->layout->addWidget(softwareLabel, 0, 0, 1, 3);

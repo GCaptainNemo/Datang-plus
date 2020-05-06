@@ -16,7 +16,7 @@
 
 #include "widget_okcancel.h"
 #include "utils.h"
-#include "par_others.h"
+#include "par_users.h"
 
 class window_manage_password : public QDialog
 {

@@ -7,35 +7,30 @@
 saveObject::saveObject(QObject *parent) : QObject(parent)
 {
 
-    this->sqlVerifyPj = "SELECT * FROM projects WHERE PRID=" + otherPar::prid;
+    this->sqlVerifyPj = "SELECT * FROM projects WHERE PRID=" + projectPar::prid;
     this->sqlSaveCoal = QString("UPDATE COAL SET xishu = %1, mei=%2, shui=%3, "
                         "hui=%4, liu=%5, qing=%6, tan=%7, dan=%8, "
                                 "yang=%9 WHERE prid=%10" ).arg(Coal::Ap).arg(Coal::bj).arg(Coal::W).arg(
-                         Coal::A).arg(Coal::S).arg(Coal::H).arg(Coal::C).arg(Coal::N).arg(Coal::O).arg(otherPar::prid);
-
-
-    qDebug() << "sqlVerifyPj = " << this->sqlVerifyPj;
-    qDebug() << "sqlSaveCoal = " << this->sqlSaveCoal;
-//    this->start();
+                         Coal::A).arg(Coal::S).arg(Coal::H).arg(Coal::C).arg(Coal::N).arg(Coal::O).arg(projectPar::prid);
 }
 
 void saveObject::start()
 {
     qDebug() << "SavePj work thread id = " << QThread::currentThreadId();
-    if (otherPar::prid.toStdString() == "")
+    if (projectPar::prid.toStdString() == "")
     {
         qDebug() << "没有该项目";
         //        没有该项目
 
         emit messageboxShowSIGNAL(0);
     }
-    else if (utils::ping(otherPar::ip)==0)
+    else if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -72,28 +67,31 @@ void saveObject::start()
 void saveObject::commandSave()
 {
 
-
-    //    Save pinf
-
+    // Save Coal
 
     this->query->exec(this->sqlSaveCoal);
+
+    // Save pinf
+
     QStringList lst1;
     lst1 << QString("%1").arg(inputParameterWindow::bz1) << QString("%1").arg(inputParameterWindow::bz2);
     for (int i=0;i<=22;i++)
         lst1.append(QString("%1").arg(gasResultPar::Gas[0][0][i]));
-    lst1 << QString("%1").arg(pinf::VCaCO3) << QString("%1").arg(pinf::VMgCO3) << QString("%1").arg(pinf::Vother);
-    lst1 << QString("%1").arg(gslResultPar::GSL[0][19][14]) << QString("%1").arg(pinf::yS) << QString("%1").arg(gslResultPar::GSL[0][11][14]) <<
-                                                                                                QString("%1").arg(gslResultPar::GSL[0][5][16]);
-    lst1 << QString("%1").arg(pinf::zysh) << QString("%1").arg(gasResultPar::Gas[0][4][22]) << QString("%1").arg(pinf::Pcaco3);
-    lst1 << QString("%1").arg(pinf::PP1) << QString("%1").arg(pinf::PP2)<< QString("%1").arg(pinf::PP3)<< QString("%1").arg(pinf::PP4)<<
-           QString("%1").arg(pinf::PP5)<< QString("%1").arg(pinf::PP6);
+    lst1 << QString("%1").arg(pinfPar::VCaCO3) << QString("%1").arg(pinfPar::VMgCO3) << QString("%1").arg(pinfPar::Vother);
+    lst1 << QString("%1").arg(gslResultPar::GSL[0][19][14]) << QString("%1").arg(pinfPar::yS)
+         << QString("%1").arg(gslResultPar::GSL[0][11][14]) << QString("%1").arg(gslResultPar::GSL[0][5][16]);
+    lst1 << QString("%1").arg(pinfPar::zysh) << QString("%1").arg(gasResultPar::Gas[0][4][22]) << QString("%1").arg(pinfPar::Pcaco3);
+    lst1 << QString("%1").arg(pinfPar::PP1) << QString("%1").arg(pinfPar::PP2)<< QString("%1").arg(pinfPar::PP3)<< QString("%1").arg(pinfPar::PP4)<<
+           QString("%1").arg(pinfPar::PP5)<< QString("%1").arg(pinfPar::PP6);
 
-    lst1 <<QString("%1").arg(pinf::PP7)<< QString("%1").arg(pinf::PP8)<< QString("%1").arg(pinf::PP9)<<
-          QString("%1").arg(pinf::PP10)<< QString("%1").arg(pinf::PP11) << QString("%1").arg(pinf::PP12);
+    lst1 <<QString("%1").arg(pinfPar::PP7)<< QString("%1").arg(pinfPar::PP8)<< QString("%1").arg(pinfPar::PP9)<<
+          QString("%1").arg(pinfPar::PP10)<< QString("%1").arg(pinfPar::PP11) << QString("%1").arg(pinfPar::PP12) << QString("%1").arg(pinfPar::PP13);
+
     QString res = lst1.join("*");
-    qDebug() << "res = " << res;
-    this->sqlSavePinf = QString("UPDATE Pinf SET Pinput = %1, Pequip=%2, Eid=%3 "
-                                "WHERE prid =").arg(res).arg(QString::fromStdString(pinf::ss)).arg(pinf::Expid).arg(otherPar::prid);
+    this->sqlSavePinf = QString("UPDATE Pinf SET Pinput = '%1', Pequip='%2', Eid=1"
+                                "WHERE prid = %3").arg(res).arg(pinfPar::ss).arg(projectPar::prid);
+    qDebug() << "salSAVEpinf = " << sqlSavePinf;
+
     this->query->exec(this->sqlSavePinf);
 
 
@@ -109,7 +107,9 @@ void saveObject::commandSave()
         }
     }
     res = lst1.join("*");
-    this->sqlSaveGas = QString("UPDATE GasResult set Gas1 = %1, WHERE prid = %2").arg(res, otherPar::prid);
+
+    this->sqlSaveGas = QString("UPDATE GasResult set Gas1 = '%1' WHERE prid = %2").arg(res).arg(projectPar::prid);
+    qDebug() << "sqlSaveGas = " << sqlSaveGas;
     this->query->exec(this->sqlSaveGas);
 
 
@@ -123,7 +123,7 @@ void saveObject::commandSave()
         }
     }
     res = lst1.join("*");
-    this->sqlSaveGSL = QString("UPDATE GSLResult set GSL1 = %1, WHERE prid = %2").arg(res, otherPar::prid);
+    this->sqlSaveGSL = QString("UPDATE GSLResult set GSL1 = '%1' WHERE prid = %2").arg(res).arg(projectPar::prid);
     this->query->exec(this->sqlSaveGSL);
 
 
@@ -141,6 +141,7 @@ void saveObject::commandSave()
     lst1 << QString("%1").arg(absorberSystem::cd ); //烟气进口底部之浆液面
     lst1 << QString("%1").arg(absorberSystem::D ); //最上层喷淋层到至第一级除雾器高度差
     lst1 << QString("%1").arg(absorberSystem::pc ); //喷淋层数量
+    lst1 << QString("%1").arg(so2AbsorbSystem::xg);
     lst1 << QString("%1").arg(absorberSystem::E ); //喷淋层间距
     lst1 << QString("%1").arg(absorberSystem::g ); //除雾器高度
     lst1 << QString("%1").arg(absorberSystem::k ); //除雾器距顶部烟气出口
@@ -155,14 +156,14 @@ void saveObject::commandSave()
     QStringList lst2;
 
     lst2 << QString("%1").arg(flueGasSystem::Yfan) ; //效率
-    lst2 << QString("%1").arg( flueGasSystem::Qfan ); //BMCR流量
-    lst2 << QString("%1").arg( flueGasSystem::Qfand); //TB流量
-    lst2 << QString("%1").arg( flueGasSystem::Pfan ); //BMCR压升
-    lst2 << QString("%1").arg( flueGasSystem::Pfand); //TB压升
-    lst2 << QString("%1").arg( flueGasSystem::Nffan); //BMCR轴功率
-    lst2 << QString("%1").arg( flueGasSystem::Ndfan); //TB轴功率
-    lst2 << QString("%1").arg( flueGasSystem::Nefan); //电机功率
-    lst2 << QString("%1").arg( flueGasSystem::Nkfan) ; //电机功率靠档
+    lst2 << QString("%1").arg(flueGasSystem::Qfan ); //BMCR流量
+    lst2 << QString("%1").arg(flueGasSystem::Qfand); //TB流量
+    lst2 << QString("%1").arg(flueGasSystem::Pfan ); //BMCR压升
+    lst2 << QString("%1").arg(flueGasSystem::Pfand); //TB压升
+    lst2 << QString("%1").arg(flueGasSystem::Nffan); //BMCR轴功率
+    lst2 << QString("%1").arg(flueGasSystem::Ndfan); //TB轴功率
+    lst2 << QString("%1").arg(flueGasSystem::Nefan); //电机功率
+    lst2 << QString("%1").arg(flueGasSystem::Nkfan) ; //电机功率靠档
     QString res2 = lst2.join("*");
 
 
@@ -181,13 +182,13 @@ void saveObject::commandSave()
     // SO2吸收系统 - 4. 氧化风机
 
     QStringList lst4;
-    lst4 << QString("%1").arg( so2AbsorbSystem::Yyang); //效率
-    lst4 << QString("%1").arg(  so2AbsorbSystem::Qyang); //湿基标态流量
-    lst4 << QString("%1").arg(  so2AbsorbSystem::QXyang ); //风机选型流量
-    lst4 << QString("%1").arg(  so2AbsorbSystem::Pyang ); //压升
-    lst4 << QString("%1").arg(  so2AbsorbSystem::Nfyang ); //轴功率
-    lst4 << QString("%1").arg(  so2AbsorbSystem::Neyang); //电机功率
-    lst4 << QString("%1").arg(  so2AbsorbSystem::Nkyang); //电机功率靠档
+    lst4 << QString("%1").arg(so2AbsorbSystem::Yyang); //效率
+    lst4 << QString("%1").arg(so2AbsorbSystem::Qyang); //湿基标态流量
+    lst4 << QString("%1").arg(so2AbsorbSystem::QXyang ); //风机选型流量
+    lst4 << QString("%1").arg(so2AbsorbSystem::Pyang ); //压升
+    lst4 << QString("%1").arg(so2AbsorbSystem::Nfyang ); //轴功率
+    lst4 << QString("%1").arg(so2AbsorbSystem::Neyang); //电机功率
+    lst4 << QString("%1").arg(so2AbsorbSystem::Nkyang); //电机功率靠档
     QString res4 = lst4.join("*");
 
 
@@ -602,15 +603,15 @@ void saveObject::commandSave()
 
     QString res32 = lst32.join("*");
 
-    sqlSaveEquip = QString("UPDATE Equip SET eq1 = %1, eq2 = %2,eq3 = %3, eq4 = %4,eq5 = %5, eq6 = %6,"
-                           "eq7 = %7, eq8 = %8,eq9 = %9, eq10 = %10,eq11 = %11, eq12 = %12,eq13 = %13, "
-                           "eq14 = %14,eq15 = %15, eq16 = %16,eq17 = %17, eq18 = %18,eq19 = %19, "
-                           "eq20 = %20,eq21 = %21, eq22 = %22,eq23 = %23, eq24 = %24,eq25 = %25, eq26 = %26,"
-                           "eq27 = %27, eq28 = %28,eq29 = %29, eq30 = %30,eq31 = %31, eq32 = %32").arg(res1).
+    sqlSaveEquip = QString("UPDATE Equip SET eq1 = '%1', eq2 = '%2',eq3 = '%3', eq4 = '%4',eq5 = '%5', eq6 = '%6',"
+                           "eq7 = '%7', eq8 = '%8', eq9 = '%9', eq10 = '%10',eq11 = '%11', eq12 = '%12',eq13 = '%13', "
+                           "eq14 = '%14', eq15 = '%15', eq16 = '%16', eq17 = '%17', eq18 = '%18', eq19 = '%19', "
+                           "eq20 = '%20', eq21 = '%21', eq22 = '%22', eq23 = '%23', eq24 = '%24', eq25 = '%25', eq26 = '%26',"
+                           "eq27 = '%27', eq28 = '%28', eq29 = '%29', eq30 = '%30', eq31 = '%31', eq32 = '%32' WHERE prid = %33").arg(res1).
             arg(res2).arg(res3).arg(res4).arg(res5).arg(res6).arg(res7).arg(res8).arg(res9).arg(res10).arg(res11).
             arg(res12).arg(res13).arg(res14).arg(res15).arg(res16).arg(res17).arg(res18).arg(res19).arg(res20).
             arg(res21).arg(res22).arg(res23).arg(res24).arg(res25).arg(res26).arg(res27).arg(res28).
-            arg(res29).arg(res30).arg(res31).arg(res32);
+            arg(res29).arg(res30).arg(res31).arg(res32).arg(projectPar::prid);
     query->exec(sqlSaveEquip);
 
 
@@ -624,7 +625,7 @@ void saveObject::commandSave()
     query->next();
     int recid = query->value(0).toInt() + 1;
     sqlInsertRecord = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '保存项目%5')").arg(recid).
-            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
     query->exec(sqlInsertRecord);
 
     emit messageboxShowSIGNAL(4);

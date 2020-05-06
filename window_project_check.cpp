@@ -61,13 +61,13 @@ checkProjectWindow::~checkProjectWindow(){
 
 bool checkProjectWindow::verifyLimit()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }
@@ -79,7 +79,7 @@ bool checkProjectWindow::verifyLimit()
         else
         {
             this->query = new QSqlQuery(this->db);
-            QString sqlStatement = QString("SELECT prstate FROM projects WHERE prid='%1'").arg(otherPar::prid);
+            QString sqlStatement = QString("SELECT prstate FROM projects WHERE prid='%1'").arg(projectPar::prid);
             this->query->exec(sqlStatement);
             if (query->next())
             {
@@ -122,7 +122,7 @@ void checkProjectWindow::okSLOT()
 
 void checkProjectWindow::checking()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if(!db.open())                                      //打开数据库
         {
@@ -135,13 +135,13 @@ void checkProjectWindow::checking()
             {
                 sqlStatement =  QString("UPDATE projects SET prstate = '校核通过', "
                                         "prcheck='%1', prcheckinf='%2' WHERE prid='%3'"
-                                        ).arg(otherPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(otherPar::prid);
+                                        ).arg(userPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(projectPar::prid);
             }
             else
             {
                 sqlStatement =  QString("UPDATE projects SET prstate = '校核未通过返回重新计算', "
                                      "prcheck='%1', prcheckinf='%2' WHERE prid='%3'"
-                                     ).arg(otherPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(otherPar::prid);
+                                     ).arg(userPar::userid).arg(checkOpinionTextedit->toPlainText()).arg(projectPar::prid);
             }
             this->query->exec(sqlStatement);
             QString ipv4 = utils::getIPV4address();
@@ -152,7 +152,7 @@ void checkProjectWindow::checking()
             query->next();
             int recid = query->value(0).toInt() + 1;
             QString sqlInsertRecords = QString ("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '校核项目%5')").arg(recid).
-            arg(otherPar::userid).arg(ipv4).arg(date).arg(otherPar::prid);
+            arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
 
             query->exec(sqlInsertRecords);
             delete query;

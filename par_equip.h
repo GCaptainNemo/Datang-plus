@@ -9,10 +9,10 @@
 #include "par_gasresult.h"
 
 
-class Equip
+class equipPar
 {
 public:
-    Equip(QSqlQuery * query);
+    equipPar(QSqlQuery * query);
 
 
 private:

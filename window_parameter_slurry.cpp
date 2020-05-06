@@ -38,6 +38,8 @@ void window_parameter_slurry::initTableWidget()
 
     QFont font ;//定义一个字体变量
     font.setBold(true);
+    tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     tableWidget->verticalHeader()->setHidden(true);
     tableWidget->horizontalHeader()->setHidden(true);
@@ -45,7 +47,6 @@ void window_parameter_slurry::initTableWidget()
 
     this->tableWidget->setRowCount(verticalHeader.size());
     this->tableWidget->setColumnCount(3);
-    int guanxian = 1;
     for(int i = 0; i <verticalHeader.size(); i++)
     {
         this->tableWidget->setItem(i, 0, new QTableWidgetItem(verticalHeader[i]));

@@ -113,7 +113,7 @@ void window_manage_user::saveSLOT()
     QString usrname = this->usrnameLineedit->text();
     QString usrlimit = this->usrlimitCombobox->currentText();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::usercode)
+    if(pw == userPar::usercode)
     {
         if (db.open())
         {
@@ -138,7 +138,7 @@ void window_manage_user::saveSLOT()
                         this->query->next();
                         int recid = this->query->value(0).toInt() + 1;
                         QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '添加用户").arg(recid).
-                                arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
+                                arg(userPar::userid).arg(ipv4).arg(date) + usrid + "')";
                         this->query->exec(sqlInsertRecord);
                         this->loadModel();
                         break;
@@ -184,7 +184,7 @@ void window_manage_user::updateSLOT()
     QString usrname = this->usrnameLineedit->text();
     QString usrlimit = this->usrlimitCombobox->currentText();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::usercode)
+    if(pw == userPar::usercode)
     {
         if (db.open())
         {
@@ -213,7 +213,7 @@ void window_manage_user::updateSLOT()
                             this->query->next();
                             int recid = this->query->value(0).toInt() + 1;
                             QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '更改用户").arg(recid).
-                                    arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
+                                    arg(userPar::userid).arg(ipv4).arg(date) + usrid + "')";
                             this->query->exec(sqlInsertRecord);
                             this->loadModel();
                         }
@@ -250,7 +250,7 @@ void window_manage_user::deleteSLOT()
     QString pw = this->managerPasswordLineedit->text();
     QString usrid = this->usridLineedit->text();
     this->managerPasswordLineedit->clear();
-    if(pw == otherPar::usercode)
+    if(pw == userPar::usercode)
     {
         if (db.open())
         {
@@ -274,7 +274,7 @@ void window_manage_user::deleteSLOT()
                     this->query->next();
                     int recid = this->query->value(0).toInt() + 1;
                     QString sqlInsertRecord = QString("INSERT INTO records VALUES(%1, '%2', '%3', '%4', '删除用户").arg(recid).
-                            arg(otherPar::userid).arg(ipv4).arg(date) + usrid + "')";
+                            arg(userPar::userid).arg(ipv4).arg(date) + usrid + "')";
                     this->query->exec(sqlInsertRecord);
                     this->loadModel();
                 }
@@ -298,13 +298,13 @@ void window_manage_user::deleteSLOT()
 
 void window_manage_user::setUserModel()
 {
-    if (utils::ping(otherPar::ip)==0)
+    if (utils::ping(userPar::userip)==0)
     {
         if (QSqlDatabase::contains("SQLserver"))
             this->db = QSqlDatabase::database("SQLserver");
         else{
             this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-            QString dsn = "DRIVER={SQL SERVER};SERVER=" + otherPar::ip + ";DATABASE=p;"
+            QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
                     "UID=sa;PWD=123456;";
             db.setDatabaseName(dsn);
         }

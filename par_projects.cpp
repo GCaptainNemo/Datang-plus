@@ -4,8 +4,8 @@
 #endif
 # include "par_projects.h"
 
-std::string projects::pj_name = "";
-int projects::pj_num = 0;
-
-
+QString projectPar::pj_name = "";
+int projectPar::preditnum = 0;
+QString projectPar::prid = "";
+QString projectPar::prstate = "";
 
