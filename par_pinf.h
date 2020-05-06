@@ -10,6 +10,10 @@
 #include <QVariant>
 #include <QDebug>
 #include <iostream>
+#include <QString>
+#include <QStringList>
+#include <QVariant>
+
 #include "par_gslresult.h"
 #include "par_gasresult.h"
 #include "window_parameter_input.h"

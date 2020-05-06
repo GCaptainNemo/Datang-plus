@@ -16,9 +16,9 @@ public:
 
 
 private:
-    std::string eq1, eq2, eq3, eq4, eq5, eq6, eq7, eq8, eq9, eq10;
-    std::string eq11, eq12, eq13, eq14, eq15, eq16, eq17, eq18, eq19;
-    std::string eq20, eq21, eq22, eq23, eq24, eq25, eq26, eq27, eq28, eq29, eq30, eq31, eq32;
+    QString eq1, eq2, eq3, eq4, eq5, eq6, eq7, eq8, eq9, eq10, eq11, eq12, eq13, eq14, eq15;
+    QString eq16, eq17, eq18, eq19, eq20, eq21, eq22, eq23, eq24, eq25, eq26, eq27, eq28, eq29, eq30;
+    QString eq31, eq32;
 
 };
 
@@ -42,7 +42,7 @@ public:
     static double hx ; //烟道宽度 %
     static int NUMjb ; //个数
     static double V ; //浆池容量
-    absorberSystem(const std::string &s);
+    static void setAbsorberSystemPar(const QString &s);
 
     static float B ; //氧化空气管距正常液面高度差
     static float Bb ; //计算最小氧化高度
@@ -74,7 +74,7 @@ public:
 //  3. 换热器
 
 
-    flueGasSystem(const std::string &s1, const std::string &s2);
+    static void setFlueGasSystemPar(const QString &s1, const QString &s2);
 
 };
 
@@ -124,10 +124,7 @@ public:
 
 
 
-    so2AbsorbSystem(std::string &s4, std::string &s5, std::string &s6, std::string &s7);
-
-
-private:
+    static void setSO2AbsorbSystemPar(const QString &s4, const QString &s5, const QString &s6, const QString &s7);
 
 
 
@@ -197,8 +194,8 @@ public:
     static float Nklyb ; //电机功率靠档
 
 
-    caso4ExtractH2Osystem(std::string &s8, std::string &s9, std::string &s10, std::string &s11,
-                          std::string & s12, std::string & s13, std::string & s14, std::string & s15);
+    static void setcaso4ExtractH2OsystemPar(const QString &s8, const QString &s9, const QString &s10, const QString &s11,
+                          const QString & s12, const QString & s13, const QString & s14, const QString & s15);
 
 };
 
@@ -213,8 +210,8 @@ public:
     static float Qshc ; //单台炉耗量
     static float Tshc ; //缓冲时间
     static float NUMshc ; //仓数量
-    static std::string CXshc ; //仓体形式 方 园
-    static std::string ZXshc ; //锥斗形式  方  园
+    static QString CXshc ; //仓体形式 方 园
+    static QString ZXshc ; //锥斗形式  方  园
     static float Dshc ; //直径
     static float Ashc ; //锥体角度
     static float H1shc ; //筒段高度
@@ -302,8 +299,8 @@ public:
 
 
 
-    slurryPreSystem(std::string &s16, std::string &s17, std::string &s18, std::string &s19,
-                    std::string &s20, std::string &s21, std::string &s22, std::string &s23, std::string &s24);
+   static void setSlurryPreSystemPar(const QString &s16, const QString &s17, const QString &s18, const QString &s19,
+                    const QString &s20, const QString &s21, const QString &s22, const QString &s23, const QString &s24);
 
 };
 
@@ -348,7 +345,7 @@ public:
     static float Neccb ; //电机功率
     static float Nkccb ; //电机功率靠档
 
-    processH2Osystem(std::string &s25, std::string &s26, std::string &s27);
+    static void setProcessH2OsystemPar(const QString &s25, const QString &s26, const QString &s27);
 
 
 };
@@ -388,7 +385,7 @@ public:
     static float Neshgb ; //电机功率
     static float Nkshgb ; //电机功率靠档
 
-    emergencySlurrySystem(std::string &s28, std::string &s29,std::string &s30);
+    static void setEmergencySlurrySystemPar(const QString &s28, const QString &s29, const QString &s30);
 
 
 };
@@ -412,7 +409,7 @@ public:
     static float Qfx ; //流量
     static float XZfx ; //旋流子个数
 
-    wasteH2OproSystem(std::string & s31, std::string & s32);
+    static void setWasteH2OproSystemPar(const QString & s31, const QString & s32);
 
 };
 

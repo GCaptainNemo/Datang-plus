@@ -9,6 +9,7 @@
 #include <iostream>
 #include <QSqlQuery>
 #include <QVariant>
+#include <QStringList>
 #include "utils.h"
 
 

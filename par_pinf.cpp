@@ -40,7 +40,8 @@ int pinfPar::zengya = 0; //增压
 void pinfPar::setPinfPar(QSqlQuery * query)
 {
 
-    std::string pinput = query->value(1).toString().toStdString();   // pinput
+//    std::string pinput = query->value(1).toString().toStdString();   // pinput
+    QString pinput = query->value(1).toString();
     pinfPar::ss = query->value(2).toString();   // pequip
     pinfPar::Expid = query->value(3).toString().toInt();      // eid
 
@@ -54,37 +55,36 @@ void pinfPar::setPinfPar(QSqlQuery * query)
     pinfPar::zengya = 1; //增压
     qDebug() << "ss = " << ss;
 
-    std::vector<std::string> pinput_res = utils::Split(pinput, "[*]");
-    inputParameterWindow::bz1 = atoi(pinput_res[0].c_str());
-    inputParameterWindow::bz2 = atoi(pinput_res[1].c_str());
-//    std::atof(res[0].c_str());
-
-    pinfPar::VCaCO3 = atof(pinput_res[25].c_str());
-    pinfPar::VMgCO3 =  atof(pinput_res[26].c_str());
-    pinfPar::Vother = atof(pinput_res[27].c_str());
-    gslResultPar::GSL[0][19][14] = atof(pinput_res[28].c_str());
-    pinfPar::yS = atof(pinput_res[29].c_str());
-    gslResultPar::GSL[0][11][14] = atof(pinput_res[30].c_str());
-    gslResultPar::GSL[0][5][16] = atof(pinput_res[31].c_str());
-    pinfPar::zysh = atof(pinput_res[32].c_str());
+    QStringList pinput_res = pinput.split("*");
+    inputParameterWindow::bz1 = pinput_res[0].toInt();
+    inputParameterWindow::bz2 = pinput_res[1].toInt();
+    pinfPar::VCaCO3 = pinput_res[25].toFloat();
+    pinfPar::VCaCO3 = pinput_res[25].toFloat();
+    pinfPar::VMgCO3 =  pinput_res[26].toFloat();
+    pinfPar::Vother = pinput_res[27].toFloat();
+    gslResultPar::GSL[0][19][14] = pinput_res[28].toFloat();
+    pinfPar::yS = pinput_res[29].toFloat();
+    gslResultPar::GSL[0][11][14] = pinput_res[30].toFloat();
+    gslResultPar::GSL[0][5][16] = pinput_res[31].toFloat();
+    pinfPar::zysh = pinput_res[32].toFloat();
 
     for(int i = 0; i <=22; i++){
-         gasResultPar::Gas[0][0][i] = atof(pinput_res[2 + i].c_str());
+         gasResultPar::Gas[0][0][i] = pinput_res[2 + i].toFloat();
     }
-    gasResultPar::Gas[0][4][22] = atof(pinput_res[33].c_str());
-    pinfPar::Pcaco3 = atof(pinput_res[34].c_str());
-    pinfPar::PP1 = atof(pinput_res[35].c_str());
-    pinfPar::PP2 = atof(pinput_res[36].c_str());
-    pinfPar::PP3 = atof(pinput_res[37].c_str());
-    pinfPar::PP4 = atof(pinput_res[38].c_str());
-    pinfPar::PP5 = atof(pinput_res[39].c_str());
-    pinfPar::PP6 = atof(pinput_res[40].c_str());
-    pinfPar::PP7 = atof(pinput_res[41].c_str());
-    pinfPar::PP8 = atof(pinput_res[42].c_str());
-    pinfPar::PP9 = atof(pinput_res[43].c_str());
-    pinfPar::PP10 = atof(pinput_res[44].c_str());
-    pinfPar::PP11 = atof(pinput_res[45].c_str());
-    pinfPar::PP12 = atof(pinput_res[46].c_str());
-    pinfPar::PP13 = atof(pinput_res[47].c_str());
+    gasResultPar::Gas[0][4][22] = pinput_res[33].toFloat();
+    pinfPar::Pcaco3 = pinput_res[34].toFloat();
+    pinfPar::PP1 = pinput_res[35].toFloat();
+    pinfPar::PP2 = pinput_res[36].toFloat();
+    pinfPar::PP3 = pinput_res[37].toFloat();
+    pinfPar::PP4 = pinput_res[38].toFloat();
+    pinfPar::PP5 = pinput_res[39].toFloat();
+    pinfPar::PP6 = pinput_res[40].toFloat();
+    pinfPar::PP7 = pinput_res[41].toFloat();
+    pinfPar::PP8 = pinput_res[42].toFloat();
+    pinfPar::PP9 = pinput_res[43].toFloat();
+    pinfPar::PP10 = pinput_res[44].toFloat();
+    pinfPar::PP11 = pinput_res[45].toFloat();
+    pinfPar::PP12 = pinput_res[46].toFloat();
+    pinfPar::PP13 = pinput_res[47].toFloat();
 }
 

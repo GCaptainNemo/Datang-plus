@@ -366,8 +366,8 @@ void saveObject::commandSave()
     lst16 << QString("%1").arg(slurryPreSystem::Qshc);
     lst16 << QString("%1").arg(slurryPreSystem::Tshc);
     lst16 << QString("%1").arg(slurryPreSystem::NUMshc);
-    lst16 << QString::fromStdString(slurryPreSystem::CXshc);
-    lst16 << QString::fromStdString(slurryPreSystem::ZXshc);
+    lst16 << slurryPreSystem::CXshc;
+    lst16 << slurryPreSystem::ZXshc;
     lst16 << QString("%1").arg(slurryPreSystem::Dshc);
     lst16 << QString("%1").arg(slurryPreSystem::Ashc);
     lst16 << QString("%1").arg(slurryPreSystem::H1shc);

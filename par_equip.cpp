@@ -34,46 +34,41 @@ Coal::Coal(const float &ap, const float &coal, const float &water, const float &
 
 
 equipPar::equipPar(QSqlQuery * query):
-    eq1(query->value(1).toString().toStdString()), eq2(query->value(2).toString().toStdString()), eq3(query->value(3).toString().toStdString()), eq4(query->value(4).toString().toStdString()),
-    eq5(query->value(5).toString().toStdString()), eq6(query->value(6).toString().toStdString()), eq7(query->value(7).toString().toStdString()), eq8(query->value(8).toString().toStdString()),
-    eq9(query->value(9).toString().toStdString()), eq10(query->value(10).toString().toStdString()), eq11(query->value(11).toString().toStdString()), eq12(query->value(12).toString().toStdString()),
-    eq13(query->value(13).toString().toStdString()), eq14(query->value(14).toString().toStdString()), eq15(query->value(15).toString().toStdString()),
-    eq16(query->value(16).toString().toStdString()), eq17(query->value(17).toString().toStdString()), eq18(query->value(18).toString().toStdString()), eq19(query->value(19).toString().toStdString()),
-    eq20(query->value(20).toString().toStdString()), eq21(query->value(21).toString().toStdString()), eq22(query->value(22).toString().toStdString()), eq23(query->value(23).toString().toStdString()),
-    eq24(query->value(24).toString().toStdString()), eq25(query->value(25).toString().toStdString()), eq26(query->value(26).toString().toStdString()), eq27(query->value(27).toString().toStdString()),
-    eq28(query->value(28).toString().toStdString()), eq29(query->value(29).toString().toStdString()), eq30(query->value(30).toString().toStdString()), eq31(query->value(31).toString().toStdString()), eq32(query->value(32).toString().toStdString()){
-    absorberSystem * sys0 = new absorberSystem(this->eq1);
+    eq1(query->value(1).toString()), eq2(query->value(2).toString()), eq3(query->value(3).toString()), eq4(query->value(4).toString()),
+    eq5(query->value(5).toString()), eq6(query->value(6).toString()), eq7(query->value(7).toString()), eq8(query->value(8).toString()),
+    eq9(query->value(9).toString()), eq10(query->value(10).toString()), eq11(query->value(11).toString()), eq12(query->value(12).toString()),
+    eq13(query->value(13).toString()), eq14(query->value(14).toString()), eq15(query->value(15).toString()),
+    eq16(query->value(16).toString()), eq17(query->value(17).toString()), eq18(query->value(18).toString()), eq19(query->value(19).toString()),
+    eq20(query->value(20).toString()), eq21(query->value(21).toString()), eq22(query->value(22).toString()), eq23(query->value(23).toString()),
+    eq24(query->value(24).toString()), eq25(query->value(25).toString()), eq26(query->value(26).toString()), eq27(query->value(27).toString()),
+    eq28(query->value(28).toString()), eq29(query->value(29).toString()), eq30(query->value(30).toString()), eq31(query->value(31).toString()), eq32(query->value(32).toString())
+{
+    absorberSystem::setAbsorberSystemPar(this->eq1);
     qDebug() << "successful sys0";
-    delete sys0;
-    flueGasSystem * sys1 = new flueGasSystem(this->eq2, this->eq3);
-    qDebug() << "successful sys1";
-    delete sys1;
 
-    so2AbsorbSystem * sys2 = new so2AbsorbSystem(this->eq4, this->eq5, this->eq6, this->eq7);
+    flueGasSystem::setFlueGasSystemPar(this->eq2, this->eq3);
+    qDebug() << "successful sys1";
+
+    so2AbsorbSystem::setSO2AbsorbSystemPar(this->eq4, this->eq5, this->eq6, this->eq7);
     qDebug() << "successful sys2";
-    delete sys2;
-    caso4ExtractH2Osystem * sys3 = new caso4ExtractH2Osystem(this->eq8, this->eq9, this->eq10, this->eq11, this->eq12, this->eq13, this->eq14, this->eq15);
+
+    caso4ExtractH2Osystem::setcaso4ExtractH2OsystemPar(this->eq8, this->eq9, this->eq10, this->eq11, this->eq12, this->eq13, this->eq14, this->eq15);
     qDebug() << "successful sys3";
 
-    delete sys3;
-    slurryPreSystem * sys4 = new slurryPreSystem(this->eq16, this->eq17, this->eq18, this->eq19,
+    slurryPreSystem::setSlurryPreSystemPar(this->eq16, this->eq17, this->eq18, this->eq19,
                          this->eq20, this->eq21, this->eq22, this->eq23, this->eq24);
     qDebug() << "successful sys4";
 
-    delete sys4;
-    processH2Osystem * sys5 = new processH2Osystem(this->eq25, this->eq26,this->eq27);
+    processH2Osystem::setProcessH2OsystemPar(this->eq25, this->eq26,this->eq27);
     qDebug() << "successful sys5";
 
-    delete sys5;
-    emergencySlurrySystem * sys6 = new emergencySlurrySystem(this->eq28, this->eq29,this->eq30);
+
+    emergencySlurrySystem::setEmergencySlurrySystemPar(this->eq28, this->eq29,this->eq30);
     qDebug() << "successful sys6";
 
-    delete sys6;
-
+    wasteH2OproSystem::setWasteH2OproSystemPar(this->eq31, this->eq32);
     qDebug() << "successful sys7";
 
-    wasteH2OproSystem * sys7 = new wasteH2OproSystem(this->eq31, this->eq32);
-    delete sys7;
 }
 
 
@@ -104,31 +99,24 @@ double absorberSystem::vin1 = 0; //入口烟气流速 选择
 
 
 
-absorberSystem::absorberSystem(const std::string &s){
+void absorberSystem::setAbsorberSystemPar(const QString &s){
     qDebug() << "in absorber succ";
-    qDebug() << QString::fromStdString(s);
-    std::vector<std::string> res = utils::Split(s, "[*]");
-    for(auto i = res.begin(); i != res.end(); i ++ ){
-        qDebug() << QString::fromStdString(*i);
-    }
-
-//    qDebug() << "res[0] = " << QString("").arg(std::atof(res[0]));
-    absorberSystem::FGDnum = std::atoi(res[0].c_str());
-    absorberSystem::vin = std::atof(res[1].c_str());
-    absorberSystem::vout = std::atof(res[2].c_str());
-    absorberSystem::u = std::atof(res[3].c_str());
-    absorberSystem::bc = std::atof(res[4].c_str());
-    absorberSystem::cd = std::atof(res[5].c_str());
-    absorberSystem::D = std::atof(res[6].c_str());
-    absorberSystem::pc = std::atoi(res[7].c_str());
-    so2AbsorbSystem::xg = std::atoi(res[8].c_str());
-    absorberSystem::E = std::atof(res[9].c_str());
-    absorberSystem::g = std::atof(res[10].c_str());
-    absorberSystem::k = std::atof(res[11].c_str());
-    absorberSystem::hx = std::atof(res[12].c_str());
-    absorberSystem::NUMjb= std::atoi(res[13].c_str());
-    absorberSystem::V= std::atof(res[14].c_str());
-
+    QStringList res = s.split("*");
+    absorberSystem::FGDnum = res[0].toInt();
+    absorberSystem::vin = res[1].toFloat();
+    absorberSystem::vout = res[2].toFloat();
+    absorberSystem::u = res[3].toFloat();
+    absorberSystem::bc = res[4].toFloat();
+    absorberSystem::cd = res[5].toFloat();
+    absorberSystem::D = res[6].toFloat();
+    absorberSystem::pc = res[7].toInt();
+    so2AbsorbSystem::xg = res[8].toInt();
+    absorberSystem::E = res[9].toFloat();
+    absorberSystem::g = res[10].toFloat();
+    absorberSystem::k = res[11].toFloat();
+    absorberSystem::hx = res[12].toFloat();
+    absorberSystem::NUMjb= res[13].toInt();
+    absorberSystem::V= res[14].toFloat();
 }
 
 // 系统1 - 2 增压风机
@@ -149,27 +137,27 @@ float flueGasSystem::Pfans = 0; //设计BMCR压升
 // 系统1 - 3 换热器
 //
 
-flueGasSystem::flueGasSystem(const std::string &s2, const std::string &s3)
+void flueGasSystem::setFlueGasSystemPar(const QString &s2, const QString &s3)
 {
-    std::vector<std::string> res = utils::Split(s2, "[*]");
+    QStringList res = s2.split("*");
 
     // 系统1 - 2 增压风机
 
-    flueGasSystem::Yfan= std::atof(res[0].c_str());
-    flueGasSystem::Qfan= std::atof(res[1].c_str());
-    flueGasSystem::Qfand = std::atof(res[2].c_str());
-    flueGasSystem::Pfan = std::atof(res[3].c_str());
-    flueGasSystem::Pfand = std::atof(res[4].c_str());
-    flueGasSystem::Nffan = std::atof(res[5].c_str());
-    flueGasSystem::Ndfan = std::atof(res[6].c_str());
-    flueGasSystem::Nefan = std::atof(res[7].c_str());
-    flueGasSystem::Nkfan = std::atof(res[8].c_str());
+    flueGasSystem::Yfan= res[0].toFloat();
+    flueGasSystem::Qfan= res[1].toFloat();
+    flueGasSystem::Qfand = res[2].toFloat();
+    flueGasSystem::Pfan = res[3].toFloat();
+    flueGasSystem::Pfand = res[4].toFloat();
+    flueGasSystem::Nffan = res[5].toFloat();
+    flueGasSystem::Ndfan = res[6].toFloat();
+    flueGasSystem::Nefan = res[7].toFloat();
+    flueGasSystem::Nkfan = res[8].toFloat();
 
     // 系统1 - 3 换热器
-    res = utils::Split(s3, "[*]");
-    gasResultPar::Gas[0][1][22] = std::atof(res[0].c_str());
-    gasResultPar::Gas[0][4][22] = std::atof(res[1].c_str());
-    gasResultPar::Gas[0][1][4] = std::atof(res[2].c_str());
+    res = s3.split("*");
+    gasResultPar::Gas[0][1][22] = res[0].toFloat();
+    gasResultPar::Gas[0][4][22] = res[1].toFloat();
+    gasResultPar::Gas[0][1][4] = res[2].toFloat();
 
 }
 
@@ -222,74 +210,74 @@ float so2AbsorbSystem::Nkxsh = 0;
     float so2AbsorbSystem::Nkshpb = 0; //电机功率靠档
 
 
-so2AbsorbSystem::so2AbsorbSystem(std::string &s4, std::string &s5, std::string &s6, std::string &s7)
+void so2AbsorbSystem::setSO2AbsorbSystemPar(const QString &s4, const QString &s5, const QString &s6, const QString &s7)
 {
 
     // 系统2 - 4 氧化风机
 
-    std::vector<std::string> res = utils::Split(s4, "[*]");
-    so2AbsorbSystem::Yyang= std::atof(res[0].c_str());
-    so2AbsorbSystem::Qyang = std::atof(res[1].c_str());
-    so2AbsorbSystem::QXyang = std::atof(res[2].c_str());
-    so2AbsorbSystem::Pyang = std::atof(res[3].c_str());
-    so2AbsorbSystem::Nfyang = std::atof(res[4].c_str());
-    so2AbsorbSystem::Neyang = std::atof(res[5].c_str());
-    so2AbsorbSystem::Nkyang = std::atof(res[6].c_str());
+    QStringList res = s4.split("*");
+    so2AbsorbSystem::Yyang= res[0].toFloat();
+    so2AbsorbSystem::Qyang = res[1].toFloat();
+    so2AbsorbSystem::QXyang = res[2].toFloat();
+    so2AbsorbSystem::Pyang = res[3].toFloat();
+    so2AbsorbSystem::Nfyang = res[4].toFloat();
+    so2AbsorbSystem::Neyang = res[5].toFloat();
+    so2AbsorbSystem::Nkyang = res[6].toFloat();
 
     // 系统2 - 5.浆液循环泵
 
-    res = utils::Split(s5, "[*]");
-    so2AbsorbSystem::Yjxb= std::atof(res[0].c_str());
-    so2AbsorbSystem::Qjxb = std::atof(res[1].c_str());
-    so2AbsorbSystem::xg = std::atoi(res[2].c_str());
+    res = s5.split("*");
+    so2AbsorbSystem::Yjxb= res[0].toFloat();
+    so2AbsorbSystem::Qjxb = res[1].toFloat();
+    so2AbsorbSystem::xg = res[2].toInt();
 
-    so2AbsorbSystem::Hjxb[0] = std::atof(res[3].c_str());
-    so2AbsorbSystem::Nfjxb[0] = std::atof(res[4].c_str());
-    so2AbsorbSystem::Nejxb[0] = std::atof(res[5].c_str());
-    so2AbsorbSystem::Nkjxb[0] = std::atof(res[6].c_str());
+    so2AbsorbSystem::Hjxb[0] = res[3].toFloat();
+    so2AbsorbSystem::Nfjxb[0] = res[4].toFloat();
+    so2AbsorbSystem::Nejxb[0] = res[5].toFloat();
+    so2AbsorbSystem::Nkjxb[0] = res[6].toFloat();
 
-    so2AbsorbSystem::Hjxb[1] = std::atof(res[7].c_str());
-    so2AbsorbSystem::Nfjxb[1] = std::atof(res[8].c_str());
-    so2AbsorbSystem::Nejxb[1] = std::atof(res[9].c_str());
-    so2AbsorbSystem::Nkjxb[1] = std::atof(res[10].c_str());
+    so2AbsorbSystem::Hjxb[1] = res[7].toFloat();
+    so2AbsorbSystem::Nfjxb[1] = res[8].toFloat();
+    so2AbsorbSystem::Nejxb[1] = res[9].toFloat();
+    so2AbsorbSystem::Nkjxb[1] = res[10].toFloat();
 
-    so2AbsorbSystem::Hjxb[2] = std::atof(res[11].c_str());
-    so2AbsorbSystem::Nfjxb[2] = std::atof(res[12].c_str());
-    so2AbsorbSystem::Nejxb[2] = std::atof(res[13].c_str());
-    so2AbsorbSystem::Nkjxb[2] = std::atof(res[14].c_str());
+    so2AbsorbSystem::Hjxb[2] = res[11].toFloat();
+    so2AbsorbSystem::Nfjxb[2] = res[12].toFloat();
+    so2AbsorbSystem::Nejxb[2] = res[13].toFloat();
+    so2AbsorbSystem::Nkjxb[2] = res[14].toFloat();
 
-    so2AbsorbSystem::Hjxb[3] = std::atof(res[15].c_str());
-    so2AbsorbSystem::Nfjxb[3] = std::atof(res[16].c_str());
-    so2AbsorbSystem::Nejxb[3] = std::atof(res[17].c_str());
-    so2AbsorbSystem::Nkjxb[3] = std::atof(res[18].c_str());
+    so2AbsorbSystem::Hjxb[3] = res[15].toFloat();
+    so2AbsorbSystem::Nfjxb[3] = res[16].toFloat();
+    so2AbsorbSystem::Nejxb[3] = res[17].toFloat();
+    so2AbsorbSystem::Nkjxb[3] = res[18].toFloat();
 
-    so2AbsorbSystem::Hjxb[4] = std::atof(res[19].c_str());
-    so2AbsorbSystem::Nfjxb[4] = std::atof(res[20].c_str());
-    so2AbsorbSystem::Nejxb[4] = std::atof(res[21].c_str());
-    so2AbsorbSystem::Nkjxb[4] = std::atof(res[22].c_str());
+    so2AbsorbSystem::Hjxb[4] = res[19].toFloat();
+    so2AbsorbSystem::Nfjxb[4] = res[20].toFloat();
+    so2AbsorbSystem::Nejxb[4] = res[21].toFloat();
+    so2AbsorbSystem::Nkjxb[4] = res[22].toFloat();
 
-    so2AbsorbSystem::Hjxb[5] = std::atof(res[23].c_str());
-    so2AbsorbSystem::Nfjxb[5] = std::atof(res[24].c_str());
-    so2AbsorbSystem::Nejxb[5] = std::atof(res[25].c_str());
-    so2AbsorbSystem::Nkjxb[5] = std::atof(res[26].c_str());
+    so2AbsorbSystem::Hjxb[5] = res[23].toFloat();
+    so2AbsorbSystem::Nfjxb[5] = res[24].toFloat();
+    so2AbsorbSystem::Nejxb[5] = res[25].toFloat();
+    so2AbsorbSystem::Nkjxb[5] = res[26].toFloat();
 
     // 系统2 - 6. 吸收塔搅拌器
 
-    res = utils::Split(s6, "[*]");
-    so2AbsorbSystem::Nbxsh = std::atof(res[0].c_str());
-    so2AbsorbSystem::Nfxsh = std::atof(res[1].c_str());
-    so2AbsorbSystem::Nexsh = std::atof(res[2].c_str());
-    so2AbsorbSystem::Nkxsh = std::atof(res[3].c_str());
+    res = s6.split("*");
+    so2AbsorbSystem::Nbxsh = res[0].toFloat();
+    so2AbsorbSystem::Nfxsh = res[1].toFloat();
+    so2AbsorbSystem::Nexsh = res[2].toFloat();
+    so2AbsorbSystem::Nkxsh = res[3].toFloat();
 
     // 系统2 - 7. 石膏排除泵
 
-    res = utils::Split(s7, "[*]");
-    so2AbsorbSystem::Yshpb = std::atof(res[0].c_str());
-    so2AbsorbSystem::Qshpb = std::atof(res[1].c_str());
-    so2AbsorbSystem::Hshpb = std::atof(res[2].c_str());
-    so2AbsorbSystem::Nfshpb = std::atof(res[3].c_str());
-    so2AbsorbSystem::Neshpb = std::atof(res[4].c_str());
-    so2AbsorbSystem::Nkshpb = std::atof(res[5].c_str());
+    res = s7.split("*");
+    so2AbsorbSystem::Yshpb = res[0].toFloat();
+    so2AbsorbSystem::Qshpb = res[1].toFloat();
+    so2AbsorbSystem::Hshpb = res[2].toFloat();
+    so2AbsorbSystem::Nfshpb = res[3].toFloat();
+    so2AbsorbSystem::Neshpb = res[4].toFloat();
+    so2AbsorbSystem::Nkshpb = res[5].toFloat();
 
 }
 
@@ -363,75 +351,76 @@ float caso4ExtractH2Osystem::Nklyb = 0;
 
 
 
-caso4ExtractH2Osystem::caso4ExtractH2Osystem(std::string & s8, std::string & s9, std::string & s10,
-                                             std::string & s11, std::string & s12, std::string & s13,
-                                             std::string & s14, std::string & s15)
+void caso4ExtractH2Osystem::setcaso4ExtractH2OsystemPar(const QString & s8, const QString & s9, const QString & s10,
+                                             const QString & s11, const QString & s12, const QString & s13,
+                                             const QString & s14, const QString & s15)
 {
 
     //    系统3 - 10 石膏旋流器
 
-    std::vector<std::string> res = utils::Split(s8, "[*]");
-    caso4ExtractH2Osystem::Qshgx = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::XZshgx = std::atof(res[1].c_str());
+
+    QStringList res = s8.split("*");
+    caso4ExtractH2Osystem::Qshgx = res[0].toFloat();
+    caso4ExtractH2Osystem::XZshgx = res[1].toFloat();
 
     //    系统3 - 9 真空皮带脱水机
 
-    res = utils::Split(s9, "[*]");
-    caso4ExtractH2Osystem::Qzhk = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Szhk = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Nezhk = std::atof(res[2].c_str());
+    res = s9.split("*");
+    caso4ExtractH2Osystem::Qzhk = res[0].toFloat();
+    caso4ExtractH2Osystem::Szhk = res[1].toFloat();
+    caso4ExtractH2Osystem::Nezhk = res[2].toFloat();
 
     //    系统3 - 10 真空泵
 
-    res = utils::Split(s10, "[*]");
-    caso4ExtractH2Osystem::Qzhb = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Nfzhb = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Nezhb = std::atof(res[2].c_str());
+    res = s10.split("*");
+    caso4ExtractH2Osystem::Qzhb = res[0].toFloat();
+    caso4ExtractH2Osystem::Nfzhb = res[1].toFloat();
+    caso4ExtractH2Osystem::Nezhb = res[2].toFloat();
 
     //    系统3 - 11 滤布冲洗水箱
 
-    res = utils::Split(s11, "[*]");
-    caso4ExtractH2Osystem::Dlb = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Hlb = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Vjlb = std::atof(res[2].c_str());
+    res = s11.split("*");
+    caso4ExtractH2Osystem::Dlb = res[0].toFloat();
+    caso4ExtractH2Osystem::Hlb = res[1].toFloat();
+    caso4ExtractH2Osystem::Vjlb = res[2].toFloat();
 
     //    系统3 - 12 滤布冲洗水泵
 
-    res = utils::Split(s12, "[*]");
-    caso4ExtractH2Osystem::Qlbb = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Hlbb = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Nelbb = std::atof(res[2].c_str());
+    res = s12.split("*");
+    caso4ExtractH2Osystem::Qlbb = res[0].toFloat();
+    caso4ExtractH2Osystem::Hlbb = res[1].toFloat();
+    caso4ExtractH2Osystem::Nelbb = res[2].toFloat();
 
     //    系统3 - 13 滤液箱
 
-    res = utils::Split(s13, "[*]");
-    caso4ExtractH2Osystem::Qlx = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Tlx = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Dlx = std::atof(res[2].c_str());//直径
-    caso4ExtractH2Osystem::Hlx =std::atof(res[3].c_str()); //高度
-    caso4ExtractH2Osystem::HDlx = std::atof(res[4].c_str()); //高径比
-    caso4ExtractH2Osystem::VTjlx = std::atof(res[5].c_str()); //计算总容积
-    caso4ExtractH2Osystem::Vjlx = std::atof(res[6].c_str()); //计算有效容积
-    caso4ExtractH2Osystem::Ylx = std::atof(res[7].c_str()); //有效 总容积
+    res = s13.split("*");
+    caso4ExtractH2Osystem::Qlx = res[0].toFloat();
+    caso4ExtractH2Osystem::Tlx = res[1].toFloat();
+    caso4ExtractH2Osystem::Dlx = res[2].toFloat();//直径
+    caso4ExtractH2Osystem::Hlx =res[3].toFloat(); //高度
+    caso4ExtractH2Osystem::HDlx = res[4].toFloat(); //高径比
+    caso4ExtractH2Osystem::VTjlx = res[5].toFloat(); //计算总容积
+    caso4ExtractH2Osystem::Vjlx = res[6].toFloat(); //计算有效容积
+    caso4ExtractH2Osystem::Ylx = res[7].toFloat(); //有效 总容积
 
     //    系统3 - 14 滤液箱搅拌器
 
-    res = utils::Split(s14, "[*]");
-    caso4ExtractH2Osystem::Nblx = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Nflx = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Nelx = std::atof(res[2].c_str());//直径
-    caso4ExtractH2Osystem::Nklx =std::atof(res[3].c_str()); //高度
+    res = s14.split("*");
+    caso4ExtractH2Osystem::Nblx = res[0].toFloat();
+    caso4ExtractH2Osystem::Nflx = res[1].toFloat();
+    caso4ExtractH2Osystem::Nelx = res[2].toFloat();//直径
+    caso4ExtractH2Osystem::Nklx =res[3].toFloat(); //高度
 
 
     //    系统3 - 15 滤液泵
 
-    res = utils::Split(s15, "[*]");
-    caso4ExtractH2Osystem::Ylyb = std::atof(res[0].c_str());
-    caso4ExtractH2Osystem::Qlyb = std::atof(res[1].c_str());
-    caso4ExtractH2Osystem::Hlyb = std::atof(res[2].c_str());
-    caso4ExtractH2Osystem::Nflyb =std::atof(res[3].c_str());
-    caso4ExtractH2Osystem::Nelyb = std::atof(res[4].c_str());
-    caso4ExtractH2Osystem::Nklyb = std::atof(res[5].c_str());
+    res = s15.split("*");
+    caso4ExtractH2Osystem::Ylyb = res[0].toFloat();
+    caso4ExtractH2Osystem::Qlyb = res[1].toFloat();
+    caso4ExtractH2Osystem::Hlyb = res[2].toFloat();
+    caso4ExtractH2Osystem::Nflyb =res[3].toFloat();
+    caso4ExtractH2Osystem::Nelyb = res[4].toFloat();
+    caso4ExtractH2Osystem::Nklyb = res[5].toFloat();
 
 
 }
@@ -443,8 +432,8 @@ caso4ExtractH2Osystem::caso4ExtractH2Osystem(std::string & s8, std::string & s9,
 float slurryPreSystem::Qshc = 0; //单台炉耗量
 float slurryPreSystem::Tshc = 0; //缓冲时间
 float slurryPreSystem::NUMshc = 0; //仓数量
-std::string slurryPreSystem::CXshc = "" ; //仓体形式 方 园
-std::string slurryPreSystem::ZXshc = ""; //锥斗形式  方  园
+QString slurryPreSystem::CXshc = "" ; //仓体形式 方 园
+QString slurryPreSystem::ZXshc = ""; //锥斗形式  方  园
 float slurryPreSystem::Dshc = 0; //直径
 float slurryPreSystem::Ashc = 0; //锥体角度
 float slurryPreSystem::H1shc = 0; //筒段高度
@@ -530,109 +519,109 @@ float slurryPreSystem::Nkshjb = 0; //电机功率靠档
 
 
 
-slurryPreSystem::slurryPreSystem(std::string &s16, std::string &s17, std::string &s18, std::string &s19,
-                                 std::string &s20, std::string &s21, std::string &s22, std::string &s23, std::string &s24)
+void slurryPreSystem::setSlurryPreSystemPar(const QString &s16, const QString &s17, const QString &s18, const QString &s19,
+                                 const QString &s20, const QString &s21, const QString &s22, const QString &s23, const QString &s24)
 {
 
     //    系统4 - 16 石灰石仓
 
-    std::vector<std::string> res = utils::Split(s16, "[*]");
+    QStringList res = s16.split("*");
 
-    slurryPreSystem::Qshc = std::atof(res[0].c_str()); //单台炉耗量
-    slurryPreSystem::Tshc = std::atof(res[1].c_str()); //缓冲时间
-    slurryPreSystem::NUMshc = std::atof(res[2].c_str()); //仓数量
+    slurryPreSystem::Qshc = res[0].toFloat(); //单台炉耗量
+    slurryPreSystem::Tshc = res[1].toFloat(); //缓冲时间
+    slurryPreSystem::NUMshc = res[2].toFloat(); //仓数量
     slurryPreSystem::CXshc = res[3]; //仓体形式 方 园
     slurryPreSystem::ZXshc = res[4]; //锥斗形式  方  园
-    slurryPreSystem::Dshc = std::atof(res[5].c_str()); //直径
-    slurryPreSystem::Ashc = std::atof(res[6].c_str()); //锥体角度
-    slurryPreSystem::H1shc = std::atof(res[7].c_str()); //筒段高度
-    slurryPreSystem::H2shc = std::atof(res[8].c_str()); //追段高度
-    slurryPreSystem::VTjshc = std::atof(res[9].c_str()); //计算总容积
-    slurryPreSystem::Vjshc = std::atof(res[10].c_str()); //计算有效容积
-    slurryPreSystem::Yshc = std::atof(res[11].c_str()); //有效 总容积
+    slurryPreSystem::Dshc = res[5].toFloat(); //直径
+    slurryPreSystem::Ashc = res[6].toFloat(); //锥体角度
+    slurryPreSystem::H1shc = res[7].toFloat(); //筒段高度
+    slurryPreSystem::H2shc = res[8].toFloat(); //追段高度
+    slurryPreSystem::VTjshc = res[9].toFloat(); //计算总容积
+    slurryPreSystem::Vjshc = res[10].toFloat(); //计算有效容积
+    slurryPreSystem::Yshc = res[11].toFloat(); //有效 总容积
 
 
     //    系统4 - 17 磨机
 
-    res = utils::Split(s17, "[*]");
-    slurryPreSystem::Qmj = std::atof(res[0].c_str()); //最大出力
-    slurryPreSystem::Nfmj = std::atof(res[1].c_str()); //轴功率
-    slurryPreSystem::Nemj = std::atof(res[2].c_str()); //电机功率
+    res = s17.split("*");
+    slurryPreSystem::Qmj = res[0].toFloat(); //最大出力
+    slurryPreSystem::Nfmj = res[1].toFloat(); //轴功率
+    slurryPreSystem::Nemj = res[2].toFloat(); //电机功率
 
     //    系统4 - 18 石灰石浆液循环箱
 
-    res = utils::Split(s18, "[*]");
-    slurryPreSystem::Qsjx = std::atof(res[0].c_str());  //单台炉耗量
-    slurryPreSystem::Tsjx = std::atof(res[1].c_str());  //缓冲时间
-    slurryPreSystem::Dsjx = std::atof(res[2].c_str());  //直径
-    slurryPreSystem::Hsjx = std::atof(res[3].c_str());  //高度
-    slurryPreSystem::HDsjx = std::atof(res[4].c_str());  //高径比
-    slurryPreSystem::VTjsjx = std::atof(res[5].c_str());  //计算总容积
-    slurryPreSystem::Vjsjx = std::atof(res[6].c_str());  //计算有效容积
-    slurryPreSystem::VTsjx = std::atof(res[7].c_str());  //总容积
-    slurryPreSystem::Ysjx = std::atof(res[8].c_str());  //有效 / 总容积
+    res = s18.split("*");
+    slurryPreSystem::Qsjx = res[0].toFloat();  //单台炉耗量
+    slurryPreSystem::Tsjx = res[1].toFloat();  //缓冲时间
+    slurryPreSystem::Dsjx = res[2].toFloat();  //直径
+    slurryPreSystem::Hsjx = res[3].toFloat();  //高度
+    slurryPreSystem::HDsjx = res[4].toFloat();  //高径比
+    slurryPreSystem::VTjsjx = res[5].toFloat();  //计算总容积
+    slurryPreSystem::Vjsjx = res[6].toFloat();  //计算有效容积
+    slurryPreSystem::VTsjx = res[7].toFloat();  //总容积
+    slurryPreSystem::Ysjx = res[8].toFloat();  //有效 / 总容积
 
     //    系统4 - 19 石灰石浆液循环箱搅拌器
 
     qDebug() << "in sys 19";
 
-    res = utils::Split(s19, "[*]");
-    slurryPreSystem::Nbsjx = std::atof(res[0].c_str());  //比功率
-    slurryPreSystem::Nfsjx = std::atof(res[1].c_str());   //轴功率
-    slurryPreSystem::Nesjx = std::atof(res[2].c_str());   //电机功率
-    slurryPreSystem::Nksjx = std::atof(res[3].c_str());   //电机功率靠档
+    res = s19.split("*");
+    slurryPreSystem::Nbsjx = res[0].toFloat();  //比功率
+    slurryPreSystem::Nfsjx = res[1].toFloat();   //轴功率
+    slurryPreSystem::Nesjx = res[2].toFloat();   //电机功率
+    slurryPreSystem::Nksjx = res[3].toFloat();   //电机功率靠档
 
 
     //    系统4 - 20 石灰石浆液循环泵
 
-    res = utils::Split(s20, "[*]");
+    res = s20.split("*");
 
-    slurryPreSystem::Yshjxb = std::atof(res[0].c_str()); //效率
-    slurryPreSystem::Qshjxb = std::atof(res[1].c_str()); //流量
-    slurryPreSystem::Hshjxb = std::atof(res[2].c_str()); //扬程
-    slurryPreSystem::Nfshjxb = std::atof(res[3].c_str()); //轴功率
-    slurryPreSystem::Neshjxb = std::atof(res[4].c_str());   //电机功率
+    slurryPreSystem::Yshjxb = res[0].toFloat(); //效率
+    slurryPreSystem::Qshjxb = res[1].toFloat(); //流量
+    slurryPreSystem::Hshjxb = res[2].toFloat(); //扬程
+    slurryPreSystem::Nfshjxb = res[3].toFloat(); //轴功率
+    slurryPreSystem::Neshjxb = res[4].toFloat();   //电机功率
 //    slurryPreSystem::Nkshjxb = std::atof(res[5].c_str()); //电机功率靠档
 
 
     //    系统4 - 21 石灰石旋流器
 
-    res = utils::Split(s21, "[*]");
-    slurryPreSystem::Qshhx = std::atof(res[0].c_str()); //流量
-    slurryPreSystem::XZshhx = std::atof(res[1].c_str()); //旋流子个数
+    res = s21.split("*");
+    slurryPreSystem::Qshhx = res[0].toFloat(); //流量
+    slurryPreSystem::XZshhx = res[1].toFloat(); //旋流子个数
 
     //    系统4 - 22 石灰石浆液箱
 
-    res = utils::Split(s22, "[*]");
+    res = s22.split("*");
 
-    slurryPreSystem::Qsj = std::atof(res[0].c_str());  //单台炉耗量
-    slurryPreSystem::Tsj = std::atof(res[1].c_str());  //缓冲时间
-    slurryPreSystem::Dsj = std::atof(res[2].c_str());  //直径
-    slurryPreSystem::Hsj = std::atof(res[3].c_str());  //高度
-    slurryPreSystem::HDsj = std::atof(res[4].c_str());  //高径比
-    slurryPreSystem::VTjsj = std::atof(res[5].c_str());  //计算总容积
-    slurryPreSystem::Vjsj = std::atof(res[6].c_str());  //计算有效容积
-    slurryPreSystem::Ysj = std::atof(res[7].c_str());  //有效 总容积
+    slurryPreSystem::Qsj = res[0].toFloat();  //单台炉耗量
+    slurryPreSystem::Tsj = res[1].toFloat();  //缓冲时间
+    slurryPreSystem::Dsj = res[2].toFloat();  //直径
+    slurryPreSystem::Hsj = res[3].toFloat();  //高度
+    slurryPreSystem::HDsj = res[4].toFloat();  //高径比
+    slurryPreSystem::VTjsj = res[5].toFloat();  //计算总容积
+    slurryPreSystem::Vjsj = res[6].toFloat();  //计算有效容积
+    slurryPreSystem::Ysj = res[7].toFloat();  //有效 总容积
 
 
     //    系统4 - 23 石灰石浆液箱搅拌器
 
-    res = utils::Split(s23, "[*]");
-    slurryPreSystem::Nbsj = std::atof(res[0].c_str()); //比功率
-    slurryPreSystem::Nfsj = std::atof(res[1].c_str()); //轴功率
-    slurryPreSystem::Nesj = std::atof(res[2].c_str()); //电机功率
-    slurryPreSystem::Nksj  = std::atof(res[3].c_str()); //电机功率
+    res = s23.split("*");
+    slurryPreSystem::Nbsj = res[0].toFloat(); //比功率
+    slurryPreSystem::Nfsj = res[1].toFloat(); //轴功率
+    slurryPreSystem::Nesj = res[2].toFloat(); //电机功率
+    slurryPreSystem::Nksj  = res[3].toFloat(); //电机功率
 
 
     //    系统4 - 24 石灰石浆液泵
 
-    res = utils::Split(s24, "[*]");
-    slurryPreSystem::Yshjb = std::atof(res[0].c_str());  //效率
-    slurryPreSystem::Qshjb = std::atof(res[1].c_str()); //流量
-    slurryPreSystem::Hshjb = std::atof(res[2].c_str()); //扬程
-    slurryPreSystem::Nfshjb = std::atof(res[3].c_str()); //轴功率
-    slurryPreSystem::Neshjb = std::atof(res[4].c_str()); //电机功率
-    slurryPreSystem::Nkshjb = std::atof(res[5].c_str()); //电机功率靠档
+    res = s24.split("*");
+    slurryPreSystem::Yshjb = res[0].toFloat();  //效率
+    slurryPreSystem::Qshjb = res[1].toFloat(); //流量
+    slurryPreSystem::Hshjb = res[2].toFloat(); //扬程
+    slurryPreSystem::Nfshjb = res[3].toFloat(); //轴功率
+    slurryPreSystem::Neshjb = res[4].toFloat(); //电机功率
+    slurryPreSystem::Nkshjb = res[5].toFloat(); //电机功率靠档
 
 }
 
@@ -672,39 +661,39 @@ float processH2Osystem::Nkccb = 0; //电机功率靠档
 
 
 
-processH2Osystem::processH2Osystem(std::string &s25, std::string &s26, std::string &s27)
+void processH2Osystem::setProcessH2OsystemPar(const QString &s25, const QString &s26, const QString &s27)
 {
 
     //    系统5 - 25 工艺水箱
-    std::vector<std::string> res = utils::Split(s25, "[*]");
+    QStringList res = s25.split("*");
 
-    processH2Osystem::Qgy = std::atof(res[0].c_str());   //单台炉耗量
-    processH2Osystem::Tgy = std::atof(res[1].c_str()); //缓冲时间
-    processH2Osystem::Dgy = std::atof(res[2].c_str()); //直径
-    processH2Osystem::Hgy = std::atof(res[3].c_str()); //高度
-    processH2Osystem::HDgy = std::atof(res[4].c_str()); //高径比
-    processH2Osystem::VTjgy = std::atof(res[5].c_str()); //计算总容积
-    processH2Osystem::Vjgy = std::atof(res[6].c_str()); //计算有效容积
-    processH2Osystem::VTgy = std::atof(res[7].c_str()); //总容积
-    processH2Osystem::Ygy = std::atof(res[8].c_str()); //有效容积 / 总容积
+    processH2Osystem::Qgy = res[0].toFloat();   //单台炉耗量
+    processH2Osystem::Tgy = res[1].toFloat(); //缓冲时间
+    processH2Osystem::Dgy = res[2].toFloat(); //直径
+    processH2Osystem::Hgy = res[3].toFloat(); //高度
+    processH2Osystem::HDgy = res[4].toFloat(); //高径比
+    processH2Osystem::VTjgy = res[5].toFloat(); //计算总容积
+    processH2Osystem::Vjgy = res[6].toFloat(); //计算有效容积
+    processH2Osystem::VTgy = res[7].toFloat(); //总容积
+    processH2Osystem::Ygy = res[8].toFloat(); //有效容积 / 总容积
 
     //    系统5 - 26 工艺水泵
-    res = utils::Split(s26, "[*]");
-    processH2Osystem::Ygyb = std::atof(res[0].c_str());    //效率
-    processH2Osystem::Qgyb = std::atof(res[1].c_str());    //流量
-    processH2Osystem::Hgyb = std::atof(res[2].c_str());    //扬程
-    processH2Osystem::Nfgyb = std::atof(res[3].c_str());    //轴功率
-    processH2Osystem::Negyb = std::atof(res[4].c_str());    //电机功率
-    processH2Osystem::Nkgyb = std::atof(res[5].c_str());    //电机功率靠档
+    res = s26.split("*");
+    processH2Osystem::Ygyb = res[0].toFloat();    //效率
+    processH2Osystem::Qgyb = res[1].toFloat();    //流量
+    processH2Osystem::Hgyb = res[2].toFloat();    //扬程
+    processH2Osystem::Nfgyb = res[3].toFloat();    //轴功率
+    processH2Osystem::Negyb = res[4].toFloat();    //电机功率
+    processH2Osystem::Nkgyb = res[5].toFloat();    //电机功率靠档
 
     //    系统5 - 27 除雾器冲洗水泵
-    res = utils::Split(s27, "[*]");
-    processH2Osystem::Yccb = std::atof(res[0].c_str());     //效率
-    processH2Osystem::Qccb = std::atof(res[1].c_str());     //流量
-    processH2Osystem::Hccb = std::atof(res[2].c_str());     //扬程
-    processH2Osystem::Nfccb = std::atof(res[3].c_str());     //轴功率
-    processH2Osystem::Neccb = std::atof(res[4].c_str());     //电机功率
-    processH2Osystem::Nkccb = std::atof(res[5].c_str());     //电机功率靠档
+    res = s27.split("*");
+    processH2Osystem::Yccb = res[0].toFloat();     //效率
+    processH2Osystem::Qccb = res[1].toFloat();     //流量
+    processH2Osystem::Hccb = res[2].toFloat();     //扬程
+    processH2Osystem::Nfccb = res[3].toFloat();     //轴功率
+    processH2Osystem::Neccb = res[4].toFloat();     //电机功率
+    processH2Osystem::Nkccb = res[5].toFloat();     //电机功率靠档
 }
 
 
@@ -750,39 +739,38 @@ float emergencySlurrySystem::Vjshg = 0; //计算有效容积
 float emergencySlurrySystem::VTjshg = 0; //计算总容积
 
 
-emergencySlurrySystem::emergencySlurrySystem(std::string &s28, std::string &s29,std::string &s30)
+void emergencySlurrySystem::setEmergencySlurrySystemPar(const QString &s28, const QString &s29, const QString &s30)
 {
 
     //    系统 6 - 28. 事故浆液箱
 
-    std::vector<std::string> res = utils::Split(s28, "[*]");
-    emergencySlurrySystem::Dshg = std::atof(res[0].c_str());      //直径
-    emergencySlurrySystem::Hshg = std::atof(res[1].c_str());      //高度
-    emergencySlurrySystem::HDshg = std::atof(res[2].c_str());     //高径比
-    emergencySlurrySystem::VTshg = std::atof(res[3].c_str());     //总容积
-    emergencySlurrySystem::Vshg = std::atof(res[4].c_str());     //有效容积
-    emergencySlurrySystem::Yshg = std::atof(res[5].c_str());     //有效 总容积
+    QStringList res = s28.split("*");
+    emergencySlurrySystem::Dshg = res[0].toFloat();      //直径
+    emergencySlurrySystem::Hshg = res[1].toFloat();      //高度
+    emergencySlurrySystem::HDshg = res[2].toFloat();     //高径比
+    emergencySlurrySystem::VTshg = res[3].toFloat();     //总容积
+    emergencySlurrySystem::Vshg = res[4].toFloat();     //有效容积
+    emergencySlurrySystem::Yshg = res[5].toFloat();     //有效 总容积
 
 
     //    系统 6 - 29. 事故浆液箱搅拌器
 
-    res = utils::Split(s29, "[*]");
-    emergencySlurrySystem::Nbshg = std::atof(res[0].c_str()); //比功率
-    emergencySlurrySystem::Nfshg = std::atof(res[1].c_str()); //轴功率
-    emergencySlurrySystem::Neshg = std::atof(res[2].c_str()); //电机功率
-    emergencySlurrySystem::Nkshg = std::atof(res[3].c_str()); //电机功率
+    res = s29.split("*");
+    emergencySlurrySystem::Nbshg = res[0].toFloat(); //比功率
+    emergencySlurrySystem::Nfshg = res[1].toFloat(); //轴功率
+    emergencySlurrySystem::Neshg = res[2].toFloat(); //电机功率
+    emergencySlurrySystem::Nkshg = res[3].toFloat(); //电机功率
 
 
     //    系统 6 - 30. 事故浆液箱泵
 
-    res = utils::Split(s30, "[*]");
-    emergencySlurrySystem::Yshgb = std::atof(res[0].c_str()); //效率
-    emergencySlurrySystem::Qshgb = std::atof(res[1].c_str()); //流量
-    emergencySlurrySystem::Hshgb = std::atof(res[2].c_str()); //扬程
-    emergencySlurrySystem::Nfshgb = std::atof(res[3].c_str()); //轴功率
-    emergencySlurrySystem::Neshgb = std::atof(res[4].c_str()); //电机功率
-    emergencySlurrySystem::Nkshgb = std::atof(res[5].c_str()); //电机功率靠档
-
+    res = s30.split("*");
+    emergencySlurrySystem::Yshgb = res[0].toFloat(); //效率
+    emergencySlurrySystem::Qshgb = res[1].toFloat(); //流量
+    emergencySlurrySystem::Hshgb = res[2].toFloat(); //扬程
+    emergencySlurrySystem::Nfshgb = res[3].toFloat(); //轴功率
+    emergencySlurrySystem::Neshgb = res[4].toFloat(); //电机功率
+    emergencySlurrySystem::Nkshgb = res[5].toFloat(); //电机功率靠档
 
 }
 
@@ -805,24 +793,24 @@ float wasteH2OproSystem::XZfx = 0; //旋流子个数
 
 
 
-wasteH2OproSystem::wasteH2OproSystem(std::string & s31, std::string & s32)
+void wasteH2OproSystem::setWasteH2OproSystemPar(const QString & s31, const QString & s32)
 {
 
     //    系统7 - 31. 废水泵
-    std::vector<std::string> res = utils::Split(s31, "[*]");
-    wasteH2OproSystem::Yfshb = std::atof(res[0].c_str());  //效率
-    wasteH2OproSystem::Qfshb = std::atof(res[1].c_str());  //流量
-    wasteH2OproSystem::Hfshb = std::atof(res[2].c_str());  //扬程
-    wasteH2OproSystem::Nffshb = std::atof(res[3].c_str());  //轴功率
-    wasteH2OproSystem::Nefshb = std::atof(res[4].c_str());  //电机功率
-    wasteH2OproSystem::Nkfshb = std::atof(res[5].c_str());  //电机功率靠档
+    QStringList res = s31.split("*");
+    wasteH2OproSystem::Yfshb = res[0].toFloat();  //效率
+    wasteH2OproSystem::Qfshb = res[1].toFloat();  //流量
+    wasteH2OproSystem::Hfshb = res[2].toFloat();  //扬程
+    wasteH2OproSystem::Nffshb = res[3].toFloat();  //轴功率
+    wasteH2OproSystem::Nefshb = res[4].toFloat();  //电机功率
+    wasteH2OproSystem::Nkfshb = res[5].toFloat();  //电机功率靠档
 
 
     //    系统7 - 32. 废水旋流器
-    res = utils::Split(s32, "[*]");
+    res = s32.split("*");
 
-    wasteH2OproSystem::Qfx = std::atof(res[0].c_str());   //流量
-    wasteH2OproSystem::XZfx = std::atof(res[1].c_str());   //旋流子个数
+    wasteH2OproSystem::Qfx = res[0].toFloat();   //流量
+    wasteH2OproSystem::XZfx = res[1].toFloat();   //旋流子个数
 
 }
 

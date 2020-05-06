@@ -101,15 +101,6 @@ int utils::ping(QString ip)
     return QProcess::execute(strArg);
 }
 
-std::vector<std::string> utils::Split(const std::string& in, const std::string& delim) {
-        std::regex re{ delim };
-        // 调用 std::vector::vector (InputIterator first, InputIterator last,const allocator_type& alloc = allocator_type())
-        // 构造函数,完成字符串分割
-        return std::vector<std::string> {
-            std::sregex_token_iterator(in.begin(), in.end(), re, -1),
-            std::sregex_token_iterator()
-        };
-    }
 
 
 float utils::KD(float & power)
