@@ -7,11 +7,6 @@ void Login_window::start()
 {
     qDebug() << "I'm working in thread:" << QThread::currentThreadId();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-    QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
-            "UID=sa;PWD=123456;";
-    db.setDatabaseName(dsn);
-
     if(!db.open())                                      //打开数据库
     {
         QMessageBox::information(this, tr("连接结果"), tr("数据库连接失败"));

@@ -117,12 +117,7 @@ void newProjectWindow::setInitValue()
 {
     // Coal
 
-
-
     pinfPar::ss = "0010100";
-
-
-
 
 }
 

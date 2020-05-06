@@ -20,6 +20,7 @@
 #include <iostream>
 #include <exception>
 #include <QThread>
+#include <QCloseEvent>
 
 #include "window_project_new.h"
 #include "window_project_open.h"
@@ -147,6 +148,7 @@ private slots:
 
 
 private:
+    virtual void closeEvent(QCloseEvent *event);
     middleWidget * midWidget;
 
     askForCheckingObject * askForCheckingObj;

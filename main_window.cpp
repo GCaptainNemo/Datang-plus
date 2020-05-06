@@ -7,6 +7,27 @@
 
 int MainWindow::first = 0;
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    switch(QMessageBox::question(this, tr("关闭窗口"), tr("你还未保存，确定要退出程序？"),
+                                 QMessageBox::Yes|QMessageBox::No, QMessageBox::Yes))
+
+    {
+    case QMessageBox::Yes:{
+        event->accept();
+        break;
+    }
+    case QMessageBox::No:
+        event->ignore();
+        break;
+    default:
+        break;
+    }
+    return;
+
+    qDebug() << "I am closing!";
+}
+
 
 void MainWindow::createAction()
 {
