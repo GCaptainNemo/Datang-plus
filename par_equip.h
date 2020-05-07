@@ -436,7 +436,7 @@ public:
 
 
 
-////声明变量
+//声明变量
 //static std::string version; //版本号
 //static int gk ; //工况
 //static std::string P ; //项目编号

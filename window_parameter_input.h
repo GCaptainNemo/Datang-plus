@@ -21,7 +21,7 @@
 #include "par_pinf.h"
 #include <math.h>
 #include "widget_okcancel.h"
-
+#include "par_const.h"
 
 class inputParameterWindow : public QDialog
 {
@@ -49,7 +49,6 @@ protected:
     // tabInwidget1
 
     QWidget * widget11, *widget12, *widget13;
-//    QFrame * widget11, *widget12, *widget13;
 
     QGridLayout *gridLayout11, *gridLayout12, *gridLayout13;
 

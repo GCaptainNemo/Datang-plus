@@ -1,5 +1,5 @@
-﻿#ifndef PAR_OTHERS_H
-#define PAR_OTHERS_H
+﻿#ifndef PAR_USERS_H
+#define PAR_USERS_H
 
 #if _MSC_VER >= 1600
 #pragma execution_character_set("utf-8")
@@ -30,4 +30,4 @@ public:
 
 
 
-#endif // PAR_OTHERS_H
+#endif // PAR_USERS_H

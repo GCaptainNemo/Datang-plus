@@ -61,7 +61,6 @@ inputParameterWindow::inputParameterWindow(QWidget *parent) : QDialog(parent)
 
 void inputParameterWindow::initParWidget1()
 {
-//    if (wetRadiobutton->isChecked())
     wetRadiobutton->setChecked(true);
     gasNumLineedit->setText(QString("%1").arg(gasResultPar::Gas[0][0][3]));
     gasTempLineedit->setText(QString("%1").arg(gasResultPar::Gas[0][0][22]));
@@ -380,10 +379,120 @@ void inputParameterWindow::initWidget3()
 
 void inputParameterWindow::okSLOT()
 {
+    inputParameterWindow::f1 = gasNumLineedit->text().toFloat();
+    inputParameterWindow::shd = h2oLineedit->text().toFloat();
+    inputParameterWindow::f6 = so2Lineedit->text().toFloat();
+    inputParameterWindow::f7 = so3Lineedit->text().toFloat();
+    inputParameterWindow::f8 = hclLineedit->text().toFloat();
+    inputParameterWindow::f9 = hfLineedit->text().toFloat();
+    inputParameterWindow::f10 = dustLineedit->text().toFloat();
+
+    if (wetRadiobutton->isChecked())
+    {
+        gasResultPar::Gas[0][0][3] =gasNumLineedit->text().toFloat();
+        gasResultPar::Gas[0][0][1] =gasResultPar::Gas[0][0][3] * inputParameterWindow::shd;
+        gasResultPar::Gas[0][0][0] =gasResultPar::Gas[0][0][3] - gasResultPar::Gas[0][0][1];
+        inputParameterWindow::bz1 = 1;
+    }
+    else if (dryRadiobutton->isChecked())
+    {
+        gasResultPar::Gas[0][0][0] = gasNumLineedit->text().toFloat();
+        gasResultPar::Gas[0][0][1] =gasResultPar::Gas[0][0][0] / (1.0 / inputParameterWindow::shd - 1);
+        gasResultPar::Gas[0][0][3] = gasResultPar::Gas[0][0][0] + gasResultPar::Gas[0][0][1];
+        inputParameterWindow::bz1 = 2;
+    }
+
+    int gongkuang = 0;
+    gasResultPar::Gas[gongkuang][0][8] = o2Lineedit->text().toFloat();
+    gasResultPar::Gas[gongkuang][0][9] = co2Lineedit->text().toFloat();
+    gasResultPar::Gas[gongkuang][0][21] = pressureLineedit->text().toFloat();
+    gasResultPar::Gas[gongkuang][6][21] = pressureLineedit->text().toFloat();
+    gasResultPar::Gas[gongkuang][0][22] = gasTempLineedit->text().toFloat();
+    if(dryCheckbox->isChecked())
+    {
+        gasResultPar::Gas[gongkuang][0][15] = so2Lineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][17] = so3Lineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][18] = hclLineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][19] = hfLineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][20] = dustLineedit->text().toFloat();
+
+
+        gasResultPar::Gas[gongkuang][0][10] = gasResultPar::Gas[gongkuang][0][15] * (21 - gasResultPar::Gas[gongkuang][0][8]) / (21 - 6);
+        gasResultPar::Gas[gongkuang][0][11] = gasResultPar::Gas[gongkuang][0][17] * (21 - gasResultPar::Gas[gongkuang][0][8]) / (21 - 6);
+        gasResultPar::Gas[gongkuang][0][12] = gasResultPar::Gas[gongkuang][0][18] * (21 - gasResultPar::Gas[gongkuang][0][8]) / (21 - 6);
+        gasResultPar::Gas[gongkuang][0][13] = gasResultPar::Gas[gongkuang][0][19] * (21 - gasResultPar::Gas[gongkuang][0][8]) / (21 - 6);
+        gasResultPar::Gas[gongkuang][0][14] = gasResultPar::Gas[gongkuang][0][20] * (21 - gasResultPar::Gas[gongkuang][0][8]) / (21 - 6);
+        gasResultPar::Gas[gongkuang][0][16] = (gasResultPar::Gas[gongkuang][0][10] + gasResultPar::Gas[gongkuang][0][11] / constPar::mSO3 * constPar::mSO2) * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+
+        inputParameterWindow::bz2 = 2;
+
+    }
+    else
+    {
+        gasResultPar::Gas[gongkuang][0][10] = so2Lineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][11] = so3Lineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][12] = hclLineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][13] = hfLineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][14] = dustLineedit->text().toFloat();
+        gasResultPar::Gas[gongkuang][0][15] = gasResultPar::Gas[gongkuang][0][10] * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+        gasResultPar::Gas[gongkuang][0][16] = (gasResultPar::Gas[gongkuang][0][10] + gasResultPar::Gas[gongkuang][0][11] / constPar::mSO3 * constPar::mSO2) * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+        gasResultPar::Gas[gongkuang][0][17] = gasResultPar::Gas[gongkuang][0][11] * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+        gasResultPar::Gas[gongkuang][0][18] = gasResultPar::Gas[gongkuang][0][12] * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+        gasResultPar::Gas[gongkuang][0][19] = gasResultPar::Gas[gongkuang][0][13] * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+        gasResultPar::Gas[gongkuang][0][20] = gasResultPar::Gas[gongkuang][0][14] * (21 - 6) / (21 - gasResultPar::Gas[gongkuang][0][8]);
+    }
+
+    if (caco3Combobox1->currentText() == "CaCO3")
+    {
+        pinfPar::VCaCO3 = caco3Lineedit1->text().toFloat();
+    }
+    else if (caco3Combobox1->currentText() == "CaO")
+    {
+        pinfPar::VCaCO3 = caco3Lineedit1->text().toFloat() / constPar::mCaO * constPar::mCaCO3;
+    }
+
+    if (caco3Combobox2->currentText() == "MgCO3")
+    {
+        pinfPar::VMgCO3 = caco3Lineedit2->text().toFloat();
+    }
+    else if (caco3Combobox2->currentText() == "MgO")
+    {
+        pinfPar::VMgCO3 = caco3Lineedit2->text().toFloat() / constPar::mMgO * constPar::mMgCO3;
+    }
+    pinfPar::Vother = otherLineedit->text().toFloat();
+
+
+    //  工艺水
+
+    gslResultPar::GSL[gongkuang][19][14] = clLineedit->text().toFloat();
+
+    pinfPar::Pcaco3 = caco3ComponentLabel->text().toFloat();
+    pinfPar::yS = lineedit22->text().toFloat();   // 脱硫效率
+    gslResultPar::GSL[gongkuang][11][14] = lineedit23->text().toFloat();  // 废水中氯离子含量
+    gslResultPar::GSL[gongkuang][5][16] = lineedit24->text().toFloat() / 100; // 石膏旋流器
+    pinfPar::zysh = lineedit25->text().toFloat() / 100;
+    gasResultPar::Gas[gongkuang][4][22] = lineedit26->text().toFloat();
+
+
+    //
+
+    pinfPar::PP1 = lineedit1->text().toFloat();
+    pinfPar::PP2 = lineedit2->text().toFloat();
+    pinfPar::PP3 = lineedit3->text().toFloat();
+    pinfPar::PP4 = lineedit4->text().toFloat();
+    pinfPar::PP5 = lineedit5->text().toFloat();
+    pinfPar::PP6 = lineedit6->text().toFloat();
+    pinfPar::PP7 = lineedit7->text().toFloat();
+    pinfPar::PP8 = lineedit8->text().toFloat();
+    pinfPar::PP9 = lineedit9->text().toFloat();
+    pinfPar::PP10 = lineedit10->text().toFloat();
+    pinfPar::PP11 = lineedit11->text().toFloat();
+    pinfPar::PP12 = lineedit12->text().toFloat();
+    pinfPar::PP13 = pinfPar::PP1 + pinfPar::PP2 +pinfPar::PP3 + pinfPar::PP4 + pinfPar::PP5+ pinfPar::PP6 +
+            pinfPar::PP7+ pinfPar::PP8+ pinfPar::PP9 + pinfPar::PP10+ pinfPar::PP11+ pinfPar::PP12;
+    inputParameterWindow::shr = 1;
 
 }
-
-
 inputParameterWindow::~inputParameterWindow()
 {
     inputParameterWindow::num -= 1;
