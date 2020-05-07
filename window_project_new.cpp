@@ -57,6 +57,7 @@ void newProjectWindow::okSLOT()
                 projectPar::pj_name = name;
                 emit changeTitleSIGNAL();
 
+                this->setInitValue();
 
                 QString ipv4 = utils::getIPV4address();
                 QDateTime curDateTime = QDateTime::currentDateTime();
@@ -73,9 +74,9 @@ void newProjectWindow::okSLOT()
                             arg(projectPar::prid).arg(projectPar::pj_name).arg(userPar::userid));
                 query->exec(QString("INSERT INTO GasResult(prid) VALUES(%1)").arg(projectPar::prid));
                 query->exec(QString("INSERT INTO GSLResult(prid) VALUES(%1)").arg(projectPar::prid));
-                query->exec(QString("INSERT INTO pinf(prid, Eid) VALUES(%1, 1)").arg(projectPar::prid));
+                query->exec(QString("INSERT INTO pinf(prid, Pequip, Eid) VALUES(%1, '%2', '%3')").arg(projectPar::prid).arg(pinfPar::ss).arg(pinfPar::Expid));
                 query->exec(QString("INSERT INTO Equip(prid) VALUES(%1)").arg(projectPar::prid));
-                query->exec(QString("INSERT INTO Coal(prid) VALUES(%1)").arg(projectPar::prid));
+                query->exec(QString("INSERT INTO Coal VALUES(%1, %2, %3, %4, %5, %6, %7, %8, %9, %10)").arg(projectPar::prid).arg(Coal::Ap).arg(Coal::bj).arg(Coal::W).arg(Coal::A).arg(Coal::S).arg(Coal::H).arg(Coal::C).arg(Coal::N).arg(Coal::O));
                 query->exec("SELECT MAX(recid) FROM records");
                 query->next();
                 int recid = query->value(0).toInt() + 1;
@@ -83,7 +84,7 @@ void newProjectWindow::okSLOT()
                         arg(userPar::userid).arg(ipv4).arg(date).arg(projectPar::prid);
                 query->exec(sqlInsertRecord);
 
-                this->setInitValue();
+
 
                 QMessageBox::information(this, tr("新建结果"), tr("项目新建成功"));
                 this->close();
@@ -117,7 +118,119 @@ void newProjectWindow::setInitValue()
 {
     // Coal
 
+    Coal::Ap = 1.37;
+    Coal::bj = 0;
+    Coal::W = 0;
+    Coal::A = 0;
+    Coal::S = 0;
+    Coal::H = 0;
+    Coal::C = 0;
+    Coal::N = 0;
+    Coal::O = 0;
+
+    // 输入参数
+
+    inputParameterWindow::bz1 = 0;
+    inputParameterWindow::bz2 = 0;
+
+    for(int i=0; i<23; ++i)
+    {
+        gasResultPar::Gas[0][0][i] = 0;
+    }
+    pinfPar::VCaCO3 = 92.95;
+    pinfPar::VMgCO3 = 2.95;
+    pinfPar::Vother = 0;
+    gslResultPar::GSL[0][19][14] = 15;
+    pinfPar::yS = 0.95; // 脱硫效率
+    gslResultPar::GSL[0][11][14] = 20000;
+    gslResultPar::GSL[0][5][16] = 0.04;
+    pinfPar::zysh = 0.5;
+    gasResultPar::Gas[0][4][22] = 80;
+    pinfPar::Pcaco3 = 2.5;
+
+    pinfPar::PP1 = 2;
+    pinfPar::PP2 = 0.3;
+    pinfPar::PP3 = 0.5;
+    pinfPar::PP4 = 1.5;
+    pinfPar::PP5 = 0;
+    pinfPar::PP6 = 1.2;
+    pinfPar::PP7 = 0.5;
+    pinfPar::PP8 = 0;
+    pinfPar::PP9 = 1.5;
+    pinfPar::PP10 = 0.3;
+    pinfPar::PP11 = 1.2;
+    pinfPar::PP12 = 3;
+    pinfPar::PP13 = 12;
+
+    absorberSystem::FGDnum = 2;
+    absorberSystem::vin = 13.3;
+    absorberSystem::vout = 15.5;
+    absorberSystem::u = 3.8;
+    absorberSystem::bc = 2.5;
+    absorberSystem::cd = 1.3;
+    absorberSystem::D = 1.5;
+    absorberSystem::pc = 3;
+    so2AbsorbSystem::xg = 3;
+    absorberSystem::E = 1.8;
+    absorberSystem::g = 2.5;
+    absorberSystem::k = 0.5;
+    absorberSystem::hx = 0.8;
+    absorberSystem::NUMjb = 3;
+
+    // 设备经验参数
+    flueGasSystem::Yfan = 0.85;
+    so2AbsorbSystem::Yyang = 0.6;
+    so2AbsorbSystem::Yjxb = 0.86;
+    so2AbsorbSystem::Yshpb = 0.5;
+    so2AbsorbSystem::Hshpb = 40;
+
+    caso4ExtractH2Osystem::Dlb = 1.8;
+    caso4ExtractH2Osystem::Hlb = 1.5;
+    caso4ExtractH2Osystem::Tlx = 0.5;
+    caso4ExtractH2Osystem::Ylx = 0.9;
+    caso4ExtractH2Osystem::HDlx = 1.2;
+    caso4ExtractH2Osystem::Ylyb = 0.45;
+    caso4ExtractH2Osystem::Hlyb = 35;
+
+    slurryPreSystem::Tshc = 60;
+    slurryPreSystem::NUMshc = 1;
+    slurryPreSystem::Yshc = 0.9;
+    slurryPreSystem::Ashc = 55;
+    slurryPreSystem::Tsjx = 0.1;
+    slurryPreSystem::Ysjx = 0.9;
+    slurryPreSystem::HDsjx = 1.2;
+    slurryPreSystem::Yshjxb = 0.45;
+    slurryPreSystem::Hshjxb = 40;
+    slurryPreSystem::Tsj = 6;
+    slurryPreSystem::Ysj = 0.9;
+    slurryPreSystem::HDsj = 1.2;
+    slurryPreSystem::Yshjb = 0.45;
+    slurryPreSystem::Hshjb = 35;
+
+    processH2Osystem::Tgy = 0.5;
+    processH2Osystem::Ygy = 0.9;
+    processH2Osystem::HDgy = 1.2;
+    processH2Osystem::Ygyb = 0.65;
+    processH2Osystem::Hgyb = 65;
+    processH2Osystem::Yccb = 0.65;
+    processH2Osystem::Qccb = 150;
+    processH2Osystem::Hccb = 65;
+
+    emergencySlurrySystem::Yshg = 0.9;
+    emergencySlurrySystem::HDshg = 1.2;
+    emergencySlurrySystem::Yshgb = 0.55;
+    emergencySlurrySystem::Hshgb = 30;
+    emergencySlurrySystem::Yshgb = 0.55;
+    emergencySlurrySystem::Hshgb = 30;
+
+    wasteH2OproSystem::Yfshb = 0.3;
+    wasteH2OproSystem::Hfshb = 35;
+
+    //
     pinfPar::ss = "0010100";
+
+    // GAS
+
 
 }
 

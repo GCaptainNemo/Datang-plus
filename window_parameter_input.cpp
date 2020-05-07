@@ -72,7 +72,7 @@ void inputParameterWindow::initParWidget1()
         h2oLineedit->setText(tr("0"));
     }
     else
-        h2oLineedit->setText(QString("%1").arg(round(gasResultPar::Gas[0][0][1] / gasResultPar::Gas[0][0][3] * 100.2)));
+        h2oLineedit->setText(QString("%1").arg(round(gasResultPar::Gas[0][0][1] / gasResultPar::Gas[0][0][3] * 100 * 100) / 100));
 
     switch(inputParameterWindow::bz2){
         case 2:{

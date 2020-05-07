@@ -4,6 +4,21 @@
 #endif
 #include "window_project_open.h"
 
+mySqlQueryModel::mySqlQueryModel(QObject * parent):QSqlQueryModel(parent){}
+
+QVariant mySqlQueryModel::data(const QModelIndex & item, int role) const
+{
+    QVariant value = QSqlQueryModel::data(item, role);
+    if(role == Qt::TextAlignmentRole)
+    {
+        value = (Qt::AlignCenter);
+        return value;
+    }
+    return value;
+}
+
+
+
 int openPjWindow::num = 0;
 
 
@@ -46,15 +61,14 @@ openPjWindow::openPjWindow(QWidget *parent) : QDialog(parent)
 
 
 
-void openPjWindow::initSqlStatement(QString pd){
-
+void openPjWindow::initSqlStatement(QString pd)
+{
     sqlPinf = "SELECT * FROM Pinf with(nolock) WHERE prid=" + pd;
     sqlGasResult = "SELECT * FROM GasResult WHERE prid=" + pd;
     sqlGSLResult = "SELECT * FROM GSLResult WHERE prid=" + pd;
     sqlEquip = "SELECT * FROM Equip WHERE prid=" + pd;
     sqlCoal = "SELECT * FROM Coal WHERE prid=" + pd;
     sqlExp = "SELECT * FROM Experience  WHERE Eid=" +pd;
-
 }
 
 
@@ -74,15 +88,6 @@ void openPjWindow::start(QString prid)
 
     this->initSqlStatement(prid);
     qDebug() << "openPj work thread id = " << QThread::currentThreadId();
-//    if (QSqlDatabase::contains("SQLserver"))
-//        this->db = QSqlDatabase::database("SQLserver");
-//    else{
-//        this->db = QSqlDatabase::addDatabase("QODBC", "SQLserver");   //数据库驱动类型为SQL Server
-//        QString dsn = "DRIVER={SQL SERVER};SERVER=" + userPar::userip + ";DATABASE=p;"
-//                "UID=sa;PWD=123456;";
-//        db.setDatabaseName(dsn);
-//    }
-
     if (db.open())
     {
         this->query = new QSqlQuery(this->db);
@@ -109,8 +114,6 @@ void openPjWindow::start(QString prid)
             equipPtr = new equipPar(query);
             delete equipPtr;
         }
-        else
-            qDebug() << "error";
 
 
         qDebug() << "sqlGasResult = " << sqlGasResult;
@@ -214,7 +217,9 @@ void openPjWindow::setPjModel()
         }
         else
         {
-            this->pjModel = new QSqlQueryModel(this->tableView);
+//            this->pjModel = new QSqlQueryModel(this->tableView);
+            this->pjModel = new mySqlQueryModel(this->tableView);
+
             pjModel->setQuery(QString("SELECT prid, prname, prstate, preditnum, prdesigh, prcheck, prverify FROM projects ORDER BY prid ASC"), db);
 
             pjModel->setHeaderData(0, Qt::Horizontal,QObject::tr("编号"));
@@ -226,7 +231,16 @@ void openPjWindow::setPjModel()
             pjModel->setHeaderData(6, Qt::Horizontal,QObject::tr("审核人编号"));
             this->tableView->setSelectionBehavior(QAbstractItemView::SelectRows);
             this->tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
+            tableView->verticalHeader()->setHidden(true);
+
             this->tableView->setModel(pjModel);
+
+            //            for (int row = 0; row < pjModel->rowCount(); ++row){
+//                for(int column = 0; column < pjModel->columnCount(); ++column)
+
+//            }
+
+
         }
     }
     else

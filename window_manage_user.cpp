@@ -337,6 +337,7 @@ void window_manage_user::loadModel()
         this->tableWidget->insertRow(rowCount);
         for(int i=0;i<=3;i++){
             this->tableWidget->setItem(rowCount, i, new QTableWidgetItem(query->value(i).toString()));
+            this->tableWidget->item(rowCount, i)->setTextAlignment(Qt::AlignCenter);
         }
     }
     this->tableWidget->setColumnHidden(1, true);

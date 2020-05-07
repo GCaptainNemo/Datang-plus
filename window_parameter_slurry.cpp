@@ -52,9 +52,9 @@ void window_parameter_slurry::initTableWidget()
         this->tableWidget->setItem(i, 0, new QTableWidgetItem(verticalHeader[i]));
         this->tableWidget->item(i, 0)->setTextAlignment(Qt::AlignCenter);
         this->tableWidget->item(i, 0)->setFont(font);
-//        this->tableWidget->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(gasResultPar::Gas[0][guanxian][i])));
-//        this->tableWidget->item(i, 1)->setTextAlignment(Qt::AlignCenter);
-//        this->tableWidget->item(i, 1)->setFont(font);
+        this->tableWidget->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(gasResultPar::Gas[0][0][i])));
+        this->tableWidget->item(i, 1)->setTextAlignment(Qt::AlignCenter);
+        this->tableWidget->item(i, 1)->setFont(font);
         this->tableWidget->setItem(i, 2, new QTableWidgetItem(unitColumn[i]));
         this->tableWidget->item(i, 2)->setFont(font);
         this->tableWidget->item(i, 2)->setTextAlignment(Qt::AlignCenter);

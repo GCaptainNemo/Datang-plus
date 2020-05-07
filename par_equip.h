@@ -451,16 +451,6 @@ public:
 //static int frm1 ; //窗口参数
 
 
-
-//static float Ap ; //系数
-//static float bj ; //煤
-//static float W ; //基水分
-//static float A ; //基灰分
-//static float s ; //基硫分
-//static float H ; //基氫分
-//static float C ; //基碳分
-//static float n ; //基氮分
-//static float O ; //基氧分
 //static int meidao ; //煤道
 
 

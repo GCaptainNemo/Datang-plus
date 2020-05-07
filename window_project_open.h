@@ -13,7 +13,7 @@
 #include <QHBoxLayout>
 #include <QMessageBox>
 #include <QDateTime>
-
+#include <QHeaderView>
 #include <QSqlQuery>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
@@ -27,6 +27,18 @@
 #include "par_projects.h"
 #include "par_experience.h"
 #include "par_users.h"
+
+
+class mySqlQueryModel: public QSqlQueryModel
+{
+public:
+    explicit mySqlQueryModel(QObject * parent = nullptr);
+    QVariant data(const QModelIndex & index, int role) const;
+
+};
+
+
+
 
 class openPjWindow : public QDialog
 {

@@ -98,8 +98,10 @@ void manageProjectWindow::loadModel()
     {
         int rowCount = this->tableWidget->rowCount();
         this->tableWidget->insertRow(rowCount);
-        for(int i=0;i<=6;i++){
+        for(int i=0;i<=6;i++)
+        {
             this->tableWidget->setItem(rowCount, i, new QTableWidgetItem(query->value(i).toString()));
+            this->tableWidget->item(rowCount, i)->setTextAlignment(Qt::AlignCenter);
         }
 
     }

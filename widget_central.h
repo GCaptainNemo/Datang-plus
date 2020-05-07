@@ -34,7 +34,7 @@ public:
     QPushButton *pushButton_3;
     QLabel *label;
     QLabel *label_2;
-    QVBoxLayout * vlayout;
+    QVBoxLayout * vlayout, *vbuttonLayout;
     window_parameter_flue_gas * windowParFlueGas;
     window_parameter_slurry * windowParSry;
 

@@ -82,7 +82,8 @@ SOURCES += \
     window_parameter_flue_gas.cpp \
     window_parameter_slurry.cpp \
     window_parameter_input.cpp \
-    par_users.cpp
+    par_users.cpp \
+    par_const.cpp
 
 HEADERS += \
     main_window.h \
@@ -138,7 +139,8 @@ HEADERS += \
     window_parameter_flue_gas.h \
     window_parameter_slurry.h \
     window_parameter_input.h \
-    par_users.h
+    par_users.h \
+    par_const.h
 
 DISTFILES += \
     icon/new.ico \

@@ -19,6 +19,8 @@
 #include <QMap>
 #include <QSplitter>
 #include <QDebug>
+#include <QHeaderView>
+
 
 #include "par_equip.h"
 #include "widget_okcancel.h"
@@ -38,10 +40,12 @@ public:
 signals:
 
 public slots:
-    void exportSLOT();
+    void exportExcelSLOT();
+    void tableWidgetShowSLOT(const int & id);
+    void chooseGongkuangSLOT(const int & id);
 protected:
     QVBoxLayout * layout;
-    QWidget * totalTableWidget;
+    QSplitter * totalTableSplitter;
     QTableWidget * tableWidgetGas, *tableWidgetLiquid;
 
     QWidget *widgetTotal, *widget1, *widget3, *widget4;
@@ -53,6 +57,8 @@ protected:
     QLabel * label31, *label32;
     QRadioButton * radiobutton311, *radiobutton312, *radiobutton313, *radiobutton314;
     QRadioButton * radiobutton321, *radiobutton322, *radiobutton323;
+    QButtonGroup * buttonGroup3;
+
 
     QLabel *  label4;
     QRadioButton * radiobutton41, *radiobutton42;
@@ -63,25 +69,33 @@ protected:
 
     QSplitter * vsplitter;
 
-    QGridLayout * tableWidgetLayout, *totalLayout, *gridLayout1, *gridLayout3, *gridLayout4;
-    void initTableWidget();
-    QStringList equipNameStringList;
-    QStringList rowheadStringList;
-    QStringList columnheadStringList;
-    QStringList specificationStringList;
-    QStringList equipNumStringList;
+    QGridLayout  *totalLayout, *gridLayout1, *gridLayout3, *gridLayout4;
+
+    QStringList tubeidLiquid;
+    QStringList tubeNameLiquid;
+    QStringList verticalHeaderLiquid;
+    QStringList unitColumnLiquid;
+
+    QStringList tubeidGas;
+    QStringList tubeNameGas;
+    QStringList verticalHeaderGas;
+    QStringList unitColumnGas;
+    QStringList otherColumnGas;
+
+    QFont font ;//定义一个字体变量
+    int gongkuang;
+
     QAxObject * myexcel, *mywork, *workbook, *mysheet;
     QMap <int, QString> excelMap = {
         {0, "A"}, {1, "B"}, {2, "C"}, {3, "D"}, {4, "E"}
     };
-    void judgePop();
     void initWidget1();
-    void initWidget2();
     void initWidget3();
     void initWidget4();
-    void initWidget5();
 
-
+    void initTableWidgetGas();
+    void initTableWidgetLiquid();
+    void refreshTableWidget();
 };
 
 

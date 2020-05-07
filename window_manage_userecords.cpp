@@ -297,6 +297,8 @@ void manageaRecordsWindow::loadModel()
     {
         for(int i=0; i<=4; i++){
             this->tableWidget->setItem(num, i, new QTableWidgetItem(query->value(i).toString()));
+            this->tableWidget->item(num, i)->setTextAlignment(Qt::AlignCenter);
+
         }
         num += 1;
     }

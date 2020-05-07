@@ -357,10 +357,24 @@ void MainWindow::experienceParManageSLOT()
 
 void MainWindow::balanceDataSLOT()
 {
-    if (window_total_calculationresult::num == 0){
-        this->calculationReslutTotalWindow = new window_total_calculationresult(this);
+    if (window_total_calculationresult::num == 0)
+    {
+        if (MainWindow::first == 0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("须新建或打开项目"));
+
+        }
+        else if (systemConfigurationWindow::pzh == 0)
+        {
+            QMessageBox::warning(this, tr("提示"), tr("须配置项目"));
+        }
+        else
+        {
+            this->calculationReslutTotalWindow = new window_total_calculationresult(this);
+        }
     }
-    else{
+    else
+    {
         this->calculationReslutTotalWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
         this->calculationReslutTotalWindow->showMaximized();
     }
