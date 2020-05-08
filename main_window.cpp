@@ -77,6 +77,7 @@ void MainWindow::createAction()
     //    equipment menu
 
     this->absorberParAction = new QAction(tr("吸收塔参数"), this);
+    connect(absorberParAction, SIGNAL(triggered(bool)), this, SLOT(absorberTowerSLOT()));
     this->pressureAirBlowerAction = new QAction(tr("增压风机"), this);
     connect(pressureAirBlowerAction, SIGNAL(triggered(bool)), this, SLOT(pressureAirBlowerSLOT()));
     this->heatExchangerAction = new QAction(tr("烟气换热器"), this);
@@ -825,6 +826,18 @@ void MainWindow::oxidationAiBlowerSLOT()
         this->o2AirBlowerWindow->showNormal();
     }
 }
+
+void MainWindow::absorberTowerSLOT()
+{
+    if (window_parameter_absorb_tower::num == 0)
+
+        this->absorberTowerWindow= new window_parameter_absorb_tower(this);
+    else{
+        this->absorberTowerWindow->setWindowFlag(Qt::WindowStaysOnTopHint);
+        this->absorberTowerWindow->showNormal();
+    }
+}
+
 
 void MainWindow::pressureAirBlowerSLOT()
 {

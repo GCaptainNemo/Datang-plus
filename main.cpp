@@ -23,9 +23,13 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    MainWindow *mainWindow = new MainWindow();
+    QFile qssFile(":/qss/css/qss.css");
+    qssFile.open(QFile::ReadOnly);
+    QString qss = QLatin1Literal(qssFile.readAll());
+    a.setStyleSheet(qss);
+    qssFile.close();
 
-//    CommonHelper::setStyle("stylesheet.qss");
+    MainWindow *mainWindow = new MainWindow();
     a.connect(&a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()));
     Login_window * loginWindow = new Login_window;
     loginWindow->connect(loginWindow, SIGNAL(setLimitSIGNAL(QString)), mainWindow, SLOT(setLimitSLOT(QString)));

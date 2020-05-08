@@ -25,7 +25,8 @@ window_total_calculationresult::window_total_calculationresult(QWidget *parent) 
 
     widgetTotal = new QWidget(this);
     totalLayout = new QGridLayout(widgetTotal);
-    totalLayout->addWidget(widget1, 0, 0, 1, 10);
+    totalLayout->addWidget(widget11, 0, 0, 1, 5);
+    totalLayout->addWidget(widget12, 0, 5, 1, 5);
     totalLayout->addWidget(widget3, 1, 0, 1, 5);
     totalLayout->addWidget(widget4, 1, 5, 1, 5);
 
@@ -51,41 +52,47 @@ window_total_calculationresult::window_total_calculationresult(QWidget *parent) 
 
 void window_total_calculationresult::initWidget1()
 {
-    widget1 = new QWidget(this);
-    gridLayout1 = new QGridLayout(widget1);
-    okButton1 = new QPushButton(tr("确定"), widget1);
-    label1 = new QLabel(tr("不同工况温度输入:"), widget1);
-    lineedit11 = new QLineEdit(widget1);
-    lineedit12 = new QLineEdit(widget1);
-    lineedit13 = new QLineEdit(widget1);
-    label11 = new QLabel(tr("°C"), widget1);
-    label12 = new QLabel(tr("°C"), widget1);
-    label13 = new QLabel(tr("°C"), widget1);
-    gridLayout1->addWidget(label1, 0, 0, 1, 3);
-    gridLayout1->addWidget(lineedit11, 0, 3, 1, 3);
-    gridLayout1->addWidget(label11, 0, 6, 1, 1);
-    gridLayout1->addWidget(lineedit12, 0, 7, 1, 3);
-    gridLayout1->addWidget(label12, 0, 10, 1, 1);
-    gridLayout1->addWidget(lineedit13, 0, 11, 1, 3);
-    gridLayout1->addWidget(label13, 0, 15, 1, 1);
-    gridLayout1->addWidget(okButton1, 0, 16, 1, 3);
+    widget11 = new QWidget(this);
+    widget11->setObjectName(tr("widgetFrame"));
+    gridLayout11 = new QGridLayout(widget11);
+    okButton1 = new QPushButton(tr("确定"), widget11);
+    label1 = new QLabel(tr("不同工况温度输入:"), widget11);
+    lineedit11 = new QLineEdit(widget11);
+    lineedit12 = new QLineEdit(widget11);
+    lineedit13 = new QLineEdit(widget11);
+    label11 = new QLabel(tr("°C"), widget11);
+    label12 = new QLabel(tr("°C"), widget11);
+    label13 = new QLabel(tr("°C"), widget11);
+    gridLayout11->addWidget(label1, 0, 0, 1, 3);
+    gridLayout11->addWidget(lineedit11, 0, 3, 1, 3);
+    gridLayout11->addWidget(label11, 0, 6, 1, 1);
+    gridLayout11->addWidget(lineedit12, 0, 7, 1, 3);
+    gridLayout11->addWidget(label12, 0, 10, 1, 1);
+    gridLayout11->addWidget(lineedit13, 0, 11, 1, 3);
+    gridLayout11->addWidget(label13, 0, 15, 1, 1);
+    gridLayout11->addWidget(okButton1, 0, 16, 1, 3);
 
-    okButton2 = new QPushButton(tr("确定"), widget1);
-    label2 = new QLabel(tr("不同SO2浓度输入:"), widget1);
-    lineedit21 = new QLineEdit(widget1);
-    lineedit22 = new QLineEdit(widget1);
-    lineedit23 = new QLineEdit(widget1);
-    label21 = new QLabel(tr("%"), widget1);
-    label22 = new QLabel(tr("%"), widget1);
-    label23 = new QLabel(tr("%"), widget1);
-    gridLayout1->addWidget(label2, 0, 19, 1, 3);
-    gridLayout1->addWidget(lineedit21, 0, 22, 1, 3);
-    gridLayout1->addWidget(label21, 0, 25, 1, 1);
-    gridLayout1->addWidget(lineedit22, 0, 26, 1, 3);
-    gridLayout1->addWidget(label22, 0, 29, 1, 1);
-    gridLayout1->addWidget(lineedit23, 0, 30, 1, 3);
-    gridLayout1->addWidget(label23, 0, 33, 1, 1);
-    gridLayout1->addWidget(okButton2, 0, 34, 1, 3);
+
+
+    widget12 = new QWidget(this);
+    widget12->setObjectName(tr("widgetFrame"));
+    gridLayout12 = new QGridLayout(widget12);
+    okButton2 = new QPushButton(tr("确定"), widget12);
+    label2 = new QLabel(tr("不同SO2浓度输入:"), widget12);
+    lineedit21 = new QLineEdit(widget12);
+    lineedit22 = new QLineEdit(widget12);
+    lineedit23 = new QLineEdit(widget12);
+    label21 = new QLabel(tr("%"), widget12);
+    label22 = new QLabel(tr("%"), widget12);
+    label23 = new QLabel(tr("%"), widget12);
+    gridLayout12->addWidget(label2, 0, 0, 1, 3);
+    gridLayout12->addWidget(lineedit21, 0, 3, 1, 3);
+    gridLayout12->addWidget(label21, 0, 6, 1, 1);
+    gridLayout12->addWidget(lineedit22, 0, 9, 1, 3);
+    gridLayout12->addWidget(label22, 0, 12, 1, 1);
+    gridLayout12->addWidget(lineedit23, 0, 15, 1, 3);
+    gridLayout12->addWidget(label23, 0, 18, 1, 1);
+    gridLayout12->addWidget(okButton2, 0, 21, 1, 3);
 
 }
 
@@ -94,6 +101,7 @@ void window_total_calculationresult::initWidget3()
 {
     qDebug() << "in widget3";
     widget3 = new QWidget(this);
+    widget3->setObjectName(tr("widgetFrame"));
     gridLayout3 = new QGridLayout(widget3);
     label31 = new QLabel(tr("不同工况:"), widget3);
     label32 = new QLabel(tr("不同SO2浓度:"), widget3);
@@ -133,6 +141,7 @@ void window_total_calculationresult::initWidget4()
 {
     qDebug() << "state1";
     widget4 = new QWidget(this);
+    widget4->setObjectName(tr("widgetFrame"));
     gridLayout4 = new QGridLayout(widget4);
     label4 = new QLabel(tr("表格选择"), widget4);
     radiobutton41 = new QRadioButton(tr("气相"), widget4);
@@ -158,6 +167,7 @@ void window_total_calculationresult::initWidget4()
     gridLayout4->addWidget(label5, 0, 9, 1, 3);
     gridLayout4->addWidget(label5Value, 0, 12, 1, 3);
     gridLayout4->addWidget(exportButton, 0, 15, 1, 3);
+
 }
 
 
@@ -475,12 +485,15 @@ void window_total_calculationresult::exportExcelSLOT()
             range->setProperty("HorizontalAlignment", -4108);
 
         }
-        for(int row = 4; row < 27; row++){
-            for(int column = 4; column < 12; column ++){
+        for(int row = 4; row < 27; row++)
+        {
+            for(int column = 4; column < 12; column ++)
+            {
                 range = sheet->querySubObject("Cells(int,int)", row, column);
                 range->dynamicCall("SetValue(const QVariant&)", QVariant(round(gasResultPar::Gas[gongkuang][column - 4][row - 3] * 100) / 100.0));
                 range->setProperty("HorizontalAlignment", -4108);
                 range->querySubObject("Font")->setProperty("Bold", true);
+                range->querySubObject("Interior")->setProperty("Bold", true);   //设置单元格背景色（绿色）
 
             }
         }

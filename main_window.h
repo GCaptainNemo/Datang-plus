@@ -75,6 +75,9 @@
 #include "window_project_check_opinion.h"
 #include "widget_central.h"
 
+#include "window_parameter_absorb_tower.h"
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -146,6 +149,7 @@ private slots:
     void verifyProjectSLOT();
     void checkOpinionSLOT();
 
+    void absorberTowerSLOT();
 
 private:
     virtual void closeEvent(QCloseEvent *event);
@@ -198,7 +202,7 @@ private:
     window_total_equipment_parameter * equipmentParTotalWindow;
     window_total_calculationresult * calculationReslutTotalWindow;
 
-
+    window_parameter_absorb_tower * absorberTowerWindow;
 
     //    工具栏
 

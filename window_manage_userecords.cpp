@@ -20,6 +20,7 @@ manageaRecordsWindow::manageaRecordsWindow(QWidget *parent) : QDialog(parent)
     this->setWindowTitle(tr("使用记录管理"));
 
     this->widget = new QWidget(this);
+    this->widget->setObjectName(tr("widgetFrame"));
     this->widget->setFixedHeight(400);
     this->dateLabel = new QLabel("开始时间+结束时间(格式为2018-1-1):", this->widget);
     this->initDateLineedit = new QLineEdit(this->widget);

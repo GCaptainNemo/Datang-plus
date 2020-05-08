@@ -48,8 +48,9 @@ protected:
     QSplitter * totalTableSplitter;
     QTableWidget * tableWidgetGas, *tableWidgetLiquid;
 
-    QWidget *widgetTotal, *widget1, *widget3, *widget4;
+    QWidget *widgetTotal, *widget11, *widget12, *widget3, *widget4;
     QPushButton * okButton1, *okButton2, *okButton3;
+
 
     QLabel * label1, * label11, * label12, * label13, *label2, *label21, *label22,*label23;
     QLineEdit * lineedit11, *lineedit12,* lineedit13, * lineedit21, *lineedit22, *lineedit23;
@@ -69,7 +70,7 @@ protected:
 
     QSplitter * vsplitter;
 
-    QGridLayout  *totalLayout, *gridLayout1, *gridLayout3, *gridLayout4;
+    QGridLayout  *totalLayout, *gridLayout11, *gridLayout12, *gridLayout3, *gridLayout4;
 
     QStringList tubeidLiquid;
     QStringList tubeNameLiquid;

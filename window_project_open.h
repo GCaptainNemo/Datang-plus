@@ -71,7 +71,6 @@ private:
     QString sqlCoal;
     QString sqlExp;
 
-
     // parameter
 
     absorberSystem * absorberPtr;
@@ -79,7 +78,7 @@ private:
     Coal * coalPtr;
     gasResultPar * gasResultPtr;
     gslResultPar * gslResultPtr;
-//
+
     // layout
 
     QLabel * pjLabel;

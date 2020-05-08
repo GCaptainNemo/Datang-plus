@@ -83,7 +83,8 @@ SOURCES += \
     window_parameter_slurry.cpp \
     window_parameter_input.cpp \
     par_users.cpp \
-    par_const.cpp
+    par_const.cpp \
+    window_parameter_absorb_tower.cpp
 
 HEADERS += \
     main_window.h \
@@ -140,7 +141,8 @@ HEADERS += \
     window_parameter_slurry.h \
     window_parameter_input.h \
     par_users.h \
-    par_const.h
+    par_const.h \
+    window_parameter_absorb_tower.h
 
 DISTFILES += \
     icon/new.ico \
@@ -153,4 +155,8 @@ DISTFILES += \
     icon/项目.ico \
     C:/Users/wang1/Desktop/stylesheet.qss
 QT += axcontainer
+
+RESOURCES += \
+    chinese_qrc/qss.qrc
+
 
